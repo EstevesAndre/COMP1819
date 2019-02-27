@@ -1,6 +1,6 @@
 options
 {
-    LOOKAHEAD=1;
+    LOOKAHEAD=2;
     // MULTI=true;
 }
 
@@ -24,19 +24,6 @@ SKIP :
     "\n" |
     <"//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")> |
     <"/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/">
-}
-
-TOKEN :
-{
-    < INTEGER_LITERAL : <DECIMAL> | <OCTAL> | <HEXADECIMAL> | <BINARY> > |
-    < #DECIMAL: ["1"-"9"](["0"-"9"])* > |
-    < #OCTAL: "0"(["0"-"7"])* > |
-    < #HEXADECIMAL: ("0x" | "0X")(["0"-"9", "A"-"F", "a"-"f"])+ > |
-    < #BINARY: ("0b" | "0B")(["0", "1"])+ > |
-    
-    < IDENTIFIER : <LETTER> (<LETTER>|<DIGIT>)* > |
-    < #LETTER : ["$", "_", "a"-"z", "A"-"Z"] > |
-    < #DIGIT : ["0"-"9"] >
 }
 
 TOKEN :
@@ -86,6 +73,19 @@ TOKEN :
     < NOT : "!">
 }
 
+TOKEN :
+{
+    < INTEGER_LITERAL : <DECIMAL> | <OCTAL> | <HEXADECIMAL> | <BINARY> > |
+    < #DECIMAL: ["1"-"9"](["0"-"9"])* > |
+    < #OCTAL: "0"(["0"-"7"])* > |
+    < #HEXADECIMAL: ("0x" | "0X")(["0"-"9", "A"-"F", "a"-"f"])+ > |
+    < #BINARY: ("0b" | "0B")(["0", "1"])+ > |
+    
+    < IDENTIFIER : <LETTER> (<LETTER>|<DIGIT>)* > |
+    < #LETTER : ["$", "_", "a"-"z", "A"-"Z"] > |
+    < #DIGIT : ["0"-"9"] >
+}
+
 SimpleNode Program(): {}
 {
     ClassDeclaration() <EOF> {return jjtThis;}
@@ -96,7 +96,7 @@ void ClassDeclaration(): {}
     <CLASS> <IDENTIFIER> (<EXTENDS> <IDENTIFIER>)? 
     <L_BRACE> 
         ( VarDeclaration() )*
-        ( MainDeclaration() | MethodDeclaration() )* 
+        ( <PUBLIC> ( MainDeclaration() | MethodDeclaration() ) )* 
     <R_BRACE>
 }
 
@@ -107,7 +107,7 @@ void VarDeclaration() : {}
 
 void MainDeclaration() : {}
 {
-    <PUBLIC> <STATIC> <VOID> <MAIN> <L_PAR> <STRING> <L_BRACKET> <R_BRACKET> <IDENTIFIER> <R_PAR>
+    <STATIC> <VOID> <MAIN> <L_PAR> <STRING> <L_BRACKET> <R_BRACKET> <IDENTIFIER> <R_PAR>
     <L_BRACE>
         ( VarDeclaration() )*
         ( Statement() )*
@@ -116,7 +116,7 @@ void MainDeclaration() : {}
 
 void MethodDeclaration() : {}
 {
-    <PUBLIC> Type() <IDENTIFIER> <L_PAR> Args() <R_PAR>
+    Type() <IDENTIFIER> <L_PAR> Args() <R_PAR>
     <L_BRACE>
         ( VarDeclaration() )*
         ( Statement() )*
@@ -126,15 +126,13 @@ void MethodDeclaration() : {}
 
 void Args() : {}
 {
-    ( Type() <IDENTIFIER> 
-      (<COMMA> Type() <IDENTIFIER> ) * )?
+    ( Type() <IDENTIFIER> ( <COMMA> Type() <IDENTIFIER> )* )?
 }
 
 void Type() : {}
 {
-    ( <INT> <L_BRACKET> <R_BRACKET> ) |
+    ( <INT> ( <L_BRACKET> <R_BRACKET> )? ) |
     <BOOL> |
-    <INT> | 
     <IDENTIFIER>
 }
 
@@ -144,8 +142,8 @@ void Statement() : {}
     ( <IF> <L_PAR> Expression() <R_PAR> Statement() <ELSE> Statement() ) | 
     ( <WHILE> <L_PAR> Expression() <R_PAR> Statement() ) |
     ( Expression() <SEMICOLON> ) | 
-    ( <IDENTIFIER> <ASSIGN> Expression() <SEMICOLON> ) |
-    ( <IDENTIFIER> <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> )
+    ( <IDENTIFIER> ( <ASSIGN> Expression() <SEMICOLON> ) |
+                   ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> ) )
 }
 
 void Expression() : {}
@@ -155,8 +153,8 @@ void Expression() : {}
     ( <F> Expression_Alt() ) |
     ( <IDENTIFIER> Expression_Alt() ) |
     ( <THIS> Expression_Alt() ) |
-    ( <NEW> <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
-    ( <NEW> <IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() ) |
+    ( <NEW> ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
+            ( <IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() ) ) |
     ( <NOT> Expression() Expression_Alt() ) |
     ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
 }
@@ -165,8 +163,9 @@ void Expression_Alt() : {}
 {
     ( Op()  Expression() Expression_Alt() ) |
     ( <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
-    ( <DOT> <LENGTH> Expression_Alt() ) |
-    ( <DOT> <IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )?  Expression_Alt() )
+    ( <DOT> ( <LENGTH> Expression_Alt() ) |
+            ( <IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() ) ) |
+    {}
 }
 
 void Op() : {}
