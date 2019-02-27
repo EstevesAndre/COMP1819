@@ -1,6 +1,7 @@
 options
 {
     LOOKAHEAD=2;
+    // DEBUG_PARSER=true;
     // MULTI=true;
 }
 
@@ -142,8 +143,8 @@ void Statement() : {}
     ( <IF> <L_PAR> Expression() <R_PAR> Statement() <ELSE> Statement() ) | 
     ( <WHILE> <L_PAR> Expression() <R_PAR> Statement() ) |
     ( Expression() <SEMICOLON> ) | 
-    ( <IDENTIFIER> ( <ASSIGN> Expression() <SEMICOLON> ) |
-                   ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> ) )
+    ( <IDENTIFIER> ( ( <ASSIGN> Expression() <SEMICOLON> ) |
+                   ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> ) ) )
 }
 
 void Expression() : {}
@@ -153,8 +154,8 @@ void Expression() : {}
     ( <F> Expression_Alt() ) |
     ( <IDENTIFIER> Expression_Alt() ) |
     ( <THIS> Expression_Alt() ) |
-    ( <NEW> ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
-            ( <IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() ) ) |
+    ( <NEW> ( ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
+            ( <IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() ) ) ) |
     ( <NOT> Expression() Expression_Alt() ) |
     ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
 }
@@ -163,8 +164,8 @@ void Expression_Alt() : {}
 {
     ( Op()  Expression() Expression_Alt() ) |
     ( <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
-    ( <DOT> ( <LENGTH> Expression_Alt() ) |
-            ( <IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() ) ) |
+    ( <DOT> ( ( <LENGTH> Expression_Alt() ) |
+            ( <IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() ) ) ) |
     {}
 }
 
