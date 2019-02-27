@@ -150,19 +150,23 @@ void Statement() : {}
 
 void Expression() : {}
 {
-    ( Expression() Op()  Expression() ) |
-    ( Expression() <L_BRACKET> Op() <R_BRACKET> ) |
-    ( Expression() <DOT> <LENGTH> ) |
-    ( Expression() <DOT> <IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )?  ) |
-    <INTEGER_LITERAL> | 
-    <T> |
-    <F> |
-    <IDENTIFIER> |
-    <THIS> |
-    ( <NEW> <INT> <L_BRACKET> Expression() <R_BRACKET> ) |
-    ( <NEW> <IDENTIFIER> <L_PAR> <R_PAR> ) |
-    ( <NOT> Expression() ) |
-    ( <L_PAR> Expression() <R_PAR> )
+    ( <INTEGER_LITERAL> Expression_Alt() )| 
+    ( <T> Expression_Alt() ) |
+    ( <F> Expression_Alt() ) |
+    ( <IDENTIFIER> Expression_Alt() ) |
+    ( <THIS> Expression_Alt() ) |
+    ( <NEW> <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
+    ( <NEW> <IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() ) |
+    ( <NOT> Expression() Expression_Alt() ) |
+    ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
+}
+
+void Expression_Alt() : {}
+{
+    ( Op()  Expression() Expression_Alt() ) |
+    ( <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
+    ( <DOT> <LENGTH> Expression_Alt() ) |
+    ( <DOT> <IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )?  Expression_Alt() )
 }
 
 void Op() : {}

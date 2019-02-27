@@ -327,8 +327,47 @@ void Statement() : {/*@bgen(jjtree) Statement */
     ( <IF> <L_PAR> Expression() <R_PAR> Statement() <ELSE> Statement() ) | 
     ( <WHILE> <L_PAR> Expression() <R_PAR> Statement() ) |
     ( Expression() <SEMICOLON> ) | 
-    ( <IDENTIFIER> <ASSIGN> Expression() <SEMICOLON> ) |
-    ( <IDENTIFIER> <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> )/*@bgen(jjtree)*/
+    ( <IDENTIFIER> <ASSIGN> Expression() <SEMICOLON> )/*@bgen(jjtree)*/
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        throw (RuntimeException)jjte000;
+      }
+      if (jjte000 instanceof ParseException) {
+        throw (ParseException)jjte000;
+      }
+      throw (Error)jjte000;
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+/*@egen*/
+    // ( <IDENTIFIER> <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> )
+}
+
+void Expression() : {/*@bgen(jjtree) Expression */
+  SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSION);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) Expression */
+    try {
+/*@egen*/
+    ( <INTEGER_LITERAL> Expression_Alt() )| 
+    ( <T> Expression_Alt() ) |
+    ( <F> Expression_Alt() ) |
+    ( <IDENTIFIER> Expression_Alt() ) |
+    ( <THIS> Expression_Alt() ) |
+    ( <NEW> <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
+    // ( <NEW> <IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() ) |
+    ( <NOT> Expression() Expression_Alt() ) |
+    ( <L_PAR> Expression() <R_PAR> Expression_Alt() )/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -351,27 +390,17 @@ void Statement() : {/*@bgen(jjtree) Statement */
 /*@egen*/
 }
 
-void Expression() : {/*@bgen(jjtree) Expression */
-  SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSION);
+void Expression_Alt() : {/*@bgen(jjtree) Expression_Alt */
+  SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSION_ALT);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/}
-{/*@bgen(jjtree) Expression */
+{/*@bgen(jjtree) Expression_Alt */
     try {
 /*@egen*/
-    ( Expression() Op()  Expression() ) |
-    ( Expression() <L_BRACKET> Op() <R_BRACKET> ) |
-    ( Expression() <DOT> <LENGTH> ) |
-    ( Expression() <DOT> <IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )?  ) |
-    <INTEGER_LITERAL> | 
-    <T> |
-    <F> |
-    <IDENTIFIER> |
-    <THIS> |
-    ( <NEW> <INT> <L_BRACKET> Expression() <R_BRACKET> ) |
-    ( <NEW> <IDENTIFIER> <L_PAR> <R_PAR> ) |
-    ( <NOT> Expression() ) |
-    ( <L_PAR> Expression() <R_PAR> )/*@bgen(jjtree)*/
+    ( Op()  Expression() Expression_Alt() ) |
+    ( <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
+    ( <DOT> <LENGTH> Expression_Alt() )/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -392,6 +421,7 @@ void Expression() : {/*@bgen(jjtree) Expression */
       }
     }
 /*@egen*/
+    // ( <DOT> <IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )?  Expression_Alt() )
 }
 
 void Op() : {/*@bgen(jjtree) Op */
