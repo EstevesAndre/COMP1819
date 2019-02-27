@@ -1,6 +1,12 @@
 # Compiled class file
 *.class
 
+# Compiled java files
+*.java
+
+# Config files
+*.json
+
 # Log file
 *.log
 
