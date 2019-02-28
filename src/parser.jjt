@@ -17,16 +17,18 @@ PARSER_BEGIN(parser)
     }
 PARSER_END(parser)
 
+/* Caracters to be skipped */
 SKIP :
 {
     " " |
     "\t" |
     "\r" |
     "\n" |
-    <"//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")> |
-    <"/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/">
+    <"//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")> |         /* Inline comments */
+    <"/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/">    /* Block comments */
 }
 
+/* Reserved words */
 TOKEN :
 {
     < CLASS : "class"> |
@@ -49,6 +51,7 @@ TOKEN :
     < NEW : "new">
 }
 
+/* Stuff :) */
 TOKEN :
 {
     < L_PAR : "("> | 
@@ -62,6 +65,7 @@ TOKEN :
     < DOT : ".">
 }
 
+/* Operations */
 TOKEN :
 {
     < ASSIGN : "="> | 
@@ -74,6 +78,7 @@ TOKEN :
     < NOT : "!">
 }
 
+/* IntegerLiteral and Identifiers */
 TOKEN :
 {
     < INTEGER_LITERAL : <DECIMAL> | <OCTAL> | <HEXADECIMAL> | <BINARY> > |
@@ -92,6 +97,9 @@ SimpleNode Program(): {}
     ClassDeclaration() <EOF> {return jjtThis;}
 }
 
+/**
+ * Class declaration
+ */
 void ClassDeclaration(): {}
 {
     <CLASS> <IDENTIFIER> (<EXTENDS> <IDENTIFIER>)? 
@@ -101,11 +109,17 @@ void ClassDeclaration(): {}
     <R_BRACE>
 }
 
+/**
+ * Variable declaration
+ */
 void VarDeclaration() : {}
 {
     Type() <IDENTIFIER> <SEMICOLON>
 }
 
+/**
+ * Main function declaration
+ */
 void MainDeclaration() : {}
 {
     <STATIC> <VOID> <MAIN> <L_PAR> <STRING> <L_BRACKET> <R_BRACKET> <IDENTIFIER> <R_PAR>
@@ -115,6 +129,9 @@ void MainDeclaration() : {}
     <R_BRACE>
 }   
 
+/**
+ * Method declaration
+ */
 void MethodDeclaration() : {}
 {
     Type() <IDENTIFIER> <L_PAR> Args() <R_PAR>
@@ -125,11 +142,20 @@ void MethodDeclaration() : {}
     <R_BRACE>
 }
 
+/**
+ * Arguments
+ */
 void Args() : {}
 {
     ( Type() <IDENTIFIER> ( <COMMA> Type() <IDENTIFIER> )* )?
 }
 
+/**
+ * Types possible
+ *      int[]
+ *      boolean
+ *      <identifier>
+ */
 void Type() : {}
 {
     ( <INT> ( <L_BRACKET> <R_BRACKET> )? ) |
@@ -137,6 +163,11 @@ void Type() : {}
     <IDENTIFIER>
 }
 
+/**
+ * Statements
+ *      If then else blocks
+ *      Assign values
+ */
 void Statement() : {}
 {
     ( <L_BRACE> Statement() <R_BRACE> ) |
@@ -147,6 +178,9 @@ void Statement() : {}
                    ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> ) ) )
 }
 
+/**
+ * Expressions    
+ */
 void Expression() : {}
 {
     ( <INTEGER_LITERAL> Expression_Alt() )| 
@@ -160,6 +194,9 @@ void Expression() : {}
     ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
 }
 
+/**
+ * Auxiliar expression - to prevent left side recursion
+ */
 void Expression_Alt() : {}
 {
     ( Op()  Expression() Expression_Alt() ) |
@@ -169,6 +206,9 @@ void Expression_Alt() : {}
     {}
 }
 
+/**
+ * Operations
+ */
 void Op() : {}
 {
     <AND> | 
