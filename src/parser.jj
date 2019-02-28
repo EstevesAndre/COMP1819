@@ -21,16 +21,18 @@ PARSER_BEGIN(parser)
     }
 PARSER_END(parser)
 
+/* Caracters to be skipped */
 SKIP :
 {
     " " |
     "\t" |
     "\r" |
     "\n" |
-    <"//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")> |
-    <"/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/">
+    <"//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")> |         /* Inline comments */
+    <"/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/">    /* Block comments */
 }
 
+/* Reserved words */
 TOKEN :
 {
     < CLASS : "class"> |
@@ -53,6 +55,7 @@ TOKEN :
     < NEW : "new">
 }
 
+/* Stuff :) */
 TOKEN :
 {
     < L_PAR : "("> | 
@@ -66,6 +69,7 @@ TOKEN :
     < DOT : ".">
 }
 
+/* Operations */
 TOKEN :
 {
     < ASSIGN : "="> | 
@@ -78,6 +82,7 @@ TOKEN :
     < NOT : "!">
 }
 
+/* IntegerLiteral and Identifiers */
 TOKEN :
 {
     < INTEGER_LITERAL : <DECIMAL> | <OCTAL> | <HEXADECIMAL> | <BINARY> > |
@@ -127,6 +132,9 @@ SimpleNode Program(): {/*@bgen(jjtree) Program */
 /*@egen*/
 }
 
+/**
+ * Class declaration
+ */
 void ClassDeclaration(): {/*@bgen(jjtree) ClassDeclaration */
   SimpleNode jjtn000 = new SimpleNode(JJTCLASSDECLARATION);
   boolean jjtc000 = true;
@@ -162,6 +170,9 @@ void ClassDeclaration(): {/*@bgen(jjtree) ClassDeclaration */
 /*@egen*/
 }
 
+/**
+ * Variable declaration
+ */
 void VarDeclaration() : {/*@bgen(jjtree) VarDeclaration */
   SimpleNode jjtn000 = new SimpleNode(JJTVARDECLARATION);
   boolean jjtc000 = true;
@@ -193,6 +204,9 @@ void VarDeclaration() : {/*@bgen(jjtree) VarDeclaration */
 /*@egen*/
 }
 
+/**
+ * Main function declaration
+ */
 void MainDeclaration() : {/*@bgen(jjtree) MainDeclaration */
   SimpleNode jjtn000 = new SimpleNode(JJTMAINDECLARATION);
   boolean jjtc000 = true;
@@ -228,6 +242,9 @@ void MainDeclaration() : {/*@bgen(jjtree) MainDeclaration */
 /*@egen*/
 }   
 
+/**
+ * Method declaration
+ */
 void MethodDeclaration() : {/*@bgen(jjtree) MethodDeclaration */
   SimpleNode jjtn000 = new SimpleNode(JJTMETHODDECLARATION);
   boolean jjtc000 = true;
@@ -264,6 +281,9 @@ void MethodDeclaration() : {/*@bgen(jjtree) MethodDeclaration */
 /*@egen*/
 }
 
+/**
+ * Arguments
+ */
 void Args() : {/*@bgen(jjtree) Args */
   SimpleNode jjtn000 = new SimpleNode(JJTARGS);
   boolean jjtc000 = true;
@@ -295,6 +315,12 @@ void Args() : {/*@bgen(jjtree) Args */
 /*@egen*/
 }
 
+/**
+ * Types possible
+ *      int[]
+ *      boolean
+ *      <identifier>
+ */
 void Type() : {/*@bgen(jjtree) Type */
   SimpleNode jjtn000 = new SimpleNode(JJTTYPE);
   boolean jjtc000 = true;
@@ -314,6 +340,11 @@ void Type() : {/*@bgen(jjtree) Type */
 /*@egen*/
 }
 
+/**
+ * Statements
+ *      If then else blocks
+ *      Assign values
+ */
 void Statement() : {/*@bgen(jjtree) Statement */
   SimpleNode jjtn000 = new SimpleNode(JJTSTATEMENT);
   boolean jjtc000 = true;
@@ -350,6 +381,9 @@ void Statement() : {/*@bgen(jjtree) Statement */
 /*@egen*/
 }
 
+/**
+ * Expressions    
+ */
 void Expression() : {/*@bgen(jjtree) Expression */
   SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSION);
   boolean jjtc000 = true;
@@ -389,6 +423,9 @@ void Expression() : {/*@bgen(jjtree) Expression */
 /*@egen*/
 }
 
+/**
+ * Auxiliar expression - to prevent left side recursion
+ */
 void Expression_Alt() : {/*@bgen(jjtree) Expression_Alt */
   SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSION_ALT);
   boolean jjtc000 = true;
@@ -429,6 +466,9 @@ void Expression_Alt() : {/*@bgen(jjtree) Expression_Alt */
 /*@egen*/
 }
 
+/**
+ * Operations
+ */
 void Op() : {/*@bgen(jjtree) Op */
   SimpleNode jjtn000 = new SimpleNode(JJTOP);
   boolean jjtc000 = true;
