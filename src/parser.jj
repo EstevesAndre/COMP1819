@@ -13,6 +13,10 @@ PARSER_BEGIN(parser)
   protected static JJTparserState jjtree = new JJTparserState();
 
 /*@egen*/
+
+        private static int nErrors = 0;
+        private static int MAX_ERRORS = 10;
+
         public static void main(String args[]) throws ParseException {
             parser p = new parser(System.in);
             SimpleNode root = p.Program();
@@ -355,7 +359,7 @@ void Statement() : {/*@bgen(jjtree) Statement */
     try {
 /*@egen*/
     ( <L_BRACE> Statement() <R_BRACE> ) |
-    ( <IF> <L_PAR> Expression() <R_PAR> Statement() <ELSE> Statement() ) | 
+    ( If() ) | 
     (  While() )|
     ( <IDENTIFIER> ( <L_BRACKET> Expression() <R_BRACKET> | {} ) ( ( <ASSIGN> Expression() <SEMICOLON> ) |
                     //  ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> ) |
@@ -383,25 +387,20 @@ void Statement() : {/*@bgen(jjtree) Statement */
 /*@egen*/
 }
 
-void While() : {/*@bgen(jjtree) While */
-  SimpleNode jjtn000 = new SimpleNode(JJTWHILE);
+void If() : {/*@bgen(jjtree) If */
+  SimpleNode jjtn000 = new SimpleNode(JJTIF);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/}
-{/*@bgen(jjtree) While */
+{/*@bgen(jjtree) If */
     try {
 /*@egen*/
     try{
-        <WHILE> <L_PAR> Expression() <R_PAR> Statement()
+        <IF> <L_PAR> Expression() <R_PAR> Statement() <ELSE> Statement()
     }
     catch (ParseException e) {
-        System.out.println("f");
-        System.out.println(e.toString());
-        Token t;
-        do {
-          t = getNextToken();
-        } while (t.kind != SEMICOLON);
-      }/*@bgen(jjtree)*/
+        reportError(e, "IF", false);
+    }/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -421,6 +420,88 @@ void While() : {/*@bgen(jjtree) While */
         jjtree.closeNodeScope(jjtn000, true);
       }
     }
+/*@egen*/
+       
+}
+
+void While() : {/*@bgen(jjtree) While */
+  SimpleNode jjtn000 = new SimpleNode(JJTWHILE);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) While */
+    try {
+/*@egen*/
+    try{
+        <WHILE> <L_PAR> Expression() <R_PAR> Statement()
+    }
+    catch (ParseException e) {
+        reportError(e, "WHILE", true);
+    }/*@bgen(jjtree)*/
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        throw (RuntimeException)jjte000;
+      }
+      if (jjte000 instanceof ParseException) {
+        throw (ParseException)jjte000;
+      }
+      throw (Error)jjte000;
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+/*@egen*/
+       
+}
+
+JAVACODE
+void recoverFromError(){/*@bgen(jjtree) recoverFromError */
+ SimpleNode jjtn000 = new SimpleNode(JJTRECOVERFROMERROR);
+ boolean jjtc000 = true;
+ jjtree.openNodeScope(jjtn000);
+ try {
+/*@egen*/
+    Token t;
+    do {
+      t = getNextToken();
+    } while (t.kind != SEMICOLON);/*@bgen(jjtree)*/
+ } finally {
+   if (jjtc000) {
+     jjtree.closeNodeScope(jjtn000, true);
+   }
+ }
+/*@egen*/
+}
+
+JAVACODE
+void reportError(ParseException e, String statement, boolean recover){/*@bgen(jjtree) reportError */
+ SimpleNode jjtn000 = new SimpleNode(JJTREPORTERROR);
+ boolean jjtc000 = true;
+ jjtree.openNodeScope(jjtn000);
+ try {
+/*@egen*/
+    System.out.println("Syntatic error on " + statement + " statement.\n\n" + e.toString());
+    nErrors++;
+
+    if(recover){
+      recoverFromError();
+    }
+
+    if(nErrors >= MAX_ERRORS){
+        System.out.println("Reached maximum number of errors (" + MAX_ERRORS + "). Terminating.");
+    }/*@bgen(jjtree)*/
+ } finally {
+   if (jjtc000) {
+     jjtree.closeNodeScope(jjtn000, true);
+   }
+ }
 /*@egen*/
 }
 

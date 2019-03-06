@@ -9,6 +9,10 @@ options
 PARSER_BEGIN(parser)
     public class parser
     {
+
+        private static int nErrors = 0;
+        private static int MAX_ERRORS = 10;
+
         public static void main(String args[]) throws ParseException {
             parser p = new parser(System.in);
             SimpleNode root = p.Program();
@@ -172,12 +176,23 @@ void Type() : {}
 void Statement() : {}
 {
     ( <L_BRACE> Statement() <R_BRACE> ) |
-    ( <IF> <L_PAR> Expression() <R_PAR> Statement() <ELSE> Statement() ) | 
+    ( If() ) | 
     (  While() )|
     ( <IDENTIFIER> ( <L_BRACKET> Expression() <R_BRACKET> | {} ) ( ( <ASSIGN> Expression() <SEMICOLON> ) |
                     //  ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> ) |
                                                                  ( Expression_Alt() <SEMICOLON> ) ) ) |
     ( ExpressionNoId() <SEMICOLON> )
+}
+
+void If() : {}
+{
+    try{
+        <IF> <L_PAR> Expression() <R_PAR> Statement() <ELSE> Statement()
+    }
+    catch (ParseException e) {
+        reportError(e, "IF", false);
+    }
+       
 }
 
 void While() : {}
@@ -186,12 +201,32 @@ void While() : {}
         <WHILE> <L_PAR> Expression() <R_PAR> Statement()
     }
     catch (ParseException e) {
-        System.out.println(e.toString());
-        Token t;
-        do {
-          t = getNextToken();
-        } while (t.kind != SEMICOLON);
-      }
+        reportError(e, "WHILE", true);
+    }
+       
+}
+
+JAVACODE
+void recoverFromError(){
+    Token t;
+    do {
+      t = getNextToken();
+    } while (t.kind != SEMICOLON);
+}
+
+JAVACODE
+void reportError(ParseException e, String statement, boolean recover){
+    System.out.println("Syntatic error on " + statement + " statement.\n\n" + e.toString());
+    nErrors++;
+
+    if(recover){
+      recoverFromError();
+    }
+
+    if(nErrors >= MAX_ERRORS){
+        System.out.println("Reached maximum number of errors (" + MAX_ERRORS + "). Terminating.");
+        System.exit(1);
+    }
 }
 
 /**
