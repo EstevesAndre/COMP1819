@@ -1,6 +1,7 @@
 options
 {
-    LOOKAHEAD=2;
+    LOOKAHEAD=1;
+    // FORCE_LA_CHECK=false;
     // DEBUG_PARSER=true;
     // MULTI=true;
 }
@@ -110,7 +111,7 @@ void MainDeclaration() : {}
 {
     <STATIC> <VOID> <MAIN> <L_PAR> <STRING> <L_BRACKET> <R_BRACKET> <IDENTIFIER> <R_PAR>
     <L_BRACE>
-        ( VarDeclaration() )*
+        ( LOOKAHEAD(2) VarDeclaration() )*
         ( Statement() )*
     <R_BRACE>
 }   
@@ -119,7 +120,7 @@ void MethodDeclaration() : {}
 {
     Type() <IDENTIFIER> <L_PAR> Args() <R_PAR>
     <L_BRACE>
-        ( VarDeclaration() )*
+        ( LOOKAHEAD(2) VarDeclaration() )*
         ( Statement() )*
         <RETURN> Expression() <SEMICOLON>
     <R_BRACE>
@@ -142,9 +143,10 @@ void Statement() : {}
     ( <L_BRACE> Statement() <R_BRACE> ) |
     ( <IF> <L_PAR> Expression() <R_PAR> Statement() <ELSE> Statement() ) | 
     ( <WHILE> <L_PAR> Expression() <R_PAR> Statement() ) |
-    ( Expression() <SEMICOLON> ) | 
     ( <IDENTIFIER> ( ( <ASSIGN> Expression() <SEMICOLON> ) |
-                   ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> ) ) )
+                     ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> ) |
+                     ( Expression_Alt() <SEMICOLON> ) ) ) |
+    ( ExpressionNoId() <SEMICOLON> )
 }
 
 void Expression() : {}
@@ -153,6 +155,18 @@ void Expression() : {}
     ( <T> Expression_Alt() ) |
     ( <F> Expression_Alt() ) |
     ( <IDENTIFIER> Expression_Alt() ) |
+    ( <THIS> Expression_Alt() ) |
+    ( <NEW> ( ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
+            ( <IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() ) ) ) |
+    ( <NOT> Expression() Expression_Alt() ) |
+    ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
+}
+
+void ExpressionNoId() : {}
+{
+    ( <INTEGER_LITERAL> Expression_Alt() )| 
+    ( <T> Expression_Alt() ) |
+    ( <F> Expression_Alt() ) |
     ( <THIS> Expression_Alt() ) |
     ( <NEW> ( ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
             ( <IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() ) ) ) |
