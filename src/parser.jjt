@@ -1,7 +1,7 @@
 options
 {
     LOOKAHEAD=1;
-    // FORCE_LA_CHECK=false;
+    FORCE_LA_CHECK=true;
     // DEBUG_PARSER=true;
     // MULTI=true;
 }
@@ -174,9 +174,9 @@ void Statement() : {}
     ( <L_BRACE> Statement() <R_BRACE> ) |
     ( <IF> <L_PAR> Expression() <R_PAR> Statement() <ELSE> Statement() ) | 
     ( <WHILE> <L_PAR> Expression() <R_PAR> Statement() ) |
-    ( <IDENTIFIER> ( ( <ASSIGN> Expression() <SEMICOLON> ) |
-                     ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> ) |
-                     ( Expression_Alt() <SEMICOLON> ) ) ) |
+    ( <IDENTIFIER> ( <L_BRACKET> Expression() <R_BRACKET> | {} ) ( ( <ASSIGN> Expression() <SEMICOLON> ) |
+                    //  ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> ) |
+                                                                 ( Expression_Alt() <SEMICOLON> ) ) ) |
     ( ExpressionNoId() <SEMICOLON> )
 }
 
