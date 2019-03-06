@@ -173,11 +173,25 @@ void Statement() : {}
 {
     ( <L_BRACE> Statement() <R_BRACE> ) |
     ( <IF> <L_PAR> Expression() <R_PAR> Statement() <ELSE> Statement() ) | 
-    ( <WHILE> <L_PAR> Expression() <R_PAR> Statement() ) |
+    (  While() )|
     ( <IDENTIFIER> ( <L_BRACKET> Expression() <R_BRACKET> | {} ) ( ( <ASSIGN> Expression() <SEMICOLON> ) |
                     //  ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> ) |
                                                                  ( Expression_Alt() <SEMICOLON> ) ) ) |
     ( ExpressionNoId() <SEMICOLON> )
+}
+
+void While() : {}
+{
+    try{
+        <WHILE> <L_PAR> Expression() <R_PAR> Statement()
+    }
+    catch (ParseException e) {
+        System.out.println(e.toString());
+        Token t;
+        do {
+          t = getNextToken();
+        } while (t.kind != SEMICOLON);
+      }
 }
 
 /**
