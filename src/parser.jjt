@@ -1,25 +1,33 @@
-options
-{
-    LOOKAHEAD=1;
-    FORCE_LA_CHECK=true;
-    // DEBUG_PARSER=true;
-    // MULTI=true;
+options {
+  LOOKAHEAD = 1;
+  FORCE_LA_CHECK = true;
+  // DEBUG_PARSER=true;
+  // MULTI=true;
 }
 
 PARSER_BEGIN(parser)
-    public class parser
-    {
+public
+class parser {
 
-        private static int nErrors = 0;
-        private static int MAX_ERRORS = 10;
+private
+  static int nErrors = 0;
+private
+  static int MAX_ERRORS = 10;
 
-        public static void main(String args[]) throws ParseException {
-            parser p = new parser(System.in);
-            SimpleNode root = p.Program();
+public
+  static void main(String args[]) throws ParseException {
+    parser p = new parser(System.in);
 
-            root.dump("");
-        }
+    try{
+    SimpleNode root = p.Program();
     }
+    catch(ParseException e){
+        System.out.println(e.toString());
+    }
+
+    root.dump("");
+  }
+}
 PARSER_END(parser)
 
 /* Caracters to be skipped */
@@ -99,15 +107,14 @@ TOKEN :
 
 SimpleNode Program(): {}
 {
-    ClassDeclaration() <EOF> {return jjtThis;}
+  ClassDeclaration()<EOF> { return jjtThis; }
 }
 
 /**
  * Class declaration
  */
-void ClassDeclaration(): {}
-{
-    <CLASS> <IDENTIFIER> (<EXTENDS> <IDENTIFIER>)? 
+void ClassDeclaration() : {} {
+<CLASS> <IDENTIFIER> (<EXTENDS> <IDENTIFIER>)? 
     <L_BRACE> 
         ( VarDeclaration() )*
         ( <PUBLIC> ( MainDeclaration() | MethodDeclaration() ) )* 
@@ -117,43 +124,32 @@ void ClassDeclaration(): {}
 /**
  * Variable declaration
  */
-void VarDeclaration() : {}
-{
-    Type() <IDENTIFIER> <SEMICOLON>
-}
+void VarDeclaration() : {} { Type()<IDENTIFIER><SEMICOLON> }
 
 /**
  * Main function declaration
  */
-void MainDeclaration() : {}
-{
-    <STATIC> <VOID> <MAIN> <L_PAR> <STRING> <L_BRACKET> <R_BRACKET> <IDENTIFIER> <R_PAR>
+void MainDeclaration() : {} {
+<STATIC> <VOID> <MAIN> <L_PAR> <STRING> <L_BRACKET> <R_BRACKET> <IDENTIFIER> <R_PAR>
     <L_BRACE>
         ( LOOKAHEAD(2) VarDeclaration() )*
         ( Statement() )*
     <R_BRACE>
-}   
+}
 
 /**
  * Method declaration
  */
-void MethodDeclaration() : {}
-{
-    Type() <IDENTIFIER> <L_PAR> Args() <R_PAR>
-    <L_BRACE>
-        ( LOOKAHEAD(2) VarDeclaration() )*
-        ( Statement() )*
-        <RETURN> Expression() <SEMICOLON>
-    <R_BRACE>
+void MethodDeclaration() : {} {
+  Type()<IDENTIFIER><L_PAR> Args()<R_PAR>
+      <L_BRACE>(LOOKAHEAD(2) VarDeclaration()) * (Statement()) *
+      <RETURN> Expression()<SEMICOLON><R_BRACE>
 }
 
 /**
  * Arguments
  */
-void Args() : {}
-{
-    ( Type() <IDENTIFIER> ( <COMMA> Type() <IDENTIFIER> )* )?
-}
+void Args() : {} { (Type() < IDENTIFIER > (<COMMA> Type() < IDENTIFIER >) *) ? }
 
 /**
  * Types possible
@@ -161,8 +157,7 @@ void Args() : {}
  *      boolean
  *      <identifier>
  */
-void Type() : {}
-{
+void Type() : {} {
     ( <INT> ( <L_BRACKET> <R_BRACKET> )? ) |
     <BOOL> |
     <IDENTIFIER>
@@ -173,95 +168,91 @@ void Type() : {}
  *      If then else blocks
  *      Assign values
  */
-void Statement() : {}
-{
-    ( <L_BRACE> Statement() <R_BRACE> ) |
-    ( If() ) | 
-    (  While() )|
-    ( <IDENTIFIER> ( <L_BRACKET> Expression() <R_BRACKET> | {} ) ( ( <ASSIGN> Expression() <SEMICOLON> ) |
-                    //  ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN> Expression() <SEMICOLON> ) |
-                                                                 ( Expression_Alt() <SEMICOLON> ) ) ) |
-    ( ExpressionNoId() <SEMICOLON> )
+void Statement() : {} {
+  (<L_BRACE> Statement() < R_BRACE >) | (If()) | (While()) |
+      (<IDENTIFIER>(<L_BRACKET> Expression() < R_BRACKET > |
+                    {})((<ASSIGN> Expression() < SEMICOLON >) |
+                        //  ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN>
+                        //  Expression() <SEMICOLON> ) |
+                        (Expression_Alt() < SEMICOLON >))) |
+      (ExpressionNoId() < SEMICOLON >)
 }
 
-void If() : {}
-{
-    try{
-        <IF> <L_PAR> Expression() <R_PAR> Statement() <ELSE> Statement()
-    }
-    catch (ParseException e) {
-        reportError(e, "IF", false);
-    }
-       
+void If() : {} {
+  try {
+    <IF><L_PAR> Expression()<R_PAR> Statement()<ELSE> Statement()
+  } catch (ParseException e) {
+    reportError(e, "IF", false);
+  }
 }
 
-void While() : {}
-{
-    try{
-        <WHILE> <L_PAR> Expression() <R_PAR> Statement()
-    }
-    catch (ParseException e) {
-        reportError(e, "WHILE", true);
-    }
-       
-}
+void While() : {} {
 
-JAVACODE
-void recoverFromError(){
-    Token t;
-    do {
-      t = getNextToken();
-    } while (t.kind != SEMICOLON);
+    <WHILE><L_PAR>
+
+  try {
+     Expression()
+  } catch (ParseException e) {
+    reportError(e, "WHILE", true);
+  }
+
+  <R_PAR> Statement()
 }
 
 JAVACODE
-void reportError(ParseException e, String statement, boolean recover){
-    System.out.println("Syntatic error on " + statement + " statement.\n\n" + e.toString());
-    nErrors++;
+void recoverFromError() {
+  Token t;
+  do {
+    t = getToken(1);
+    if (t.kind == R_PAR)
+      return;
+    t = getNextToken();
+  } while (t.kind != R_PAR);
+}
 
-    if(recover){
-      recoverFromError();
-    }
+JAVACODE
+void reportError(ParseException e, String statement, boolean recover) {
+  System.out.println("Syntatic error on " + statement + " statement.\n\n" +
+                     e.toString());
+  nErrors++;
 
-    if(nErrors >= MAX_ERRORS){
-        System.out.println("Reached maximum number of errors (" + MAX_ERRORS + "). Terminating.");
-        System.exit(1);
-    }
+  if (recover) {
+    recoverFromError();
+  }
+
+  if (nErrors >= MAX_ERRORS) {
+    System.out.println("Reached maximum number of errors (" + MAX_ERRORS +
+                       "). Terminating.");
+    System.exit(1);
+  }
 }
 
 /**
- * Expressions    
+ * Expressions
  */
-void Expression() : {}
-{
-    ( <INTEGER_LITERAL> Expression_Alt() )| 
-    ( <T> Expression_Alt() ) |
-    ( <F> Expression_Alt() ) |
-    ( <IDENTIFIER> Expression_Alt() ) |
-    ( <THIS> Expression_Alt() ) |
-    ( <NEW> ( ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
-            ( <IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() ) ) ) |
-    ( <NOT> Expression() Expression_Alt() ) |
-    ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
+void Expression() : {} {
+  (<INTEGER_LITERAL> Expression_Alt()) | (<T> Expression_Alt()) |
+      (<F> Expression_Alt()) | (<IDENTIFIER> Expression_Alt()) |
+      (<THIS> Expression_Alt()) |
+      (<NEW>((<INT><L_BRACKET> Expression() < R_BRACKET > Expression_Alt()) |
+             (<IDENTIFIER><L_PAR><R_PAR> Expression_Alt()))) |
+      (<NOT> Expression() Expression_Alt()) |
+      (<L_PAR> Expression() < R_PAR > Expression_Alt())
 }
 
-void ExpressionNoId() : {}
-{
-    ( <INTEGER_LITERAL> Expression_Alt() )| 
-    ( <T> Expression_Alt() ) |
-    ( <F> Expression_Alt() ) |
-    ( <THIS> Expression_Alt() ) |
-    ( <NEW> ( ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
-            ( <IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() ) ) ) |
-    ( <NOT> Expression() Expression_Alt() ) |
-    ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
+void ExpressionNoId() : {} {
+  (<INTEGER_LITERAL> Expression_Alt()) | (<T> Expression_Alt()) |
+      (<F> Expression_Alt()) | (<THIS> Expression_Alt()) |
+      (<NEW>((<INT><L_BRACKET> Expression() < R_BRACKET > Expression_Alt()) |
+             (<IDENTIFIER><L_PAR><R_PAR> Expression_Alt()))) |
+      (<NOT> Expression() Expression_Alt()) |
+      (<L_PAR> Expression() < R_PAR > Expression_Alt())
 }
 
 /**
  * Auxiliar expression - to prevent left side recursion
  */
-void Expression_Alt() : {}
-{
+void Expression_Alt() : {} {
     ( Op()  Expression() Expression_Alt() ) |
     ( <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
     ( <DOT> ( ( <LENGTH> Expression_Alt() ) |
@@ -272,12 +263,9 @@ void Expression_Alt() : {}
 /**
  * Operations
  */
-void Op() : {}
-{
-    <AND> | 
+void Op() : {} { <AND> | 
     <LESSTHAN> |
     <SUM> |
     <SUB> |
     <MULT> |
-    <DIV>
-}
+    <DIV> }
