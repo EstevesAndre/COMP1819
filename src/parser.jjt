@@ -1,8 +1,8 @@
 options {
   LOOKAHEAD = 1;
-  FORCE_LA_CHECK = true;
+  // FORCE_LA_CHECK = true;
   // DEBUG_PARSER=true;
-  // MULTI=true;
+  MULTI=true;
 }
 
 PARSER_BEGIN(parser)
@@ -17,12 +17,14 @@ private
 public
   static void main(String args[]) throws ParseException {
     parser p = new parser(System.in);
+    SimpleNode root;
 
     try{
-    SimpleNode root = p.Program();
+    root = p.Program();
     }
     catch(ParseException e){
         System.out.println(e.toString());
+        return;
     }
 
     root.dump("");
@@ -113,8 +115,8 @@ SimpleNode Program(): {}
 /**
  * Class declaration
  */
-void ClassDeclaration() : {} {
-<CLASS> <IDENTIFIER> (<EXTENDS> <IDENTIFIER>)? 
+void ClassDeclaration() : {Token id, ext;} {
+<CLASS> id=<IDENTIFIER> {jjtThis.id = id;} (<EXTENDS> ext=<IDENTIFIER> {jjtThis.ext = ext;})? 
     <L_BRACE> 
         ( VarDeclaration() )*
         ( <PUBLIC> ( MainDeclaration() | MethodDeclaration() ) )* 
@@ -124,13 +126,13 @@ void ClassDeclaration() : {} {
 /**
  * Variable declaration
  */
-void VarDeclaration() : {} { Type()<IDENTIFIER><SEMICOLON> }
+void VarDeclaration() : {Token id;} { id=Type()<IDENTIFIER><SEMICOLON> {jjtThis.id = id;} }
 
 /**
  * Main function declaration
  */
-void MainDeclaration() : {} {
-<STATIC> <VOID> <MAIN> <L_PAR> <STRING> <L_BRACKET> <R_BRACKET> <IDENTIFIER> <R_PAR>
+void MainDeclaration() : {Token id;} {
+<STATIC> <VOID> <MAIN> <L_PAR> <STRING> <L_BRACKET> <R_BRACKET> id=<IDENTIFIER> <R_PAR> {jjtThis.id = id;}
     <L_BRACE>
         ( LOOKAHEAD(2) VarDeclaration() )*
         ( Statement() )*
@@ -140,16 +142,21 @@ void MainDeclaration() : {} {
 /**
  * Method declaration
  */
-void MethodDeclaration() : {} {
-  Type()<IDENTIFIER><L_PAR> Args()<R_PAR>
-      <L_BRACE>(LOOKAHEAD(2) VarDeclaration()) * (Statement()) *
-      <RETURN> Expression()<SEMICOLON><R_BRACE>
+void MethodDeclaration() : {Token id;} {
+    Type() id=<IDENTIFIER><L_PAR> Args()<R_PAR> {jjtThis.id = id;}
+    <L_BRACE>(LOOKAHEAD(2) VarDeclaration()) * (Statement()) *
+    <RETURN> Expression()<SEMICOLON><R_BRACE>
 }
 
 /**
  * Arguments
  */
-void Args() : {} { (Type() < IDENTIFIER > (<COMMA> Type() < IDENTIFIER >) *) ? }
+void Args() : {} { (Arg() (<COMMA> Arg()) *) ? }
+
+/**
+ * Argument
+ */
+void Arg() : {Token id;} { Type() id=<IDENTIFIER> {jjtThis.id = id;} }
 
 /**
  * Types possible
@@ -158,9 +165,9 @@ void Args() : {} { (Type() < IDENTIFIER > (<COMMA> Type() < IDENTIFIER >) *) ? }
  *      <identifier>
  */
 void Type() : {} {
-    ( <INT> ( <L_BRACKET> <R_BRACKET> )? ) |
-    <BOOL> |
-    <IDENTIFIER>
+    ( <INT> {jjtThis.type = "int";} ( <L_BRACKET> <R_BRACKET> {jjtThis.array = true;} )? ) |
+    <BOOL> {jjtThis.type = "bool";} |
+    <IDENTIFIER> {jjtThis.type = "id";}
 }
 
 /**
@@ -168,14 +175,12 @@ void Type() : {} {
  *      If then else blocks
  *      Assign values
  */
-void Statement() : {} {
-  (<L_BRACE> Statement() < R_BRACE >) | (If()) | (While()) |
-      (<IDENTIFIER>(<L_BRACKET> Expression() < R_BRACKET > |
-                    {})((<ASSIGN> Expression() < SEMICOLON >) |
-                        //  ( <L_BRACKET> Expression() <R_BRACKET> <ASSIGN>
-                        //  Expression() <SEMICOLON> ) |
-                        (Expression_Alt() < SEMICOLON >))) |
-      (ExpressionNoId() < SEMICOLON >)
+void Statement() : {Token id;} {
+  (<L_BRACE> Statement() < R_BRACE >) |
+  (If()) {jjtThis.type = "if";} | 
+  (While()) {jjtThis.type = "while";} |
+  (id=<IDENTIFIER> {jjtThis.type = "id";} (<L_BRACKET> Expression() < R_BRACKET > {jjtThis.array = true;} | {}) ( (<ASSIGN> Expression() < SEMICOLON > {jjtThis.assign = true;} ) | (Expression_Alt() < SEMICOLON > ))) |
+  (ExpressionNoId() < SEMICOLON > {jjtThis.type = "no_id";})
 }
 
 void If() : {} {
@@ -228,44 +233,75 @@ void reportError(ParseException e, String statement, boolean recover) {
 }
 
 /**
- * Expressions
+ * Expressions    
  */
-void Expression() : {} {
-  (<INTEGER_LITERAL> Expression_Alt()) | (<T> Expression_Alt()) |
-      (<F> Expression_Alt()) | (<IDENTIFIER> Expression_Alt()) |
-      (<THIS> Expression_Alt()) |
-      (<NEW>((<INT><L_BRACKET> Expression() < R_BRACKET > Expression_Alt()) |
-             (<IDENTIFIER><L_PAR><R_PAR> Expression_Alt()))) |
-      (<NOT> Expression() Expression_Alt()) |
-      (<L_PAR> Expression() < R_PAR > Expression_Alt())
+void Expression() #void : {}
+{
+    And()
 }
 
-void ExpressionNoId() : {} {
-  (<INTEGER_LITERAL> Expression_Alt()) | (<T> Expression_Alt()) |
-      (<F> Expression_Alt()) | (<THIS> Expression_Alt()) |
-      (<NEW>((<INT><L_BRACKET> Expression() < R_BRACKET > Expression_Alt()) |
-             (<IDENTIFIER><L_PAR><R_PAR> Expression_Alt()))) |
-      (<NOT> Expression() Expression_Alt()) |
-      (<L_PAR> Expression() < R_PAR > Expression_Alt())
+void And() #void : {}
+{
+    LT() ( LOOKAHEAD(2) <AND> LT() #and(2))*
+}
+
+void LT() #void : {}
+{
+    Sum() ( LOOKAHEAD(2) <LESSTHAN> Sum() #lt(2))*
+}
+
+void Sum() #void : {}
+{
+    Sub() ( LOOKAHEAD(2) <SUM> Sub() #sum(2))*
+}
+
+void Sub() #void : {}
+{
+    Mult() ( LOOKAHEAD(2) <SUB> Mult() #sub(2))*
+}
+
+void Mult() #void : {}
+{
+    Div() ( LOOKAHEAD(2) <MULT> Div() #mult(2))*
+}
+
+void Div() #void : {}
+{
+    LowerExpression() ( LOOKAHEAD(2) <DIV> LowerExpression() #div(2))*
+}
+
+void LowerExpression() #void : {Token t;}
+{
+    ( t=<INTEGER_LITERAL> Expression_Alt() #literal {jjtThis.info = t;} )| 
+    ( <T> Expression_Alt() #bool {jjtThis.info = true;} ) |
+    ( <F> Expression_Alt() #bool ) |
+    ( t=<IDENTIFIER> Expression_Alt() #id {jjtThis.info = t;}) |
+    ( <THIS> Expression_Alt() #_this ) |
+    ( <NEW> #_new ( ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() {jjtThis.type = "array";} ) |
+                   ( t=<IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t;) ) ) |
+    ( <NOT> Expression() Expression_Alt() #not ) |
+    ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
+}
+
+void ExpressionNoId() #void : {Token t;}
+{
+    ( t=<INTEGER_LITERAL> Expression_Alt() #literal {jjtThis.info = t;} )| 
+    ( <T> Expression_Alt() #bool {jjtThis.info = true;} ) |
+    ( <F> Expression_Alt() #bool ) |
+    ( <THIS> Expression_Alt() #_this ) |
+    ( <NEW> #_new ( ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() {jjtThis.type = "array";}) |
+                   ( t=<IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t;} ) ) ) |
+    ( <NOT> Expression() Expression_Alt() #not ) |
+    ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
 }
 
 /**
  * Auxiliar expression - to prevent left side recursion
  */
-void Expression_Alt() : {} {
-    ( Op()  Expression() Expression_Alt() ) |
+void Expression_Alt() #void : {Token t;}
+{
     ( <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
-    ( <DOT> ( ( <LENGTH> Expression_Alt() ) |
-            ( <IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() ) ) ) |
+    ( <DOT> #field ( ( <LENGTH> Expression_Alt() {jjtThis.type = "length") ) |
+                     ( t=<IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t;} ) ) |
     {}
 }
-
-/**
- * Operations
- */
-void Op() : {} { <AND> | 
-    <LESSTHAN> |
-    <SUM> |
-    <SUB> |
-    <MULT> |
-    <DIV> }
