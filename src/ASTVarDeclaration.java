@@ -2,18 +2,12 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 public
 class ASTVarDeclaration extends SimpleNode {
-  public String id;
-  
   public ASTVarDeclaration(int id) {
     super(id);
   }
 
   public ASTVarDeclaration(parser p, int id) {
     super(p, id);
-  }
-
-  public String toString() {
-    return "var " + id;
   }
 }
 /* JavaCC - OriginalChecksum=4e604d6a77c4c7fb01df67af0b175127 (do not edit this line) */

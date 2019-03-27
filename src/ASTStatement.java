@@ -3,6 +3,7 @@
 public
 class ASTStatement extends SimpleNode {
   public String type;
+  public String id;
   public boolean array = false;
   public boolean assign = false;
   
@@ -15,7 +16,7 @@ class ASTStatement extends SimpleNode {
   }
 
   public String toString() {
-    return "statement " + type + array != null ? "[]" : "" + assign != null ? " =" : "";
+    return "statement " + type + id != null ? (" " + id) : "" + array ? "[]" : "" + assign ? " =" : "";
   }
 }
 /* JavaCC - OriginalChecksum=d080604f9202b38270c2414fd96b3d8a (do not edit this line) */

@@ -116,7 +116,7 @@ SimpleNode Program(): {}
  * Class declaration
  */
 void ClassDeclaration() : {Token id, ext;} {
-<CLASS> id=<IDENTIFIER> {jjtThis.id = id;} (<EXTENDS> ext=<IDENTIFIER> {jjtThis.ext = ext;})? 
+<CLASS> id=<IDENTIFIER> {jjtThis.id = id.image;} (<EXTENDS> ext=<IDENTIFIER> {jjtThis.ext = ext.image;})? 
     <L_BRACE> 
         ( VarDeclaration() )*
         ( <PUBLIC> ( MainDeclaration() | MethodDeclaration() ) )* 
@@ -126,13 +126,13 @@ void ClassDeclaration() : {Token id, ext;} {
 /**
  * Variable declaration
  */
-void VarDeclaration() : {Token id;} { id=Type()<IDENTIFIER><SEMICOLON> {jjtThis.id = id;} }
+void VarDeclaration() : {} { Type()<IDENTIFIER><SEMICOLON> }
 
 /**
  * Main function declaration
  */
 void MainDeclaration() : {Token id;} {
-<STATIC> <VOID> <MAIN> <L_PAR> <STRING> <L_BRACKET> <R_BRACKET> id=<IDENTIFIER> <R_PAR> {jjtThis.id = id;}
+<STATIC> <VOID> <MAIN> <L_PAR> <STRING> <L_BRACKET> <R_BRACKET> id=<IDENTIFIER> <R_PAR> {jjtThis.id = id.image;}
     <L_BRACE>
         ( LOOKAHEAD(2) VarDeclaration() )*
         ( Statement() )*
@@ -145,7 +145,7 @@ void MainDeclaration() : {Token id;} {
 void MethodDeclaration() : {Token id;} {
     Type() id=<IDENTIFIER> <L_PAR> Args() <R_PAR>
     <L_BRACE> ( LOOKAHEAD(2) VarDeclaration() )* (Statement())*
-    <RETURN> Expression() <SEMICOLON> <R_BRACE> {jjtThis.id = id;}
+    <RETURN> Expression() <SEMICOLON> <R_BRACE> {jjtThis.id = id.image;}
 }
 
 /**
@@ -156,7 +156,7 @@ void Args() : {} { (Arg() (<COMMA> Arg()) *) ? }
 /**
  * Argument
  */
-void Arg() : {Token id;} { Type() id=<IDENTIFIER> {jjtThis.id = id;} }
+void Arg() : {Token id;} { Type() id=<IDENTIFIER> {jjtThis.id = id.image;} }
 
 /**
  * Types possible
@@ -179,7 +179,7 @@ void Statement() : {Token id;} {
   (<L_BRACE> Statement() < R_BRACE >) |
   (If()) {jjtThis.type = "if";} | 
   (While()) {jjtThis.type = "while";} |
-  (id=<IDENTIFIER> {jjtThis.type = "id";} (<L_BRACKET> Expression() < R_BRACKET > {jjtThis.array = true;} | {}) ( (<ASSIGN> Expression() < SEMICOLON > {jjtThis.assign = true;} ) | (Expression_Alt() < SEMICOLON > ))) |
+  (id=<IDENTIFIER> {jjtThis.type = "id"; jjtThis.id = id.image;} (<L_BRACKET> Expression() < R_BRACKET > {jjtThis.array = true;} | {}) ( (<ASSIGN> Expression() < SEMICOLON > {jjtThis.assign = true;} ) | (Expression_Alt() < SEMICOLON > ))) |
   (ExpressionNoId() < SEMICOLON > {jjtThis.type = "no_id";})
 }
 
@@ -272,15 +272,15 @@ void Div() #void : {}
 
 void LowerExpression() #void : {Token t;}
 {
-    ( t=<INTEGER_LITERAL> Expression_Alt() #literal {jjtThis.info = t;} )| 
+    ( t=<INTEGER_LITERAL> Expression_Alt() #literal {jjtThis.info = t.image;} )| 
     ( <T> Expression_Alt() #bool {jjtThis.info = true;} ) |
     ( <F> Expression_Alt() #bool ) |
-    ( t=<IDENTIFIER> Expression_Alt() #id {jjtThis.info = t;}) |
+    ( t=<IDENTIFIER> Expression_Alt() #id {jjtThis.info = t.image;}) |
     ( <THIS> Expression_Alt() #_this ) |
     ( <NEW> ( 
        ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() {jjtThis.type = "array";} ) 
       |
-       ( t=<IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t;}) 
+       ( t=<IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t.image;}) 
       ) #_new ) |
     ( <NOT> Expression() Expression_Alt() #not ) |
     ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
@@ -288,12 +288,12 @@ void LowerExpression() #void : {Token t;}
 
 void ExpressionNoId() #void : {Token t;}
 {
-    ( t=<INTEGER_LITERAL> Expression_Alt() #literal {jjtThis.info = t;} )| 
+    ( t=<INTEGER_LITERAL> Expression_Alt() #literal {jjtThis.info = t.image;} )| 
     ( <T> Expression_Alt() #bool {jjtThis.info = true;} ) |
     ( <F> Expression_Alt() #bool ) |
     ( <THIS> Expression_Alt() #_this ) |
     ( <NEW> ( ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() {jjtThis.type = "array";}) |
-            ( t=<IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t;} ) ) #_new ) |
+            ( t=<IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t.image;} ) ) #_new ) |
     ( <NOT> Expression() Expression_Alt() #not ) |
     ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
 }
@@ -305,6 +305,6 @@ void Expression_Alt() #void : {Token t;}
 {
     ( <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
     ( <DOT> ( ( <LENGTH> Expression_Alt() {jjtThis.type = "length";}) ) |
-              ( t=<IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t;} ) #field ) |
+              ( t=<IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t.image;} ) #field ) |
     {}
 }
