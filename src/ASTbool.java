@@ -12,5 +12,9 @@ class ASTbool extends SimpleNode {
     super(p, id);
   }
 
+  public String toString() {
+    return "bool " + info;
+  }
+
 }
 /* JavaCC - OriginalChecksum=7064e952aa942fd46131a1edde577da1 (do not edit this line) */

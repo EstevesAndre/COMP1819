@@ -12,5 +12,8 @@ class ASTArg extends SimpleNode {
     super(p, id);
   }
 
+  public String toString() {
+    return "arg " + id;
+  }
 }
 /* JavaCC - OriginalChecksum=9449a47bc112a1214da3d3890b56f464 (do not edit this line) */

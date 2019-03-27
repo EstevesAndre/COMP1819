@@ -14,5 +14,8 @@ class ASTStatement extends SimpleNode {
     super(p, id);
   }
 
+  public String toString() {
+    return "statement " + type + array != null ? "[]" : "" + assign != null ? " =" : "";
+  }
 }
 /* JavaCC - OriginalChecksum=d080604f9202b38270c2414fd96b3d8a (do not edit this line) */

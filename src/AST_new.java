@@ -12,6 +12,9 @@ class AST_new extends SimpleNode {
   public AST_new(parser p, int id) {
     super(p, id);
   }
-
+  
+  public String toString() {
+    return "new " + type + " " + info;
+  }
 }
 /* JavaCC - OriginalChecksum=71f95ffa1708d3507896129b9ea23e12 (do not edit this line) */

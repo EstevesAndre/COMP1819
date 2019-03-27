@@ -12,5 +12,8 @@ class ASTliteral extends SimpleNode {
     super(p, id);
   }
 
+  public String toString() {
+    return "literal " + info;
+  }
 }
 /* JavaCC - OriginalChecksum=570004d639550726751648828304833a (do not edit this line) */

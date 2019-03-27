@@ -22,7 +22,12 @@ public interface parserTreeConstants
   public int JJTMULT = 18;
   public int JJTDIV = 19;
   public int JJTLITERAL = 20;
-  public int JJTFIELD = 21;
+  public int JJTBOOL = 21;
+  public int JJTID = 22;
+  public int JJT_THIS = 23;
+  public int JJT_NEW = 24;
+  public int JJTNOT = 25;
+  public int JJTFIELD = 26;
 
 
   public String[] jjtNodeName = {
@@ -47,7 +52,12 @@ public interface parserTreeConstants
     "mult",
     "div",
     "literal",
+    "bool",
+    "id",
+    "_this",
+    "_new",
+    "not",
     "field",
   };
 }
-/* JavaCC - OriginalChecksum=c415a08fadb2f0223d2d1b1f3ee718ba (do not edit this line) */
+/* JavaCC - OriginalChecksum=753d8b08810a97f5c6591f3785cafdee (do not edit this line) */

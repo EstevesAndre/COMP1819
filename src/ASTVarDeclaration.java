@@ -12,5 +12,8 @@ class ASTVarDeclaration extends SimpleNode {
     super(p, id);
   }
 
+  public String toString() {
+    return "var " + id;
+  }
 }
 /* JavaCC - OriginalChecksum=4e604d6a77c4c7fb01df67af0b175127 (do not edit this line) */

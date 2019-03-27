@@ -12,5 +12,8 @@ class ASTMethodDeclaration extends SimpleNode {
     super(p, id);
   }
 
+  public String toString() {
+    return "method " + id;
+  }
 }
 /* JavaCC - OriginalChecksum=4db4e7d00203d02b3e258a10941c8c0e (do not edit this line) */

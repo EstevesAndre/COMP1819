@@ -13,5 +13,8 @@ class ASTClassDeclaration extends SimpleNode {
     super(p, id);
   }
 
+  public String toString() {
+    return "class " + type + " " + ext != null ? ("extends " + ext) : "";
+  }
 }
 /* JavaCC - OriginalChecksum=18527d10e528b78e818ee6610e15139d (do not edit this line) */

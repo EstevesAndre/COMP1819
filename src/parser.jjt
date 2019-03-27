@@ -277,8 +277,11 @@ void LowerExpression() #void : {Token t;}
     ( <F> Expression_Alt() #bool ) |
     ( t=<IDENTIFIER> Expression_Alt() #id {jjtThis.info = t;}) |
     ( <THIS> Expression_Alt() #_this ) |
-    ( <NEW> #_new ( ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() {jjtThis.type = "array";} ) |
-                   ( t=<IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t;) ) ) |
+    ( <NEW> ( 
+       ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() {jjtThis.type = "array";} ) 
+      |
+       ( t=<IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t;}) 
+      ) #_new ) |
     ( <NOT> Expression() Expression_Alt() #not ) |
     ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
 }
@@ -289,8 +292,8 @@ void ExpressionNoId() #void : {Token t;}
     ( <T> Expression_Alt() #bool {jjtThis.info = true;} ) |
     ( <F> Expression_Alt() #bool ) |
     ( <THIS> Expression_Alt() #_this ) |
-    ( <NEW> #_new ( ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() {jjtThis.type = "array";}) |
-                   ( t=<IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t;} ) ) ) |
+    ( <NEW> ( ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() {jjtThis.type = "array";}) |
+            ( t=<IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t;} ) ) #_new ) |
     ( <NOT> Expression() Expression_Alt() #not ) |
     ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
 }
@@ -301,7 +304,7 @@ void ExpressionNoId() #void : {Token t;}
 void Expression_Alt() #void : {Token t;}
 {
     ( <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
-    ( <DOT> #field ( ( <LENGTH> Expression_Alt() {jjtThis.type = "length") ) |
-                     ( t=<IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t;} ) ) |
+    ( <DOT> ( ( <LENGTH> Expression_Alt() {jjtThis.type = "length";}) ) |
+              ( t=<IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t;} ) #field ) |
     {}
 }
