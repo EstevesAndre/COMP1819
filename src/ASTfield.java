@@ -14,7 +14,7 @@ class ASTfield extends SimpleNode {
   }
 
   public String toString() {
-    return "field " + info;
+    return "field " + type + " " + info;
   }
 }
 /* JavaCC - OriginalChecksum=b1ed2277fe6b22d7aef0ccc7a29e9dd9 (do not edit this line) */

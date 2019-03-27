@@ -16,7 +16,7 @@ class ASTStatement extends SimpleNode {
   }
 
   public String toString() {
-    return "statement " + type + id != null ? (" " + id) : "" + array ? "[]" : "" + assign ? " =" : "";
+    return "statement " + type + ( (id != null) ? (" " + id) : "" ) + ( array ? "[]" : "") + (assign ? " =" : "");
   }
 }
 /* JavaCC - OriginalChecksum=d080604f9202b38270c2414fd96b3d8a (do not edit this line) */

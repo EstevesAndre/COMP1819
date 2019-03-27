@@ -16,7 +16,25 @@ private
 
 public
   static void main(String args[]) throws ParseException {
-    parser p = new parser(System.in);
+
+    if(args.length != 1)
+    {
+      System.out.println("Usage: java parser <filename>");
+      return;
+    }
+
+    parser p;
+
+    try 
+    {
+      p = new parser(new java.io.FileInputStream(args[0]));
+    } 
+    catch (java.io.FileNotFoundException e) 
+    {
+      System.out.println("error: file " + args[0] + " not found.");
+      return;
+    }
+
     SimpleNode root;
 
     try{
@@ -176,7 +194,7 @@ void Type() : {} {
  *      Assign values
  */
 void Statement() : {Token id;} {
-  (<L_BRACE> Statement() < R_BRACE >) |
+  (<L_BRACE> (Statement())* < R_BRACE >) |
   (If()) {jjtThis.type = "if";} | 
   (While()) {jjtThis.type = "while";} |
   (id=<IDENTIFIER> {jjtThis.type = "id"; jjtThis.id = id.image;} (<L_BRACKET> Expression() < R_BRACKET > {jjtThis.array = true;} | {}) ( (<ASSIGN> Expression() < SEMICOLON > {jjtThis.assign = true;} ) | (Expression_Alt() < SEMICOLON > ))) |
@@ -272,10 +290,10 @@ void Div() #void : {}
 
 void LowerExpression() #void : {Token t;}
 {
-    ( t=<INTEGER_LITERAL> Expression_Alt() #literal {jjtThis.info = t.image;} )| 
-    ( <T> Expression_Alt() #bool {jjtThis.info = true;} ) |
+    ( t=<INTEGER_LITERAL> Expression_Alt() {jjtThis.info = t.image;} #literal)| 
+    ( <T> Expression_Alt() {jjtThis.info = true;} #bool) |
     ( <F> Expression_Alt() #bool ) |
-    ( t=<IDENTIFIER> Expression_Alt() #id {jjtThis.info = t.image;}) |
+    ( t=<IDENTIFIER> Expression_Alt() {jjtThis.info = t.image;} #id ) |
     ( <THIS> Expression_Alt() #_this ) |
     ( <NEW> ( 
        ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() {jjtThis.type = "array";} ) 
@@ -288,8 +306,8 @@ void LowerExpression() #void : {Token t;}
 
 void ExpressionNoId() #void : {Token t;}
 {
-    ( t=<INTEGER_LITERAL> Expression_Alt() #literal {jjtThis.info = t.image;} )| 
-    ( <T> Expression_Alt() #bool {jjtThis.info = true;} ) |
+    ( t=<INTEGER_LITERAL> Expression_Alt() {jjtThis.info = t.image;} #literal)| 
+    ( <T> Expression_Alt() {jjtThis.info = true;} #bool) |
     ( <F> Expression_Alt() #bool ) |
     ( <THIS> Expression_Alt() #_this ) |
     ( <NEW> ( ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() {jjtThis.type = "array";}) |
@@ -304,7 +322,7 @@ void ExpressionNoId() #void : {Token t;}
 void Expression_Alt() #void : {Token t;}
 {
     ( <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
-    ( <DOT> ( ( <LENGTH> Expression_Alt() {jjtThis.type = "length";}) ) |
-              ( t=<IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t.image;} ) #field ) |
+    ( <DOT> (( <LENGTH> Expression_Alt() {jjtThis.type = "length";} ) |
+             ( t=<IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t.image;} ) ) #field ) |
     {}
 }
