@@ -47,6 +47,32 @@ public
 
     root.dump("");
   }
+
+  static void reportError(ParseException e, String statement, boolean recover) {
+    System.out.println("Syntatic error on " + statement + " statement.\n\n" +
+                       e.toString());
+    nErrors++;
+  
+    if (recover) {
+      recoverFromError();
+    }
+  
+    if (nErrors >= MAX_ERRORS) {
+      System.out.println("Reached maximum number of errors (" + MAX_ERRORS +
+                         "). Terminating.");
+      System.exit(1);
+    }
+  }
+
+  static void recoverFromError() {
+    Token t;
+    do {
+      t = getToken(1);
+      if (t.kind == R_PAR)
+        return;
+      t = getNextToken();
+    } while (t.kind != R_PAR);
+  }
 }
 PARSER_END(parser)
 
@@ -220,34 +246,6 @@ void While() : {} {
   }
 
   <R_PAR> Statement()
-}
-
-JAVACODE
-void recoverFromError() {
-  Token t;
-  do {
-    t = getToken(1);
-    if (t.kind == R_PAR)
-      return;
-    t = getNextToken();
-  } while (t.kind != R_PAR);
-}
-
-JAVACODE
-void reportError(ParseException e, String statement, boolean recover) {
-  System.out.println("Syntatic error on " + statement + " statement.\n\n" +
-                     e.toString());
-  nErrors++;
-
-  if (recover) {
-    recoverFromError();
-  }
-
-  if (nErrors >= MAX_ERRORS) {
-    System.out.println("Reached maximum number of errors (" + MAX_ERRORS +
-                       "). Terminating.");
-    System.exit(1);
-  }
 }
 
 /**

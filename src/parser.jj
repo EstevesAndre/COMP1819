@@ -51,6 +51,32 @@ public
 
     root.dump("");
   }
+
+  static void reportError(ParseException e, String statement, boolean recover) {
+    System.out.println("Syntatic error on " + statement + " statement.\n\n" +
+                       e.toString());
+    nErrors++;
+  
+    if (recover) {
+      recoverFromError();
+    }
+  
+    if (nErrors >= MAX_ERRORS) {
+      System.out.println("Reached maximum number of errors (" + MAX_ERRORS +
+                         "). Terminating.");
+      System.exit(1);
+    }
+  }
+
+  static void recoverFromError() {
+    Token t;
+    do {
+      t = getToken(1);
+      if (t.kind == R_PAR)
+        return;
+      t = getNextToken();
+    } while (t.kind != R_PAR);
+  }
 }
 PARSER_END(parser)
 
@@ -540,56 +566,6 @@ void While() : {/*@bgen(jjtree) While */
         jjtree.closeNodeScope(jjtn000, true);
       }
     }
-/*@egen*/
-}
-
-JAVACODE
-void recoverFromError() {/*@bgen(jjtree) recoverFromError */
-ASTrecoverFromError jjtn000 = new ASTrecoverFromError(JJTRECOVERFROMERROR);
-boolean jjtc000 = true;
-jjtree.openNodeScope(jjtn000);
-try {
-/*@egen*/
-  Token t;
-  do {
-    t = getToken(1);
-    if (t.kind == R_PAR)
-      return;
-    t = getNextToken();
-  } while (t.kind != R_PAR);/*@bgen(jjtree)*/
-} finally {
-  if (jjtc000) {
-    jjtree.closeNodeScope(jjtn000, true);
-  }
-}
-/*@egen*/
-}
-
-JAVACODE
-void reportError(ParseException e, String statement, boolean recover) {/*@bgen(jjtree) reportError */
-ASTreportError jjtn000 = new ASTreportError(JJTREPORTERROR);
-boolean jjtc000 = true;
-jjtree.openNodeScope(jjtn000);
-try {
-/*@egen*/
-  System.out.println("Syntatic error on " + statement + " statement.\n\n" +
-                     e.toString());
-  nErrors++;
-
-  if (recover) {
-    recoverFromError();
-  }
-
-  if (nErrors >= MAX_ERRORS) {
-    System.out.println("Reached maximum number of errors (" + MAX_ERRORS +
-                       "). Terminating.");
-    System.exit(1);
-  }/*@bgen(jjtree)*/
-} finally {
-  if (jjtc000) {
-    jjtree.closeNodeScope(jjtn000, true);
-  }
-}
 /*@egen*/
 }
 

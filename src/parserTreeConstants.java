@@ -12,22 +12,20 @@ public interface parserTreeConstants
   public int JJTSTATEMENT = 8;
   public int JJTIF = 9;
   public int JJTWHILE = 10;
-  public int JJTRECOVERFROMERROR = 11;
-  public int JJTREPORTERROR = 12;
-  public int JJTVOID = 13;
-  public int JJTAND = 14;
-  public int JJTLT = 15;
-  public int JJTSUM = 16;
-  public int JJTSUB = 17;
-  public int JJTMULT = 18;
-  public int JJTDIV = 19;
-  public int JJTLITERAL = 20;
-  public int JJTBOOL = 21;
-  public int JJTID = 22;
-  public int JJT_THIS = 23;
-  public int JJT_NEW = 24;
-  public int JJTNOT = 25;
-  public int JJTFIELD = 26;
+  public int JJTVOID = 11;
+  public int JJTAND = 12;
+  public int JJTLT = 13;
+  public int JJTSUM = 14;
+  public int JJTSUB = 15;
+  public int JJTMULT = 16;
+  public int JJTDIV = 17;
+  public int JJTLITERAL = 18;
+  public int JJTBOOL = 19;
+  public int JJTID = 20;
+  public int JJT_THIS = 21;
+  public int JJT_NEW = 22;
+  public int JJTNOT = 23;
+  public int JJTFIELD = 24;
 
 
   public String[] jjtNodeName = {
@@ -42,8 +40,6 @@ public interface parserTreeConstants
     "Statement",
     "If",
     "While",
-    "recoverFromError",
-    "reportError",
     "void",
     "and",
     "lt",
@@ -60,4 +56,4 @@ public interface parserTreeConstants
     "field",
   };
 }
-/* JavaCC - OriginalChecksum=753d8b08810a97f5c6591f3785cafdee (do not edit this line) */
+/* JavaCC - OriginalChecksum=85c5410995575bdd8e3b248cca767ce5 (do not edit this line) */
