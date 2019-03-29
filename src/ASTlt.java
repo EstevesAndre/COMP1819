@@ -6,7 +6,7 @@ class ASTlt extends SimpleNode {
     super(id);
   }
 
-  public ASTlt(parser p, int id) {
+  public ASTlt(jmm p, int id) {
     super(p, id);
   }
 

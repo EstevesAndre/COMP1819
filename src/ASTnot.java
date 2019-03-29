@@ -6,7 +6,7 @@ class ASTnot extends SimpleNode {
     super(id);
   }
 
-  public ASTnot(parser p, int id) {
+  public ASTnot(jmm p, int id) {
     super(p, id);
   }
 

@@ -5,9 +5,9 @@ options {
   MULTI=true;
 }
 
-PARSER_BEGIN(parser)
+PARSER_BEGIN(jmm)
 public
-class parser {
+class jmm {
 
 private
   static int nErrors = 0;
@@ -19,15 +19,15 @@ public
 
     if(args.length != 1)
     {
-      System.out.println("Usage: java parser <filename>");
+      System.out.println("Usage: java jmm <filename>");
       return;
     }
 
-    parser p;
+    jmm p;
 
     try 
     {
-      p = new parser(new java.io.FileInputStream(args[0]));
+      p = new jmm(new java.io.FileInputStream(args[0]));
     } 
     catch (java.io.FileNotFoundException e) 
     {
@@ -74,7 +74,7 @@ public
     } while (t.kind != R_PAR);
   }
 }
-PARSER_END(parser)
+PARSER_END(jmm)
 
 /* Caracters to be skipped */
 SKIP :

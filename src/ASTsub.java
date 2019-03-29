@@ -6,7 +6,7 @@ class ASTsub extends SimpleNode {
     super(id);
   }
 
-  public ASTsub(parser p, int id) {
+  public ASTsub(jmm p, int id) {
     super(p, id);
   }
 

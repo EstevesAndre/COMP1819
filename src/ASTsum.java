@@ -6,7 +6,7 @@ class ASTsum extends SimpleNode {
     super(id);
   }
 
-  public ASTsum(parser p, int id) {
+  public ASTsum(jmm p, int id) {
     super(p, id);
   }
 

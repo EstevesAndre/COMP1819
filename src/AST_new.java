@@ -9,7 +9,7 @@ class AST_new extends SimpleNode {
     super(id);
   }
 
-  public AST_new(parser p, int id) {
+  public AST_new(jmm p, int id) {
     super(p, id);
   }
   

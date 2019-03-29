@@ -6,7 +6,7 @@ class ASTmult extends SimpleNode {
     super(id);
   }
 
-  public ASTmult(parser p, int id) {
+  public ASTmult(jmm p, int id) {
     super(p, id);
   }
 

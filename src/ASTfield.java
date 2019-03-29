@@ -9,7 +9,7 @@ class ASTfield extends SimpleNode {
     super(id);
   }
 
-  public ASTfield(parser p, int id) {
+  public ASTfield(jmm p, int id) {
     super(p, id);
   }
 

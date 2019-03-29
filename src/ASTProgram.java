@@ -6,7 +6,7 @@ class ASTProgram extends SimpleNode {
     super(id);
   }
 
-  public ASTProgram(parser p, int id) {
+  public ASTProgram(jmm p, int id) {
     super(p, id);
   }
 

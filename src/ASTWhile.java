@@ -6,7 +6,7 @@ class ASTWhile extends SimpleNode {
     super(id);
   }
 
-  public ASTWhile(parser p, int id) {
+  public ASTWhile(jmm p, int id) {
     super(p, id);
   }
 

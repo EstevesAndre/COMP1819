@@ -6,7 +6,7 @@ class ASTdiv extends SimpleNode {
     super(id);
   }
 
-  public ASTdiv(parser p, int id) {
+  public ASTdiv(jmm p, int id) {
     super(p, id);
   }
 

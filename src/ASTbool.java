@@ -8,7 +8,7 @@ class ASTbool extends SimpleNode {
     super(id);
   }
 
-  public ASTbool(parser p, int id) {
+  public ASTbool(jmm p, int id) {
     super(p, id);
   }
 

@@ -6,7 +6,7 @@ class ASTIf extends SimpleNode {
     super(id);
   }
 
-  public ASTIf(parser p, int id) {
+  public ASTIf(jmm p, int id) {
     super(p, id);
   }
 

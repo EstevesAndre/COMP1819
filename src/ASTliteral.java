@@ -8,7 +8,7 @@ class ASTliteral extends SimpleNode {
     super(id);
   }
 
-  public ASTliteral(parser p, int id) {
+  public ASTliteral(jmm p, int id) {
     super(p, id);
   }
 

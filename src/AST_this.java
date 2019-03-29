@@ -6,7 +6,7 @@ class AST_this extends SimpleNode {
     super(id);
   }
 
-  public AST_this(parser p, int id) {
+  public AST_this(jmm p, int id) {
     super(p, id);
   }
 

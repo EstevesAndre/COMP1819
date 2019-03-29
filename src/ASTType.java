@@ -9,7 +9,7 @@ class ASTType extends SimpleNode {
     super(id);
   }
 
-  public ASTType(parser p, int id) {
+  public ASTType(jmm p, int id) {
     super(p, id);
   }
 

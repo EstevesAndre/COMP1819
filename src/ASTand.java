@@ -6,7 +6,7 @@ class ASTand extends SimpleNode {
     super(id);
   }
 
-  public ASTand(parser p, int id) {
+  public ASTand(jmm p, int id) {
     super(p, id);
   }
 

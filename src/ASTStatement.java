@@ -11,7 +11,7 @@ class ASTStatement extends SimpleNode {
     super(id);
   }
 
-  public ASTStatement(parser p, int id) {
+  public ASTStatement(jmm p, int id) {
     super(p, id);
   }
 

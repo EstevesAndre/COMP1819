@@ -8,7 +8,7 @@ class ASTid extends SimpleNode {
     super(id);
   }
 
-  public ASTid(parser p, int id) {
+  public ASTid(jmm p, int id) {
     super(p, id);
   }
 
