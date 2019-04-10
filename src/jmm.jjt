@@ -170,7 +170,10 @@ void ClassDeclaration() : {Token id, ext;} {
 /**
  * Variable declaration
  */
-void VarDeclaration() : {} { Type()<IDENTIFIER><SEMICOLON> }
+void VarDeclaration() : {Token id;} 
+{ 
+  Type() id=<IDENTIFIER> <SEMICOLON> {jjtThis.id = id.image;} 
+}
 
 /**
  * Main function declaration

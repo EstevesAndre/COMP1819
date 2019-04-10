@@ -232,32 +232,40 @@ try {
  * Variable declaration
  */
 void VarDeclaration() : {/*@bgen(jjtree) VarDeclaration */
-  ASTVarDeclaration jjtn000 = new ASTVarDeclaration(JJTVARDECLARATION);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/} {/*@bgen(jjtree) VarDeclaration */
-                             try {
-/*@egen*/ Type()<IDENTIFIER><SEMICOLON>/*@bgen(jjtree)*/
-                             } catch (Throwable jjte000) {
-                               if (jjtc000) {
-                                 jjtree.clearNodeScope(jjtn000);
-                                 jjtc000 = false;
-                               } else {
-                                 jjtree.popNode();
-                               }
-                               if (jjte000 instanceof RuntimeException) {
-                                 throw (RuntimeException)jjte000;
-                               }
-                               if (jjte000 instanceof ParseException) {
-                                 throw (ParseException)jjte000;
-                               }
-                               throw (Error)jjte000;
-                             } finally {
-                               if (jjtc000) {
-                                 jjtree.closeNodeScope(jjtn000, true);
-                               }
-                             }
-/*@egen*/ }
+                         ASTVarDeclaration jjtn000 = new ASTVarDeclaration(JJTVARDECLARATION);
+                         boolean jjtc000 = true;
+                         jjtree.openNodeScope(jjtn000);
+/*@egen*/Token id;} 
+{/*@bgen(jjtree) VarDeclaration */
+  try {
+/*@egen*/ 
+  Type() id=<IDENTIFIER> <SEMICOLON>/*@bgen(jjtree)*/
+                                     {
+                                       jjtree.closeNodeScope(jjtn000, true);
+                                       jjtc000 = false;
+                                     }
+/*@egen*/ {jjtn000.id = id.image;}/*@bgen(jjtree)*/
+  } catch (Throwable jjte000) {
+    if (jjtc000) {
+      jjtree.clearNodeScope(jjtn000);
+      jjtc000 = false;
+    } else {
+      jjtree.popNode();
+    }
+    if (jjte000 instanceof RuntimeException) {
+      throw (RuntimeException)jjte000;
+    }
+    if (jjte000 instanceof ParseException) {
+      throw (ParseException)jjte000;
+    }
+    throw (Error)jjte000;
+  } finally {
+    if (jjtc000) {
+      jjtree.closeNodeScope(jjtn000, true);
+    }
+  }
+/*@egen*/ 
+}
 
 /**
  * Main function declaration

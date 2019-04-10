@@ -6,10 +6,12 @@ class ASTArg extends SimpleNode {
 
   public ASTArg(int id) {
     super(id);
+    addToSymbolTable(this.id, ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : ""));
   }
 
   public ASTArg(jmm p, int id) {
     super(p, id);
+    addToSymbolTable(this.id, ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : ""));
   }
 
   public String toString() {

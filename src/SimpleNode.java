@@ -78,6 +78,52 @@ class SimpleNode implements Node {
   public int getId() {
     return id;
   }
+
+  public boolean addToSymbolTable(String id, String type)
+  {
+    Node n = parent;
+    String id_prev;
+
+    while(n != null)
+    {
+      if(n instanceof ASTClassDeclaration)
+      {
+        id_prev = ((ASTClassDeclaration) n).symtbl.get(id);
+
+        if(id_prev != null)
+          return false;
+        
+        ((ASTClassDeclaration) n).symtbl.put(id, type);
+        return true;
+      }
+      
+      if(n instanceof ASTMainDeclaration)
+      {
+        id_prev = ((ASTMainDeclaration) n).symtbl.get(id);
+
+        if(id_prev != null)
+          return false;
+        
+        ((ASTMainDeclaration) n).symtbl.put(id, type);
+        return true;
+      } 
+
+      if(n instanceof ASTMethodDeclaration)
+      {
+        id_prev = ((ASTMethodDeclaration) n).symtbl.get(id);
+
+        if(id_prev != null)
+          return false;
+        
+        ((ASTMethodDeclaration) n).symtbl.put(id, type);
+        return true;
+      } 
+
+      n = (SimpleNode) parent.jjtGetParent();
+    }
+
+    return false;
+  }
 }
 
 /* JavaCC - OriginalChecksum=1170bfc765845a635efbe3cdd869fe92 (do not edit this line) */
