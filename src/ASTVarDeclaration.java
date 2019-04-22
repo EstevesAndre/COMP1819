@@ -6,16 +6,19 @@ class ASTVarDeclaration extends SimpleNode {
 
   public ASTVarDeclaration(int id) {
     super(id);
-    addToSymbolTable(this.id, ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : ""));
   }
 
   public ASTVarDeclaration(jmm p, int id) {
     super(p, id);
-    addToSymbolTable(this.id, ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : ""));
   }
 
   public String toString() {
     return "arg " + id;
+  }
+
+  void triggerSymbolTable()
+  {
+    addToSymbolTable(id, ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : ""));
   }
 }
 /* JavaCC - OriginalChecksum=4e604d6a77c4c7fb01df67af0b175127 (do not edit this line) */

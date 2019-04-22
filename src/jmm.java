@@ -40,6 +40,9 @@ public
     }
 
     root.dump("");
+    root.addToSymbolTable();
+    root.printSymbolTable();
+
   }
 
   static void reportError(ParseException e, String statement, boolean recover) {
@@ -200,9 +203,9 @@ if (jjtc000) {
       Type();
       id = jj_consume_token(IDENTIFIER);
       jj_consume_token(SEMICOLON);
+      jjtn000.id = id.image;
 jjtree.closeNodeScope(jjtn000, true);
                                        jjtc000 = false;
-jjtn000.id = id.image;
     } catch (Throwable jjte000) {
 if (jjtc000) {
       jjtree.clearNodeScope(jjtn000);
@@ -435,9 +438,10 @@ if (jjtc000) {
     try {
       Type();
       id = jj_consume_token(IDENTIFIER);
+      jjtn000.id = id.image;
+
 jjtree.closeNodeScope(jjtn000, true);
                                                     jjtc000 = false;
-jjtn000.id = id.image;
     } catch (Throwable jjte000) {
 if (jjtc000) {
                                jjtree.clearNodeScope(jjtn000);

@@ -6,16 +6,19 @@ class ASTArg extends SimpleNode {
 
   public ASTArg(int id) {
     super(id);
-    addToSymbolTable(this.id, ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : ""));
   }
 
   public ASTArg(jmm p, int id) {
     super(p, id);
-    addToSymbolTable(this.id, ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : ""));
   }
 
   public String toString() {
     return "arg " + id;
+  }
+
+  void triggerSymbolTable()
+  {
+    addToSymbolTable(id, ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : ""));
   }
 }
 /* JavaCC - OriginalChecksum=9449a47bc112a1214da3d3890b56f464 (do not edit this line) */
