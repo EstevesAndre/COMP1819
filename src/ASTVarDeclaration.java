@@ -3,6 +3,8 @@
 public
 class ASTVarDeclaration extends SimpleNode {
   public String id;
+  public int line;
+  public int column;
 
   public ASTVarDeclaration(int id) {
     super(id);
@@ -16,9 +18,12 @@ class ASTVarDeclaration extends SimpleNode {
     return "arg " + id;
   }
 
-  void triggerSymbolTable()
+  void triggerSemanticAnalysis() throws SemanticException
   {
-    addToSymbolTable(id, ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : ""));
+    /* Symbol Table insertions */
+    if(!addToSymbolTable(id, ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : ""))){
+      throw new SemanticException("Variable already defined: " + id + " at line " + line + ", column " + column + ".");
+    }
   }
 }
 /* JavaCC - OriginalChecksum=4e604d6a77c4c7fb01df67af0b175127 (do not edit this line) */

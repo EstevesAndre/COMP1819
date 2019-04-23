@@ -16,5 +16,9 @@ class ASTbool extends SimpleNode {
     return "bool " + info;
   }
 
+  public String getType() {
+    return "bool";
+  }
+
 }
 /* JavaCC - OriginalChecksum=7064e952aa942fd46131a1edde577da1 (do not edit this line) */

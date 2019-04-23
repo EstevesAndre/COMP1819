@@ -10,5 +10,9 @@ class ASTsum extends SimpleNode {
     super(p, id);
   }
 
+  public String getType() {
+    return "int";
+  }
+
 }
 /* JavaCC - OriginalChecksum=fd58adc0663531e5eea42a153c98a773 (do not edit this line) */

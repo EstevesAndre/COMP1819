@@ -2,6 +2,9 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 public
 class ASTand extends SimpleNode {
+  public int line;
+  public int column;
+
   public ASTand(int id) {
     super(id);
   }
@@ -10,5 +13,18 @@ class ASTand extends SimpleNode {
     super(p, id);
   }
 
+  void triggerSemanticAnalysis() throws SemanticException
+  {
+    SimpleNode left = (SimpleNode)children[0];
+    SimpleNode right = (SimpleNode)children[1];
+
+    if(!left.getType().equals("bool") || !right.getType().equals("bool")){
+      throw new SemanticException("At least one of operands of && is not a boolean at line " + line + ", column " + column + ".");
+    }
+  }
+
+  public String getType() {
+    return "bool";
+  }
 }
 /* JavaCC - OriginalChecksum=f0e373d6ade899c6fe25fd68511409dc (do not edit this line) */

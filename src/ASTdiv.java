@@ -10,5 +10,9 @@ class ASTdiv extends SimpleNode {
     super(p, id);
   }
 
+  public String getType() {
+    return "int";
+  }
+
 }
 /* JavaCC - OriginalChecksum=8e5bf6cb6320f30a44173f2c5c582639 (do not edit this line) */

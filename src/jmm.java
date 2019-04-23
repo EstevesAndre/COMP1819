@@ -40,9 +40,8 @@ public
     }
 
     root.dump("");
-    root.addToSymbolTable();
+    root.semanticAnalysis();
     root.printSymbolTable();
-
   }
 
   static void reportError(ParseException e, String statement, boolean recover) {
@@ -204,6 +203,10 @@ if (jjtc000) {
       id = jj_consume_token(IDENTIFIER);
       jj_consume_token(SEMICOLON);
       jjtn000.id = id.image;
+      // add line and column
+      jjtn000.line = id.beginLine;
+      jjtn000.column = id.beginColumn;
+
 jjtree.closeNodeScope(jjtn000, true);
                                        jjtc000 = false;
     } catch (Throwable jjte000) {
@@ -439,6 +442,9 @@ if (jjtc000) {
       Type();
       id = jj_consume_token(IDENTIFIER);
       jjtn000.id = id.image;
+      // add line and column
+      jjtn000.line = id.beginLine;
+      jjtn000.column = id.beginColumn;
 
 jjtree.closeNodeScope(jjtn000, true);
                                                     jjtc000 = false;
@@ -737,8 +743,11 @@ if (jjtc000) {
       } else {
         break label_9;
       }
-      jj_consume_token(AND);
+      Token t = jj_consume_token(AND);
 ASTand jjtn001 = new ASTand(JJTAND);
+// add line and column
+jjtn001.line = t.beginLine;
+jjtn001.column = t.beginColumn;
                                 boolean jjtc001 = true;
                                 jjtree.openNodeScope(jjtn001);
       try {

@@ -10,5 +10,8 @@ class ASTmult extends SimpleNode {
     super(p, id);
   }
 
+  public String getType() {
+    return "int";
+  }
 }
 /* JavaCC - OriginalChecksum=c8ecbec8e2431c5d327a17275c35d236 (do not edit this line) */

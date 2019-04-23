@@ -10,5 +10,8 @@ class ASTnot extends SimpleNode {
     super(p, id);
   }
 
+  public String getType() {
+    return "bool";
+  }
 }
 /* JavaCC - OriginalChecksum=fb8d63593e6952b5ae4d23414e6729e2 (do not edit this line) */

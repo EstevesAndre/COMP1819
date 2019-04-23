@@ -16,5 +16,9 @@ class ASTType extends SimpleNode {
   public String toString() {
     return "type " + type + ( array ? "[]" : "" );
   }
+
+  public String getType() {
+    return type;
+  }
 }
 /* JavaCC - OriginalChecksum=82260e3d975ec54bb074f6297441afec (do not edit this line) */

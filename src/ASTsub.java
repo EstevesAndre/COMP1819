@@ -10,5 +10,8 @@ class ASTsub extends SimpleNode {
     super(p, id);
   }
 
+  public String getType() {
+    return "int";
+  }
 }
 /* JavaCC - OriginalChecksum=f38f9886273cf50e18bf3c3d7436b843 (do not edit this line) */
