@@ -1,7 +1,8 @@
 class semanticError {
     public static void main(String[] a){
-        int b;
-        if(2 - 17){
+        boolean b;
+        b = true;
+        if(b && true) {
             b=2;
         }else{
             b=3;

@@ -200,6 +200,7 @@ public class SimpleNode implements Node {
   }
 
   public String getType() {
+
     return "Error";
   }
 
