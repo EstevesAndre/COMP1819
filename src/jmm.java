@@ -783,8 +783,11 @@ if (jjtc001) {
       } else {
         break label_10;
       }
-      jj_consume_token(LESSTHAN);
+      Token t = jj_consume_token(LESSTHAN);
 ASTlt jjtn001 = new ASTlt(JJTLT);
+// add line and column
+jjtn001.line = t.beginLine;
+jjtn001.column = t.beginColumn;
                                       boolean jjtc001 = true;
                                       jjtree.openNodeScope(jjtn001);
       try {
@@ -820,8 +823,11 @@ if (jjtc001) {
       } else {
         break label_11;
       }
-      jj_consume_token(SUM);
+      Token t = jj_consume_token(SUM);
 ASTsum jjtn001 = new ASTsum(JJTSUM);
+// add line and column
+jjtn001.line = t.beginLine;
+jjtn001.column = t.beginColumn;
                                  boolean jjtc001 = true;
                                  jjtree.openNodeScope(jjtn001);
       try {
@@ -857,8 +863,11 @@ if (jjtc001) {
       } else {
         break label_12;
       }
-      jj_consume_token(SUB);
+      Token t = jj_consume_token(SUB);
 ASTsub jjtn001 = new ASTsub(JJTSUB);
+// add line and column
+jjtn001.line = t.beginLine;
+jjtn001.column = t.beginColumn;
                                   boolean jjtc001 = true;
                                   jjtree.openNodeScope(jjtn001);
       try {
@@ -894,8 +903,11 @@ if (jjtc001) {
       } else {
         break label_13;
       }
-      jj_consume_token(MULT);
+      Token t = jj_consume_token(MULT);
 ASTmult jjtn001 = new ASTmult(JJTMULT);
+// add line and column
+jjtn001.line = t.beginLine;
+jjtn001.column = t.beginColumn;
                                   boolean jjtc001 = true;
                                   jjtree.openNodeScope(jjtn001);
       try {
@@ -931,8 +943,11 @@ if (jjtc001) {
       } else {
         break label_14;
       }
-      jj_consume_token(DIV);
+      Token t = jj_consume_token(DIV);
 ASTdiv jjtn001 = new ASTdiv(JJTDIV);
+// add line and column
+jjtn001.line = t.beginLine;
+jjtn001.column = t.beginColumn;
                                              boolean jjtc001 = true;
                                              jjtree.openNodeScope(jjtn001);
       try {

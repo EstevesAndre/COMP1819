@@ -2,6 +2,10 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 public
 class ASTsum extends SimpleNode {
+
+  public int line;
+  public int column;
+
   public ASTsum(int id) {
     super(id);
   }
@@ -12,6 +16,16 @@ class ASTsum extends SimpleNode {
 
   public String getType() {
     return "int";
+  }
+
+  void triggerSemanticAnalysis() throws SemanticException
+  {
+    SimpleNode left = (SimpleNode)children[0];
+    SimpleNode right = (SimpleNode)children[1];
+
+    if(!left.getType().equals("int") || !right.getType().equals("int")){
+      throw new SemanticException("At least one of operands of + is not an int at line " + line + ", column " + column + ".");
+    }
   }
 
 }
