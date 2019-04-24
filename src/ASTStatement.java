@@ -47,8 +47,16 @@ class ASTStatement extends SimpleNode {
       }
 
       if(entry.type != null)
-      {
-        if(type.equals("int[]"))
+      { System.out.println("id: " + id);
+        System.out.println("type: " + type);
+        System.out.println("entry.type: " + entry.type);
+        
+        for(int i = 0; i < children.length; i++){
+          System.out.println("child" + i + " " + ((SimpleNode) children[i]).getType());
+
+        }
+
+        if(entry.type.equals("int[]"))
         {
           if(!((SimpleNode) children[1]).getType().equals("int"))
           {
