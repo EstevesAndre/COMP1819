@@ -579,6 +579,9 @@ jjtn000.type = "while";
       case IDENTIFIER:{
         id = jj_consume_token(IDENTIFIER);
 jjtn000.type = "id"; jjtn000.id = id.image;
+// add line and column
+jjtn000.line = id.beginLine;
+jjtn000.column = id.beginColumn;
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case L_BRACKET:{
           jj_consume_token(L_BRACKET);
@@ -1138,9 +1141,12 @@ if (jjtc006) {
       break;
       }
     case NOT:{
-      jj_consume_token(NOT);
+      Token tkn = jj_consume_token(NOT);
       Expression();
 ASTnot jjtn007 = new ASTnot(JJTNOT);
+// add line and column
+jjtn007.line = tkn.beginLine;
+jjtn007.column = tkn.beginColumn;
                            boolean jjtc007 = true;
                            jjtree.openNodeScope(jjtn007);
       try {

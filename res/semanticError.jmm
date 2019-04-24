@@ -1,11 +1,14 @@
 class semanticError {
     public static void main(String[] a){
-        boolean b;
-        b = true;
-        if(b && true) {
-            b=2;
-        }else{
-            b=3;
-        }
+        int index;
+        boolean error1;
+        int[] array;
+
+        error1 = true;
+
+        index = 0;
+        //array[index] = 2;
+        //array[error1] = 2;
+        array[0] = error1;
     }
 }

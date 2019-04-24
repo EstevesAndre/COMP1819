@@ -7,6 +7,9 @@ class ASTStatement extends SimpleNode {
   public boolean array = false;
   public boolean assign = false;
   
+  public int column;
+  public int line;
+  
   public ASTStatement(int id) {
     super(id);
   }
@@ -17,6 +20,17 @@ class ASTStatement extends SimpleNode {
 
   public String toString() {
     return "statement " + type + ( (id != null) ? (" " + id) : "" ) + ( array ? "[]" : "") + (assign ? " =" : "");
+  }
+  
+  void triggerSemanticAnalysis() throws SemanticException
+  {
+    if(array)
+    {
+      if(!((SimpleNode) children[0]).getType().equals("int"))
+      {
+        throw new SemanticException("Invalid array access: " + id + " at line " + line + ", column " + column + ".");
+      }
+    }
   }
 }
 /* JavaCC - OriginalChecksum=d080604f9202b38270c2414fd96b3d8a (do not edit this line) */
