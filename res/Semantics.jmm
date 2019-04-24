@@ -23,19 +23,19 @@ class Semantics {
     boolean _type2; 
 
     public static void main(String[] a){
-        variable_initialization();
+        this.variable_initialization();
         
-        array_verify();
-        array_index();
-        array_assign();
+        this.array_verify();
+        this.array_index();
+        this.array_assign();
 
-        boolean_check();
-        not_boolean();
+        this.boolean_check();
+        this.not_boolean();
 
-        type_verify();
+        this.type_verify();
     }
 
-    public static void variable_initialization() {
+    public int variable_initialization() {
         _initialized = 1;
 
         // valid
@@ -43,9 +43,11 @@ class Semantics {
 
         // not valid
         _initialized = se_initialized + 1;
+
+        return 0;
     }
 
-    public static void array_index() {
+    public int array_index() {
         _array_index = 0;
         _array_assign = 1;
         se_array_index = false;
@@ -55,9 +57,11 @@ class Semantics {
 
         // not valid | "se_array_index": Excepted int, found boolean
         _array[se_array_index] = _array_assign;
+
+        return 0;
     }
 
-    public static void array_verify() {
+    public int array_verify() {
         _array_index = 0;
         _array_assign = 2;
 
@@ -66,9 +70,11 @@ class Semantics {
 
         // not valid | "se_array": Excepted int[], found int
         se_array[_array_index] = _array_assign;
+        
+        return 0;
     }
 
-    public static void array_assign() {
+    public int array_assign() {
         _array_index = 0;
         _array_assign = 2;
         se_array_assign = false;
@@ -78,18 +84,22 @@ class Semantics {
 
         // not valid | "se_array_assign": Excepted int, found boolean
         _array[_array_assign] = se_array_assign;
+
+        return 0;
     }
 
-    public static void boolean_check() {
+    public int boolean_check() {
         
         // valid
         _bool = true;
 
         // not valid | "se_bool": Excepted boolean, found int
         _bool = se_bool;
+
+        return 0;
     }
 
-    public static void not_boolean() {
+    public int not_boolean() {
         _not_bool = false;
 
         // valid
@@ -97,17 +107,21 @@ class Semantics {
 
         // not valid | "se_not_bool": Excepted boolean, found int
         _not_bool = !se_not_bool;
+
+        return 0;
     }
 
-    public static void type_verify() {
+    public int type_verify() {
         _type2 = false;
         se_type2 = false;
 
         // valid
         _type1 = _type2;
 
-        // not valid | 
+        // not valid | "se_type2": Excepted int, found boolean
         se_type1 = se_type2;
+
+        return 0;
     }
 
 }

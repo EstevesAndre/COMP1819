@@ -32,18 +32,16 @@ class ASTfield extends SimpleNode {
       }
     }
     else {
-      System.out.println("DEBUG");
       List<String> args = new ArrayList<>();
       String type = null;
       for(Node arg : children){
 
-        System.out.println(((SimpleNode)arg).id);
-        Class cls = arg.getClass();
-        System.out.println("The type of the object is: " + cls.getName());
-
-        if(arg instanceof ASTArg){
-          System.out.println("DEBUG: " + ((ASTArg)arg).getType());
-          args.add(((ASTArg)arg).getType());
+        if(arg instanceof ASTid){
+          args.add(((ASTid)arg).getType());
+        }
+        
+        if(arg instanceof ASTliteral){
+          args.add(((ASTliteral)arg).getType());
         }
       }
       STFunc func = new STFunc(info,type,line,column,args);
