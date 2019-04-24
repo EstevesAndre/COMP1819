@@ -18,23 +18,9 @@ class ASTid extends SimpleNode {
 
   public String getType() {
     // Check if it is in the symbol table of simpleNode
-    SimpleNode tempParent = (SimpleNode)parent;
-    String answer = null;
-    while(tempParent != null){
-      if (tempParent instanceof ASTClassDeclaration) {
-        answer = ((ASTClassDeclaration) tempParent).symtbl.get(info);
-      }
-      else if (tempParent instanceof ASTMainDeclaration) {
-        answer = ((ASTMainDeclaration) tempParent).symtbl.get(info);
-      }
-      else if (tempParent instanceof ASTMethodDeclaration) {
-        answer = ((ASTMethodDeclaration) tempParent).symtbl.get(info);
-      }
-      if(answer != null) return answer;
-      tempParent = (SimpleNode)tempParent.parent;
-    }
+    String type = checkSymbolTable(info);
 
-    return "Error";
+    return (type == null) ? "Error" : type;
   }
 
 }

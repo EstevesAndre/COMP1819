@@ -1,14 +1,14 @@
 class semanticError {
+    int b;
     public static void main(String[] a){
-        int index;
-        boolean error1;
-        int[] array;
+        int result;
 
-        error1 = true;
+        b = 2;
 
-        index = 0;
-        //array[index] = 2;
-        //array[error1] = 2;
-        array[0] = error1;
+        b = this.sum(b, 3);
+    }
+
+    public int sum(int i1, int i2) {
+        return i1 + i2;
     }
 }

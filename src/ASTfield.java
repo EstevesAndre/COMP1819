@@ -16,5 +16,17 @@ class ASTfield extends SimpleNode {
   public String toString() {
     return "field " + type + " " + info;
   }
+
+  void triggerSemanticAnalysis() throws SemanticException
+  { 
+    if(type.equals("length"))
+    {
+      String type = checkSymbolTable(((ASTStatement) parent).id);
+      if (type != null && !type.equals("int[]"))
+      {
+        throw new SemanticException("Invalid field access: Expecting int[], found " + type + " at line " + line + ", column " + column + ".");
+      }
+    }
+  }
 }
 /* JavaCC - OriginalChecksum=b1ed2277fe6b22d7aef0ccc7a29e9dd9 (do not edit this line) */

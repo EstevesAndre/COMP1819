@@ -7,9 +7,6 @@ class ASTStatement extends SimpleNode {
   public boolean array = false;
   public boolean assign = false;
   
-  public int column;
-  public int line;
-  
   public ASTStatement(int id) {
     super(id);
   }
@@ -29,6 +26,37 @@ class ASTStatement extends SimpleNode {
       if(!((SimpleNode) children[0]).getType().equals("int"))
       {
         throw new SemanticException("Invalid array access: " + id + " at line " + line + ", column " + column + ".");
+      }
+
+      String answer = checkSymbolTable(id);
+
+      if(!answer.equals("int[]")){
+        throw new SemanticException(id + " is not an array at line " + line + ", column " + column + ".");
+      }
+      
+    }
+
+    if(assign)
+    {
+      String type = checkSymbolTable(id);
+
+      if(type != null)
+      {
+        if(type.equals("int[]"))
+        {
+          if(!((SimpleNode) children[1]).getType().equals("int"))
+          {
+            throw new SemanticException("Invalid assignment: expected int, found " + ((SimpleNode) children[1]).getType() + " at line " + line + ", column " + column + ".");
+          }
+        }
+        else if (!((SimpleNode) children[0]).getType().equals(type))
+        {
+          throw new SemanticException("Invalid assignment: expected " + type + ", found " + ((SimpleNode) children[0]).getType() + " at line " + line + ", column " + column + ".");
+        }
+      }
+      else
+      {
+        throw new SemanticException("Undeclared variable: " + id + " at line " + line + ", column " + column + ".");
       }
     }
   }

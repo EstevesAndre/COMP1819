@@ -3,8 +3,6 @@
 public
 class ASTArg extends SimpleNode {
   public String id;
-  public int line;
-  public int column;
 
   public ASTArg(int id) {
     super(id);

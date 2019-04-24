@@ -3,9 +3,6 @@
 public
 class ASTsub extends SimpleNode {
 
-  public int line;
-  public int column;
-
   public ASTsub(int id) {
     super(id);
   }

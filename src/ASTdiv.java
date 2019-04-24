@@ -3,9 +3,6 @@
 public
 class ASTdiv extends SimpleNode {
 
-  public int line;
-  public int column;
-
   public ASTdiv(int id) {
     super(id);
   }

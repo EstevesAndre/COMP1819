@@ -3,8 +3,6 @@
 public
 class ASTVarDeclaration extends SimpleNode {
   public String id;
-  public int line;
-  public int column;
 
   public ASTVarDeclaration(int id) {
     super(id);

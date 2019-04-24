@@ -16,5 +16,16 @@ class AST_new extends SimpleNode {
   public String toString() {
     return "new " + type + " " + info;
   }
+
+  void triggerSemanticAnalysis() throws SemanticException
+  {
+    if(type.equals("array"))
+    {
+      if(!((SimpleNode) children[0]).getType().equals("int"))
+      {
+        throw new SemanticException("Invalid array initialization: " + id + " at line " + line + ", column " + column + ".");
+      }
+    }
+  }
 }
 /* JavaCC - OriginalChecksum=71f95ffa1708d3507896129b9ea23e12 (do not edit this line) */

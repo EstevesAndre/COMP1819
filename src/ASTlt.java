@@ -3,9 +3,6 @@
 public
 class ASTlt extends SimpleNode {
 
-  public int line;
-  public int column;
-
   public ASTlt(int id) {
     super(id);
   }

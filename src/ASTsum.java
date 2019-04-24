@@ -3,9 +3,6 @@
 public
 class ASTsum extends SimpleNode {
 
-  public int line;
-  public int column;
-
   public ASTsum(int id) {
     super(id);
   }

@@ -1087,8 +1087,11 @@ if (jjtc005) {
       break;
       }
     case NEW:{
-      jj_consume_token(NEW);
+      Token tkn = jj_consume_token(NEW);
 AST_new jjtn006 = new AST_new(JJT_NEW);
+// add line and column
+jjtn006.line = tkn.beginLine;
+jjtn006.column = tkn.beginColumn;
               boolean jjtc006 = true;
               jjtree.openNodeScope(jjtn006);
       try {
@@ -1279,8 +1282,11 @@ if (jjtc004) {
       break;
       }
     case NEW:{
-      jj_consume_token(NEW);
+      Token tkn = jj_consume_token(NEW);
 AST_new jjtn005 = new AST_new(JJT_NEW);
+// add line and column
+jjtn005.line = tkn.beginLine;
+jjtn005.column = tkn.beginColumn;
               boolean jjtc005 = true;
               jjtree.openNodeScope(jjtn005);
       try {
@@ -1395,11 +1401,14 @@ ASTfield jjtn001 = new ASTfield(JJTFIELD);
       try {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case LENGTH:{
-          jj_consume_token(LENGTH);
+          Token tkn = jj_consume_token(LENGTH);
           Expression_Alt();
 jjtree.closeNodeScope(jjtn001, true);
                                            jjtc001 = false;
 jjtn001.type = "length";
+// add line and column
+jjtn001.line = tkn.beginLine;
+jjtn001.column = tkn.beginColumn;
           break;
           }
         case IDENTIFIER:{

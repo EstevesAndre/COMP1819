@@ -3,9 +3,6 @@
 public
 class ASTmult extends SimpleNode {
 
-  public int line;
-  public int column;
-
   public ASTmult(int id) {
     super(id);
   }

@@ -10,6 +10,9 @@ public class SimpleNode implements Node {
   protected Object value;
   protected jmm parser;
 
+  public int line;
+  public int column;
+
   public SimpleNode(int i) {
     id = i;
   }
@@ -96,20 +99,20 @@ public class SimpleNode implements Node {
 
     if (this instanceof ASTClassDeclaration) {
       System.out.println("Symbol table for " + ((ASTClassDeclaration) this).id);
-      for (Map.Entry<String, String> entry : ((ASTClassDeclaration) this).symtbl.entrySet()) {
-        System.out.println(entry.getKey() + ": " + entry.getValue());
+      for (Map.Entry<String, STEntry> entry : ((ASTClassDeclaration) this).symtbl.entrySet()) {
+        System.out.println(entry.getKey() + ": " + entry.getValue().type);
       }
     }
     if (this instanceof ASTMainDeclaration) {
       System.out.println("Symbol table for main");
-      for (Map.Entry<String, String> entry : ((ASTMainDeclaration) this).symtbl.entrySet()) {
-        System.out.println(entry.getKey() + ": " + entry.getValue());
+      for (Map.Entry<String, STEntry> entry : ((ASTMainDeclaration) this).symtbl.entrySet()) {
+        System.out.println(entry.getKey() + ": " + entry.getValue().type);
       }
     }
     if (this instanceof ASTMethodDeclaration) {
       System.out.println("Symbol table for " + ((ASTMethodDeclaration) this).id);
-      for (Map.Entry<String, String> entry : ((ASTMethodDeclaration) this).symtbl.entrySet()) {
-        System.out.println(entry.getKey() + ": " + entry.getValue());
+      for (Map.Entry<String, STEntry> entry : ((ASTMethodDeclaration) this).symtbl.entrySet()) {
+        System.out.println(entry.getKey() + ": " + entry.getValue().type);
       }
     }
 
@@ -148,7 +151,7 @@ public class SimpleNode implements Node {
   public boolean addToSymbolTable(String id, String type)
   {
     Node n = parent;
-    String id_prev;
+    STEntry id_prev;
 
     while(n != null)
     {    
@@ -160,7 +163,7 @@ public class SimpleNode implements Node {
         if(id_prev != null)
           return false;
         
-        ((ASTClassDeclaration) n).symtbl.put(id, type);
+        ((ASTClassDeclaration) n).symtbl.put(id, new STVar(type, line, column));
         return true;
       }
       
@@ -172,7 +175,7 @@ public class SimpleNode implements Node {
         if(id_prev != null)
           return false;
         
-        ((ASTMainDeclaration) n).symtbl.put(id, type);
+        ((ASTMainDeclaration) n).symtbl.put(id, new STVar(type, line, column));
         return true;
       } 
 
@@ -184,7 +187,7 @@ public class SimpleNode implements Node {
         if(id_prev != null)
           return false;
         
-        ((ASTMethodDeclaration) n).symtbl.put(id, type);
+        ((ASTMethodDeclaration) n).symtbl.put(id, new STVar(type, line, column));
         return true;
       } 
 
@@ -202,6 +205,27 @@ public class SimpleNode implements Node {
   public String getType() {
 
     return "Error";
+  }
+
+  String checkSymbolTable(String info)
+  {
+    SimpleNode tempParent = (SimpleNode)parent;
+    STEntry answer = null;
+    while(tempParent != null){
+      if (tempParent instanceof ASTClassDeclaration) {
+        answer = ((ASTClassDeclaration) tempParent).symtbl.get(info);
+      }
+      else if (tempParent instanceof ASTMainDeclaration) {
+        answer = ((ASTMainDeclaration) tempParent).symtbl.get(info);
+      }
+      else if (tempParent instanceof ASTMethodDeclaration) {
+        answer = ((ASTMethodDeclaration) tempParent).symtbl.get(info);
+      }
+      if(answer != null) return answer.type;
+      tempParent = (SimpleNode)tempParent.parent;
+    }
+
+    return null;
   }
 
 }
