@@ -1,0 +1,113 @@
+class Semantics {
+
+    int _initialized;
+    int se_initialized;
+
+    int _array_index;
+    boolean se_array_index;
+    int _array_assign;
+    boolean se_array_assign;
+    int _array_length;
+    boolean se_array_length;
+    int[] _array;
+    int se_array;
+
+    boolean _bool;
+    int se_bool;
+    boolean _not_bool;
+    int se_not_bool;
+
+    int se_type1;
+    boolean se_type2;
+    boolean _type1;
+    boolean _type2; 
+
+    public static void main(String[] a){
+        variable_initialization();
+        
+        array_verify();
+        array_index();
+        array_assign();
+
+        boolean_check();
+        not_boolean();
+
+        type_verify();
+    }
+
+    public static void variable_initialization() {
+        _initialized = 1;
+
+        // valid
+        _initialized = _initialized + 1;
+
+        // not valid
+        _initialized = se_initialized + 1;
+    }
+
+    public static void array_index() {
+        _array_index = 0;
+        _array_assign = 1;
+        se_array_index = false;
+
+        // valid
+        _array[_array_index] = _array_assign;
+
+        // not valid | "se_array_index": Excepted int, found boolean
+        _array[se_array_index] = _array_assign;
+    }
+
+    public static void array_verify() {
+        _array_index = 0;
+        _array_assign = 2;
+
+        // valid
+        _array[_array_index] = _array_assign;
+
+        // not valid | "se_array": Excepted int[], found int
+        se_array[_array_index] = _array_assign;
+    }
+
+    public static void array_assign() {
+        _array_index = 0;
+        _array_assign = 2;
+        se_array_assign = false;
+
+        // valid
+        _array[_array_index] = _array_assign;
+
+        // not valid | "se_array_assign": Excepted int, found boolean
+        _array[_array_assign] = se_array_assign;
+    }
+
+    public static void boolean_check() {
+        
+        // valid
+        _bool = true;
+
+        // not valid | "se_bool": Excepted boolean, found int
+        _bool = se_bool;
+    }
+
+    public static void not_boolean() {
+        _not_bool = false;
+
+        // valid
+        _not_bool = !_not_bool;
+
+        // not valid | "se_not_bool": Excepted boolean, found int
+        _not_bool = !se_not_bool;
+    }
+
+    public static void type_verify() {
+        _type2 = false;
+        se_type2 = false;
+
+        // valid
+        _type1 = _type2;
+
+        // not valid | 
+        se_type1 = se_type2;
+    }
+
+}

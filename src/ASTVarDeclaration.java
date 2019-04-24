@@ -19,7 +19,9 @@ class ASTVarDeclaration extends SimpleNode {
   void triggerSemanticAnalysis() throws SemanticException
   {
     /* Symbol Table insertions */
-    if(!addToSymbolTable(id, ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : ""))){
+    String type = ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : "");
+
+    if(!addToSymbolTable(id, new STVar(id, type, -1, -1))){
       throw new SemanticException("Variable already defined: " + id + " at line " + line + ", column " + column + ".");
     }
   }

@@ -1,10 +1,12 @@
 abstract class STEntry implements Comparable<STEntry>{
+    public String id;
     public String type;
     public int line;
     public int column;
 
-    STEntry(String type, int line, int column)
+    STEntry(String id, String type, int line, int column)
     {
+        this.id = id;
         this.type = type;
         this.line = line;
         this.column = column;
@@ -12,9 +14,11 @@ abstract class STEntry implements Comparable<STEntry>{
 
     @Override
     public int compareTo(STEntry o) {
+        if(line == -1)
+            return -1;
         if(line != o.line)
-            return line - o.line;
+            return o.line - line;
         
-        return column - o.column;
+        return o.column - column;
     }
 }

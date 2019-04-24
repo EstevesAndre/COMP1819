@@ -1,4 +1,6 @@
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 /* Gen /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 public
@@ -17,6 +19,27 @@ class ASTMethodDeclaration extends SimpleNode {
 
   public String toString() {
     return "method " + id;
+  }
+
+  void triggerSemanticAnalysis() throws SemanticException
+  {
+    List<String> args = new ArrayList<>();
+    String type = null;
+    SimpleNode argsNode = (SimpleNode)children[1];
+    if(children[0] instanceof ASTType){
+      type = ((ASTType)(children[0])).type;
+    }
+
+    for(Node arg : argsNode.children){
+      if(arg instanceof ASTArg){
+        args.add(((ASTArg)arg).getType());
+      }
+    }
+
+    STFunc func = new STFunc(id,type,line,column,args);
+    if(!addToSymbolTable(func.getKeyName(),func)){
+      throw new SemanticException("Function already defined: " + id + " at line " + line + ", column " + column + ".");
+    }
   }
 }
 /* JavaCC - OriginalChecksum=4db4e7d00203d02b3e258a10941c8c0e (do not edit this line) */

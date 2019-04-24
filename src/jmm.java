@@ -248,6 +248,9 @@ if (jjtc000) {
       id = jj_consume_token(IDENTIFIER);
       jj_consume_token(R_PAR);
 jjtn000.id = id.image;
+// add line and column
+jjtn000.line = id.beginLine;
+jjtn000.column = id.beginColumn;
       jj_consume_token(L_BRACE);
       label_3:
       while (true) {
@@ -314,6 +317,9 @@ if (jjtc000) {
       Type();
       id = jj_consume_token(IDENTIFIER);
       jj_consume_token(L_PAR);
+      // add line and column
+      jjtn000.line = id.beginLine;
+      jjtn000.column = id.beginColumn;
       Args();
       jj_consume_token(R_PAR);
       jj_consume_token(L_BRACE);
@@ -1045,6 +1051,9 @@ if (jjtc003) {
       t = jj_consume_token(IDENTIFIER);
       Expression_Alt();
 ASTid jjtn004 = new ASTid(JJTID);
+// add line and column
+jjtn004.line = t.beginLine;
+jjtn004.column = t.beginColumn;
                                         boolean jjtc004 = true;
                                         jjtree.openNodeScope(jjtn004);
       try {

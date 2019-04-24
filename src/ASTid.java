@@ -18,10 +18,18 @@ class ASTid extends SimpleNode {
 
   public String getType() {
     // Check if it is in the symbol table of simpleNode
-    String type = checkSymbolTable(info);
+    STEntry entry = checkSymbolTable(info);
 
-    return (type == null) ? "Error" : type;
+    return (entry == null) ? "Error" : entry.type;
   }
+
+  void triggerSemanticAnalysis() throws SemanticException
+  {
+      STEntry entry = checkSymbolTable(info);
+      
+      if(entry.compareTo(new STVar(info, "", line, column)) < 0)
+        throw new SemanticException("Variable may not have been initialized: " + info + " at line " + line + ", column " + column + ".");
+    }
 
 }
 /* JavaCC - OriginalChecksum=26eb977e90f51861269bce1db317103c (do not edit this line) */

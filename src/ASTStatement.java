@@ -28,9 +28,9 @@ class ASTStatement extends SimpleNode {
         throw new SemanticException("Invalid array access: " + id + " at line " + line + ", column " + column + ".");
       }
 
-      String answer = checkSymbolTable(id);
+      STEntry entry = checkSymbolTable(id);
 
-      if(!answer.equals("int[]")){
+      if(!entry.type.equals("int[]")){
         throw new SemanticException(id + " is not an array at line " + line + ", column " + column + ".");
       }
       
@@ -38,9 +38,15 @@ class ASTStatement extends SimpleNode {
 
     if(assign)
     {
-      String type = checkSymbolTable(id);
+      STEntry entry = checkSymbolTable(id);
 
-      if(type != null)
+      if(!(parent instanceof ASTIf) && !(parent instanceof ASTWhile) && entry.line == -1)
+      {
+        entry.line = line;
+        entry.column = column;
+      }
+
+      if(entry.type != null)
       {
         if(type.equals("int[]"))
         {
@@ -49,9 +55,9 @@ class ASTStatement extends SimpleNode {
             throw new SemanticException("Invalid assignment: expected int, found " + ((SimpleNode) children[1]).getType() + " at line " + line + ", column " + column + ".");
           }
         }
-        else if (!((SimpleNode) children[0]).getType().equals(type))
+        else if (!((SimpleNode) children[0]).getType().equals(entry.type))
         {
-          throw new SemanticException("Invalid assignment: expected " + type + ", found " + ((SimpleNode) children[0]).getType() + " at line " + line + ", column " + column + ".");
+          throw new SemanticException("Invalid assignment: expected " + entry.type + ", found " + ((SimpleNode) children[0]).getType() + " at line " + line + ", column " + column + ".");
         }
       }
       else
@@ -59,6 +65,15 @@ class ASTStatement extends SimpleNode {
         throw new SemanticException("Undeclared variable: " + id + " at line " + line + ", column " + column + ".");
       }
     }
+
+    if(type.equals("id"))
+    {
+      STEntry entry = checkSymbolTable(id);
+      
+      if(entry.compareTo(new STVar(id, type, line, column)) < 0)
+        throw new SemanticException("Variable may not have been initialized: " + id + " at line " + line + ", column " + column + ".");
+    }
   }
+
 }
 /* JavaCC - OriginalChecksum=d080604f9202b38270c2414fd96b3d8a (do not edit this line) */

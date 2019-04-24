@@ -148,7 +148,7 @@ public class SimpleNode implements Node {
     }
   }
 
-  public boolean addToSymbolTable(String id, String type)
+  public boolean addToSymbolTable(String id, STEntry entry)
   {
     Node n = parent;
     STEntry id_prev;
@@ -163,7 +163,7 @@ public class SimpleNode implements Node {
         if(id_prev != null)
           return false;
         
-        ((ASTClassDeclaration) n).symtbl.put(id, new STVar(type, line, column));
+        ((ASTClassDeclaration) n).symtbl.put(id, entry);
         return true;
       }
       
@@ -175,7 +175,7 @@ public class SimpleNode implements Node {
         if(id_prev != null)
           return false;
         
-        ((ASTMainDeclaration) n).symtbl.put(id, new STVar(type, line, column));
+        ((ASTMainDeclaration) n).symtbl.put(id, entry);
         return true;
       } 
 
@@ -187,7 +187,7 @@ public class SimpleNode implements Node {
         if(id_prev != null)
           return false;
         
-        ((ASTMethodDeclaration) n).symtbl.put(id, new STVar(type, line, column));
+        ((ASTMethodDeclaration) n).symtbl.put(id, entry);
         return true;
       } 
 
@@ -207,7 +207,7 @@ public class SimpleNode implements Node {
     return "Error";
   }
 
-  String checkSymbolTable(String info)
+  STEntry checkSymbolTable(String info)
   {
     SimpleNode tempParent = (SimpleNode)parent;
     STEntry answer = null;
@@ -221,11 +221,11 @@ public class SimpleNode implements Node {
       else if (tempParent instanceof ASTMethodDeclaration) {
         answer = ((ASTMethodDeclaration) tempParent).symtbl.get(info);
       }
-      if(answer != null) return answer.type;
+      if(answer != null) break;
       tempParent = (SimpleNode)tempParent.parent;
     }
 
-    return null;
+    return answer;
   }
 
 }
