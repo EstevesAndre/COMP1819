@@ -40,21 +40,31 @@ class ASTStatement extends SimpleNode {
     {
       STEntry entry = checkSymbolTable(id);
 
-      if(!(parent instanceof ASTIf) && !(parent instanceof ASTWhile) && entry.line == -1)
+      Node p = parent;
+      while(p != null)
+      {
+        if((p instanceof ASTIf) || (p instanceof ASTWhile))
+          break;
+
+        p = ((SimpleNode) p).parent;
+      }
+
+      if(p == null && entry.line == -1)
       {
         entry.line = line;
         entry.column = column;
       }
 
       if(entry.type != null)
-      { System.out.println("id: " + id);
-        System.out.println("type: " + type);
-        System.out.println("entry.type: " + entry.type);
+      { 
+        // System.out.println("id: " + id);
+        // System.out.println("type: " + type);
+        // System.out.println("entry.type: " + entry.type);
         
-        for(int i = 0; i < children.length; i++){
-          System.out.println("child" + i + " " + ((SimpleNode) children[i]).getType());
+        // for(int i = 0; i < children.length; i++){
+        //   System.out.println("child" + i + " " + ((SimpleNode) children[i]).getType());
 
-        }
+        // }
 
         if(entry.type.equals("int[]"))
         {
@@ -74,7 +84,7 @@ class ASTStatement extends SimpleNode {
       }
     }
 
-    if(type.equals("id"))
+    if(type != null && !assign && type.equals("id"))
     {
       STEntry entry = checkSymbolTable(id);
       

@@ -2,7 +2,7 @@ class init {
     public static void main(String[] a){
         int a;
         int b;
-        if(true)
+        while(true)
         {
         b = 1;
         }
