@@ -79,7 +79,7 @@ class ASTStatement extends SimpleNode {
     {
       STEntry entry = checkSymbolTable(id);
       
-      if(entry.compareTo(new STVar(id, type, line, column)) < 0)
+      if(entry != null && entry.compareTo(new STVar(id, type, line, column)) < 0)
         throw new SemanticException("Variable may not have been initialized: " + id + " at line " + line + ", column " + column + ".");
     }
   }
