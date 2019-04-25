@@ -131,7 +131,7 @@ public class SimpleNode implements Node {
   }
 
   public void semanticAnalysis() {
-    
+ 
     try {
       triggerSemanticAnalysis();
     } catch (SemanticException e) {
@@ -155,6 +155,7 @@ public class SimpleNode implements Node {
 
     while(n != null)
     {    
+
       if(n instanceof ASTClassDeclaration)
       {    
 
@@ -191,7 +192,7 @@ public class SimpleNode implements Node {
         return true;
       } 
 
-      n = (SimpleNode) parent.jjtGetParent();
+      n = ((SimpleNode) n).parent;
     }
 
     return false;

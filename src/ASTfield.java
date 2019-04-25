@@ -37,7 +37,7 @@ class ASTfield extends SimpleNode {
       if(children != null)
       {
         for(Node arg : children){
-  
+          
           if(arg instanceof ASTid){
             args.add(((ASTid)arg).getType());
           }

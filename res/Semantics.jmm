@@ -90,6 +90,8 @@ class Semantics {
 
     public int boolean_check() {
         
+        se_bool = 1;
+
         // valid
         _bool = true;
 
@@ -101,6 +103,7 @@ class Semantics {
 
     public int not_boolean() {
         _not_bool = false;
+        se_not_bool = 1;
 
         // valid
         _not_bool = !_not_bool;

@@ -30,11 +30,12 @@ class ASTMethodDeclaration extends SimpleNode {
       type = ((ASTType)(children[0])).type;
     }
 
-    for(Node arg : argsNode.children){
-      if(arg instanceof ASTArg){
-        args.add(((ASTArg)arg).getType());
+    if(argsNode.children != null)
+      for(Node arg : argsNode.children){
+        if(arg instanceof ASTArg){
+          args.add(((ASTArg)arg).getType());
+        }
       }
-    }
 
     STFunc func = new STFunc(id,type,line,column,args);
     if(!addToSymbolTable(func.getKeyName(),func)){
