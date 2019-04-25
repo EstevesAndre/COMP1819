@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /* Gen /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 public
 class ASTMethodDeclaration extends SimpleNode {
+public  int global_order = 0;
   public HashMap<String, STEntry> symtbl = new HashMap<String, STEntry>();
 
   public String id;
@@ -27,7 +28,7 @@ class ASTMethodDeclaration extends SimpleNode {
     String type = null;
     SimpleNode argsNode = (SimpleNode)children[1];
     if(children[0] instanceof ASTType){
-      type = ((ASTType)(children[0])).type;
+      type = ((ASTType)(children[0])).getType();
     }
 
     if(argsNode.children != null)
@@ -37,7 +38,7 @@ class ASTMethodDeclaration extends SimpleNode {
         }
       }
 
-    STFunc func = new STFunc(id,type,line,column,args);
+    STFunc func = new STFunc(-1, id,type,line,column,args);
     if(!addToSymbolTable(func.getKeyName(),func)){
       throw new SemanticException("Function already defined: " + id + " at line " + line + ", column " + column + ".");
     }

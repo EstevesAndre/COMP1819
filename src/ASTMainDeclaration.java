@@ -4,6 +4,7 @@ import java.util.HashMap;
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 public
 class ASTMainDeclaration extends SimpleNode {
+public  int global_order = 0;
   public HashMap<String, STEntry> symtbl = new HashMap<String, STEntry>();
 
   public String id;
@@ -24,7 +25,7 @@ class ASTMainDeclaration extends SimpleNode {
   {
     /* Symbol Table insertions */
 
-    if(!addToSymbolTable(id, new STVar(id, "String[]", line, column))){
+    if(!addToSymbolTable(id, new STVar(-1, id, "String[]", line, column))){
       throw new SemanticException("Variable already defined: " + id + " at line " + line + ", column " + column + ".");
     }
   }

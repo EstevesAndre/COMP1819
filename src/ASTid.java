@@ -27,7 +27,7 @@ class ASTid extends SimpleNode {
   {
       STEntry entry = checkSymbolTable(info);
       
-      if(entry == null || (entry.compareTo(new STVar(info, "", line, column)) < 0))
+      if(entry == null || (entry.compareTo(new STVar(-1, info, "", line, column)) < 0))
         throw new SemanticException("Variable may not have been initialized: " + info + " at line " + line + ", column " + column + ".");
     }
 

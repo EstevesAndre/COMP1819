@@ -47,8 +47,8 @@ class ASTfield extends SimpleNode {
           }
         }
       }
-      STFunc func = new STFunc(info,type,line,column,args);
-      if(!addToSymbolTable(func.getKeyName(),func)){
+      STFunc func = new STFunc(-1, info,type,line,column,args);
+      if(checkSymbolTable(func.getKeyName()) == null){
         throw new SemanticException("Function not defined: " + id + "() at line " + line + ", column " + column + ".");
       }
     }
@@ -59,6 +59,83 @@ class ASTfield extends SimpleNode {
       return "int";
 
     return ((SimpleNode) children[0]).getType();
+  }
+
+  public String getJasmin()
+  {
+    String out = "";
+    
+    if(children != null)
+      for (Node n : children) {
+        STEntry entry = checkSymbolTable(((ASTid) n).info);
+        if(entry != null)
+          out += "iload_" + entry.order + "\n";
+      }
+
+    out += "invokevirtual ";
+
+    if(!(parent instanceof ASTStatement))
+    {
+      Node n = parent;
+      while(n != null)
+      {
+        if(n instanceof ASTClassDeclaration)
+        {
+          out += ((ASTClassDeclaration) n).id;
+          break;
+        }
+        n = ((SimpleNode) n).parent;
+      }
+    }
+    else {out += ((ASTStatement) parent).id;}
+
+    out += "/" + info + "(";
+
+    List<String> args = new ArrayList<>();
+    String type = null;
+
+    if(children != null)
+    {
+      for(Node arg : children){
+        
+        if(arg instanceof ASTid){
+          args.add(((ASTid)arg).getType());
+        }
+        
+        if(arg instanceof ASTliteral){
+          args.add(((ASTliteral)arg).getType());
+        }
+      }
+    }
+    
+    STFunc func = new STFunc(-1, info,type,line,column,args);
+    STEntry entry = checkSymbolTable(func.getKeyName());
+
+    if(entry != null)
+    {
+      if(children != null)
+      {
+        for(Node arg : children){
+        
+          if(arg instanceof ASTid){
+            String t = ((SimpleNode) arg).getType();
+            if(t.equals("Error"))
+              out += "L"+((ASTid) arg).info + ";";
+            else
+              out += SimpleNode.getJasminType(t);
+          }
+          
+          if(arg instanceof ASTliteral){
+            out += SimpleNode.getJasminType(((SimpleNode) arg).getType());
+          }
+        }
+      }
+
+      out += ")" + SimpleNode.getJasminType(entry.type); 
+    }
+
+    out += "\n";
+    return out;
   }
 }
 /* JavaCC - OriginalChecksum=b1ed2277fe6b22d7aef0ccc7a29e9dd9 (do not edit this line) */

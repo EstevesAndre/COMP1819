@@ -32,7 +32,16 @@ class Semantics {
         this.boolean_check();
         this.not_boolean();
 
-        this.type_verify();
+        io.type_verify();
+
+        //temp for Jasmin testing
+        this.test(se_type1, se_type2);
+    }
+
+    //temp for Jasmin testing
+    public int test(int a, boolean b)
+    {
+        return a;
     }
 
     public int variable_initialization() {

@@ -21,7 +21,7 @@ class ASTArg extends SimpleNode {
     /* Symbol Table insertions */
     String type = ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : "");
 
-    if(!addToSymbolTable(id, new STVar(id, type, line, column))){
+    if(!addToSymbolTable(id, new STVar(-1, id, type, line, column))){
       throw new SemanticException("Variable already defined: " + id + " at line " + line + ", column " + column + ".");
     }
   }

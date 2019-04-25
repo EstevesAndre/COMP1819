@@ -3,9 +3,9 @@ import java.util.List;
 class STFunc extends STEntry {
     public List<String> argTypes;
 
-    STFunc(String id, String type, int line, int column, List<String> argTypes)
+    STFunc(int order, String id, String type, int line, int column, List<String> argTypes)
     {
-        super(id, type, line, column);
+        super(order, id, type, line, column);
 
         this.argTypes = argTypes;
     }

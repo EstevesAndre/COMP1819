@@ -1,6 +1,6 @@
 class STVar extends STEntry {
-    STVar(String id, String type, int line, int column)
+    STVar(int order, String id, String type, int line, int column)
     {
-        super(id, type, line, column);
+        super(order, id, type, line, column);
     }
 }

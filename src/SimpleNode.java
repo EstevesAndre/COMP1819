@@ -164,6 +164,8 @@ public class SimpleNode implements Node {
         if(id_prev != null)
           return false;
         
+        entry.order = ((ASTClassDeclaration) n).global_order;
+        ((ASTClassDeclaration) n).global_order++;
         ((ASTClassDeclaration) n).symtbl.put(id, entry);
         return true;
       }
@@ -176,6 +178,8 @@ public class SimpleNode implements Node {
         if(id_prev != null)
           return false;
         
+        entry.order = ((ASTMainDeclaration) n).global_order;
+        ((ASTMainDeclaration) n).global_order++;
         ((ASTMainDeclaration) n).symtbl.put(id, entry);
         return true;
       } 
@@ -187,7 +191,9 @@ public class SimpleNode implements Node {
 
         if(id_prev != null)
           return false;
-        
+
+        entry.order = ((ASTMethodDeclaration) n).global_order;
+        ((ASTMethodDeclaration) n).global_order++;
         ((ASTMethodDeclaration) n).symtbl.put(id, entry);
         return true;
       } 
@@ -201,6 +207,30 @@ public class SimpleNode implements Node {
   void triggerSemanticAnalysis() throws SemanticException
   {
     //to be overwritten
+  }
+
+  String getJasmin()
+  {
+    return "";
+  }
+
+  void printJasmin()
+  {
+    String j = getJasmin();
+
+    if(!j.isEmpty())
+    {
+      System.out.print("Jasmin: " + j);
+    }
+
+    if (children != null) {
+      for (int i = 0; i < children.length; ++i) {
+        SimpleNode n = (SimpleNode) children[i];
+        if (n != null) {
+          n.printJasmin();
+        }
+      }
+    }
   }
 
   public String getType() {
@@ -227,6 +257,22 @@ public class SimpleNode implements Node {
     }
 
     return answer;
+  }
+
+  public static String getJasminType(String type) {
+    switch(type)
+    {
+      case "void":
+        return "V";
+      case "int":
+        return "I";
+      case "int[]":
+        return "[I";
+      case "bool":
+        return "Z";
+    }
+
+    return "";
   }
 
 }

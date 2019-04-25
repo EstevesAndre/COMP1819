@@ -1,11 +1,13 @@
 abstract class STEntry implements Comparable<STEntry>{
+    public int order;
     public String id;
     public String type;
     public int line;
     public int column;
 
-    STEntry(String id, String type, int line, int column)
+    STEntry(int order, String id, String type, int line, int column)
     {
+        this.order = order;
         this.id = id;
         this.type = type;
         this.line = line;
