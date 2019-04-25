@@ -19,5 +19,14 @@ class ASTMainDeclaration extends SimpleNode {
   public String toString() {
     return "main args=" + id;
   }
+
+  void triggerSemanticAnalysis() throws SemanticException
+  {
+    /* Symbol Table insertions */
+
+    if(!addToSymbolTable(id, new STVar(id, "String[]", line, column))){
+      throw new SemanticException("Variable already defined: " + id + " at line " + line + ", column " + column + ".");
+    }
+  }
 }
 /* JavaCC - OriginalChecksum=3ab5bbea112e01d51552a7af0e602a02 (do not edit this line) */

@@ -13,7 +13,7 @@ class ASTVarDeclaration extends SimpleNode {
   }
 
   public String toString() {
-    return "arg " + id;
+    return "var " + id;
   }
 
   void triggerSemanticAnalysis() throws SemanticException

@@ -34,14 +34,17 @@ class ASTfield extends SimpleNode {
     else {
       List<String> args = new ArrayList<>();
       String type = null;
-      for(Node arg : children){
-
-        if(arg instanceof ASTid){
-          args.add(((ASTid)arg).getType());
-        }
-        
-        if(arg instanceof ASTliteral){
-          args.add(((ASTliteral)arg).getType());
+      if(children != null)
+      {
+        for(Node arg : children){
+  
+          if(arg instanceof ASTid){
+            args.add(((ASTid)arg).getType());
+          }
+          
+          if(arg instanceof ASTliteral){
+            args.add(((ASTliteral)arg).getType());
+          }
         }
       }
       STFunc func = new STFunc(info,type,line,column,args);
