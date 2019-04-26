@@ -38,6 +38,7 @@ class ASTStatement extends SimpleNode {
 
     if(assign)
     {
+      // entry is the entry of the variable for the value to the left of assign
       STEntry entry = checkSymbolTable(id);
 
       Node p = parent;
@@ -59,7 +60,14 @@ class ASTStatement extends SimpleNode {
       { 
         if(entry.type.equals("int[]"))
         {
-          if(!((SimpleNode) children[1]).getType().equals("int"))
+          if(children[0] instanceof AST_new){
+            AST_new new_node = ((AST_new)(children[0]));
+            if(new_node.info != "new"){
+              throw new SemanticException("Invalid assignment: expected int array, found " + new_node.info + " at line " + new_node.line + ", column " + new_node.column + ".");
+            }
+          }
+
+          if(children.length > 1 && !((SimpleNode) children[1]).getType().equals("int"))
           {
             throw new SemanticException("Invalid assignment: expected int, found " + ((SimpleNode) children[1]).getType() + " at line " + line + ", column " + column + ".");
           }

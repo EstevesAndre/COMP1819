@@ -1,7 +1,16 @@
 class erro {
      public static void main(String[] a){
-        if(a[1+2+3] < b[2+3]){
-            
-        }
+        boolean b;
+        int eita;
+        int[] quatro;
+        int[] arrayYeah;
+        Ident ident;
+
+        quatro = new int[2];
+        ident = new Ident();
+        quatro[2] = 2;
+
+        b = false && true;
+        eita = 2+2;
  }
 }

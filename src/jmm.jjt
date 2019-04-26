@@ -211,10 +211,10 @@ void Arg() : {Token id;} { Type() id=<IDENTIFIER> {jjtThis.id = id.image;} }
  *      boolean
  *      <identifier>
  */
-void Type() : {} {
+void Type() : {Token t;} {
     ( <INT> {jjtThis.type = "int";} ( <L_BRACKET> <R_BRACKET> {jjtThis.array = true;} )? ) |
     ( <BOOL> {jjtThis.type = "bool";} ) |
-    ( <IDENTIFIER> {jjtThis.type = "id";} )
+    ( t=<IDENTIFIER> {jjtThis.type = t.image;} )
 }
 
 /**

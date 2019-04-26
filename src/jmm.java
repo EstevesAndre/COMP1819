@@ -207,9 +207,9 @@ if (jjtc000) {
       // add line and column
       jjtn000.line = id.beginLine;
       jjtn000.column = id.beginColumn;
-
 jjtree.closeNodeScope(jjtn000, true);
                                        jjtc000 = false;
+jjtn000.id = id.image;
     } catch (Throwable jjte000) {
 if (jjtc000) {
       jjtree.clearNodeScope(jjtn000);
@@ -455,6 +455,7 @@ if (jjtc000) {
 
 jjtree.closeNodeScope(jjtn000, true);
                                                     jjtc000 = false;
+jjtn000.id = id.image;
     } catch (Throwable jjte000) {
 if (jjtc000) {
                                jjtree.clearNodeScope(jjtn000);
@@ -483,9 +484,9 @@ if (jjtc000) {
  *      <identifier>
  */
   static final public void Type() throws ParseException {/*@bgen(jjtree) Type */
-  ASTType jjtn000 = new ASTType(JJTTYPE);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
+               ASTType jjtn000 = new ASTType(JJTTYPE);
+               boolean jjtc000 = true;
+               jjtree.openNodeScope(jjtn000);Token t;
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case INT:{
@@ -512,10 +513,10 @@ jjtn000.type = "bool";
         break;
         }
       case IDENTIFIER:{
-        jj_consume_token(IDENTIFIER);
+        t = jj_consume_token(IDENTIFIER);
 jjtree.closeNodeScope(jjtn000, true);
-                     jjtc000 = false;
-jjtn000.type = "id";
+                       jjtc000 = false;
+jjtn000.type = t.image;
         break;
         }
       default:
@@ -1102,6 +1103,7 @@ AST_new jjtn006 = new AST_new(JJT_NEW);
 // add line and column
 jjtn006.line = tkn.beginLine;
 jjtn006.column = tkn.beginColumn;
+jjtn006.info = tkn.image; 
               boolean jjtc006 = true;
               jjtree.openNodeScope(jjtn006);
       try {

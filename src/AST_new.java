@@ -27,5 +27,14 @@ class AST_new extends SimpleNode {
       }
     }
   }
+
+  public String getType() {
+    
+    if(type.equals("array")){
+      return type;
+    }else {
+      return info;
+    }
+  }
 }
 /* JavaCC - OriginalChecksum=71f95ffa1708d3507896129b9ea23e12 (do not edit this line) */
