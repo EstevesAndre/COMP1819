@@ -18,7 +18,8 @@ public  int global_order = 0;
   }
 
   public String toString() {
-    return "class " + id + " " + ext != null ? ("extends " + ext) : "";
+    String extendsString = (ext != null) ? ("extends " + ext) : "";
+    return "class " + id + " " + extendsString;
   }
 }
 /* JavaCC - OriginalChecksum=18527d10e528b78e818ee6610e15139d (do not edit this line) */

@@ -1,0 +1,22 @@
+class SE_arity {
+
+    int number;
+
+    public static void main(String[] a) {
+        SE_arity ar1;
+        SE_arity ar2;
+        int[] result;
+
+        ar1 = new SE_arity();
+        ar2 = new SE_arity();
+
+        result = ar1.getArray();
+    }
+
+    public int[] getArray() {
+        int[] result;
+        result = new int[5];
+        return result;
+    }
+
+}
