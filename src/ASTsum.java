@@ -25,5 +25,117 @@ class ASTsum extends SimpleNode {
     }
   }
 
+  String getJasmin()
+  {
+    String out = "";
+
+    if(parent instanceof ASTsum ||
+    parent instanceof ASTsub ||
+    parent instanceof ASTmult ||
+    parent instanceof ASTdiv)
+    return "";
+
+    SimpleNode p = (SimpleNode) parent;
+
+    String assign = ((ASTStatement) p).id;
+
+    STEntry local = checkImediateSymbolTable(assign);
+    STEntry global = checkSymbolTable(assign);
+
+    if(local == null)
+    {
+      if(global != null)
+        out += "aload_0\n";
+    }
+
+    out += getJasminRecursive();
+
+    if(local == null)
+    {
+      if(global != null)
+        out += "putfield " + assign + "/" + global.order + "\n";
+    }
+    else
+    {
+      out += "istore " + local.order + "\n";
+    }
+
+    return out;
+  }
+
+
+  String getJasminRecursive()
+  {
+    String out = "";
+    
+
+    if(children[0] instanceof ASTid)
+    {
+      String arg0 = ((ASTid) children[0]).info;
+      STEntry local_0 = checkImediateSymbolTable(arg0);
+      STEntry global_0 = checkSymbolTable(arg0);
+
+      if(local_0 == null)
+      {
+        if(global_0 != null)
+        {
+          out += "aload_0\n";
+          out += "getfield " + arg0 + "/" + global_0.order + "\n";
+        }
+      }
+      else
+      {
+        out += "iload " + local_0.order + "\n";
+      }
+    }
+    else if (children[0] instanceof ASTliteral)
+    {
+      out += "ldc " + ((ASTliteral) children[0]).info + "\n";
+    }
+    else if (children[0] instanceof ASTsum)
+      out += ((ASTsum) children[0]).getJasminRecursive();
+    else if (children[0] instanceof ASTsub)
+      out += ((ASTsub) children[0]).getJasminRecursive();
+    else if (children[0] instanceof ASTmult)
+      out += ((ASTmult) children[0]).getJasminRecursive();
+    else if (children[0] instanceof ASTdiv)
+      out += ((ASTdiv) children[0]).getJasminRecursive();
+
+    if(children[1] instanceof ASTid)
+    {
+      String arg1 = ((ASTid) children[1]).info;
+      STEntry local_1 = checkImediateSymbolTable(arg1);
+      STEntry global_1 = checkSymbolTable(arg1);
+
+      if(local_1 == null)
+      {
+        if(global_1 != null)
+        {
+          out += "aload_0\n";
+          out += "getfield " + arg1 + "/" + global_1.order + "\n";
+        }
+      }
+      else
+      {
+        out += "iload " + local_1.order + "\n";
+      }
+    }
+    else if (children[1] instanceof ASTliteral)
+    {
+      out += "ldc " + ((ASTliteral) children[1]).info + "\n";
+    }
+    else if (children[1] instanceof ASTsum)
+      out += ((ASTsum) children[1]).getJasminRecursive();
+    else if (children[1] instanceof ASTsub)
+      out += ((ASTsub) children[1]).getJasminRecursive();
+    else if (children[1] instanceof ASTmult)
+      out += ((ASTmult) children[1]).getJasminRecursive();
+    else if (children[1] instanceof ASTdiv)
+      out += ((ASTdiv) children[1]).getJasminRecursive();
+    
+    out += "isum\n";
+
+    return out;
+  }
 }
 /* JavaCC - OriginalChecksum=fd58adc0663531e5eea42a153c98a773 (do not edit this line) */

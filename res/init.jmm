@@ -1,20 +1,12 @@
 class init {
-
-    public int testInt(int i, int j) {
-        int z;
-        z = 1;
-        return z;
-    }
-    public static void main(String[] a){
         int a;
+    public static void main(String[] a){
         int b;
-        init testClass;
-        while(true)
-        {
+        int c;
+
         b = 1;
-        }
-        a = b + 2;
-        testClass = new init();
-        testClass.testInt(a,b);
+        c = 2;
+
+        a = b + c * 2;
     }
 }

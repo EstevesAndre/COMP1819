@@ -214,7 +214,7 @@ public class SimpleNode implements Node {
     return "";
   }
 
-  void printJasmin()
+  public void printJasmin()
   {
     String j = getJasmin();
 
