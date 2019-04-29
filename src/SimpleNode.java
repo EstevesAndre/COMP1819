@@ -259,6 +259,44 @@ public class SimpleNode implements Node {
     return answer;
   }
 
+  STEntry checkImediateSymbolTable(String info)
+  {
+    SimpleNode tempParent = (SimpleNode)parent;
+    STEntry answer = null;
+    while(tempParent != null){
+      if (tempParent instanceof ASTClassDeclaration) {
+        answer = ((ASTClassDeclaration) tempParent).symtbl.get(info);
+        return answer;
+      }
+      else if (tempParent instanceof ASTMainDeclaration) {
+        answer = ((ASTMainDeclaration) tempParent).symtbl.get(info);
+        return answer;
+      }
+      else if (tempParent instanceof ASTMethodDeclaration) {
+        answer = ((ASTMethodDeclaration) tempParent).symtbl.get(info);
+        return answer;
+      }
+      if(answer != null) break;
+      tempParent = (SimpleNode)tempParent.parent;
+    }
+
+    return answer;
+  }
+
+  String getClassName()
+  {
+    SimpleNode tempParent = (SimpleNode)parent;
+    while(tempParent != null){
+      if (tempParent instanceof ASTClassDeclaration) {
+        return ((ASTClassDeclaration) tempParent).id;
+      }
+
+      tempParent = (SimpleNode)tempParent.parent;
+    }
+
+    return "";
+  }
+
   public static String getJasminType(String type) {
     switch(type)
     {

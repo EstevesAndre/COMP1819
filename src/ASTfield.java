@@ -67,9 +67,24 @@ class ASTfield extends SimpleNode {
     
     if(children != null)
       for (Node n : children) {
-        STEntry entry = checkSymbolTable(((ASTid) n).info);
+        STEntry entry = checkImediateSymbolTable(((ASTid) n).info);
         if(entry != null)
-          out += "iload_" + entry.order + "\n";
+        {
+          if(entry.type == "int")
+            out += "iload " + entry.order + "\n";
+          else
+            out += "aload " + entry.order + "\n";
+        }
+        else
+        {
+          entry = checkSymbolTable(((ASTid) n).info);
+          if(entry != null)
+          {
+            out += "aload_0\n";
+            out += "getfield " + getClassName() + "/" + entry.order + " " + getJasminType(entry.type) + "\n";
+          }
+        }
+
       }
 
     out += "invokevirtual ";
