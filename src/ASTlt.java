@@ -11,6 +11,11 @@ class ASTlt extends SimpleNode {
     super(p, id);
   }
 
+
+  public String getType() {
+    return "bool";
+  }
+
   void triggerSemanticAnalysis() throws SemanticException
   {
     SimpleNode left = (SimpleNode)children[0];
