@@ -220,7 +220,7 @@ public class SimpleNode implements Node {
 
     if(!j.isEmpty())
     {
-      System.out.print("Jasmin: " + j);
+      System.out.print("Jasmin: \n" + j);
     }
 
     if (children != null) {
