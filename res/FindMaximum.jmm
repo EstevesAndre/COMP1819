@@ -8,6 +8,7 @@ class FindMaximum {
 
 		i = 1;
 		maximum = arr[0];
+		value = 2 + arr.length;
 		while (i < arr.length) {
 			value = arr[i];
 			if (maximum < value) {

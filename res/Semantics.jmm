@@ -22,6 +22,18 @@ class Semantics {
     boolean _type1;
     boolean _type2; 
 
+    public int variable_initialization() {
+        _initialized = 1;
+
+        // valid
+        _initialized = _initialized + 1;
+
+        // not valid
+        _initialized = se_initialized + 1;
+
+        return 0;
+    }
+
     public static void main(String[] a){
         this.variable_initialization();
         
@@ -42,18 +54,6 @@ class Semantics {
     public int test(int a, boolean b)
     {
         return a;
-    }
-
-    public int variable_initialization() {
-        _initialized = 1;
-
-        // valid
-        _initialized = _initialized + 1;
-
-        // not valid
-        _initialized = se_initialized + 1;
-
-        return 0;
     }
 
     public int array_index() {

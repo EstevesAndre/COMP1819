@@ -130,6 +130,7 @@ public class SimpleNode implements Node {
     return id;
   }
 
+  // TODO: fazer analise semantica depois de ter symbol table completa
   public void semanticAnalysis() {
  
     try {

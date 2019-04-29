@@ -37,16 +37,19 @@ class ASTsum extends SimpleNode {
 
     SimpleNode p = (SimpleNode) parent;
 
-    String assign = ((ASTStatement) p).id;
+    String assign = null;
+    if(p instanceof ASTStatement)
+      assign = ((ASTStatement) p).id;
 
     STEntry local = checkImediateSymbolTable(assign);
     STEntry global = checkSymbolTable(assign);
 
-    if(local == null)
-    {
-      if(global != null)
-        out += "aload_0\n";
-    }
+    if(assign != null)
+      if(local == null)
+      {
+        if(global != null)
+          out += "aload_0\n";
+      }
 
     out += getJasminRecursive();
 
