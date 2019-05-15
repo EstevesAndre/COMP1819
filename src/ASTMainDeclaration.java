@@ -32,6 +32,7 @@ public  int global_order = 1;
 
   String getPreJasmin() {
     String out = ".method static public main(" + getJasminType("String[]") + ")" + getJasminType("void") + "\n";
+    out += ".limit locals " + (symtbl.size() + 1) + "\n";
     return out;
   }
 

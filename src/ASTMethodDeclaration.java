@@ -53,6 +53,8 @@ public class ASTMethodDeclaration extends SimpleNode {
 
     out += ")" + getJasminType(((ASTType) (children[0])).getType()) + "\n";
 
+    out += ".limit locals " + (symtbl.size() + 1) + "\n";
+
     return out;
   }
 
