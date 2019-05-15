@@ -25,7 +25,7 @@ class ASTmult extends SimpleNode {
     }
   }
 
-  String getJasmin()
+  String getPreJasmin()
   {
     String out = "";
 

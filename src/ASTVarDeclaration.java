@@ -26,7 +26,7 @@ class ASTVarDeclaration extends SimpleNode {
     }
   }
 
-  String getJasmin() {
+  String getPreJasmin() {
     String out = "";
 
     if(parent instanceof ASTClassDeclaration)

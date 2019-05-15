@@ -22,7 +22,7 @@ public  int global_order = 1;
     return "class " + id + " " + extendsString;
   }
 
-  public String getJasmin() {
+  public String getPreJasmin() {
     String out = ".class public " + id + "\n";
 
     if(ext != null)

@@ -42,7 +42,7 @@ public class ASTMethodDeclaration extends SimpleNode {
     }
   }
 
-  String getJasmin() {
+  String getPreJasmin() {
     String out = ".method public " + id + "(";
 
     ASTArgs args = (ASTArgs) children[1];
@@ -54,6 +54,10 @@ public class ASTMethodDeclaration extends SimpleNode {
     out += ")" + getJasminType(((ASTType) (children[0])).getType()) + "\n";
 
     return out;
+  }
+
+  String getPostJasmin() {
+    return ".end method\n";
   }
 }
 /*

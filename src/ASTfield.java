@@ -81,7 +81,7 @@ public class ASTfield extends SimpleNode {
     return ((SimpleNode) children[0]).getType();
   }
 
-  public String getJasmin() {
+  public String getPreJasmin() {
     String out = "";
 
     if (children != null)

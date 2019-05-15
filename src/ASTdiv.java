@@ -25,7 +25,7 @@ class ASTdiv extends SimpleNode {
     }
   }
 
-  String getJasmin()
+  String getPreJasmin()
   {
     String out = "";
 

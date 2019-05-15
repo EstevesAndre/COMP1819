@@ -210,14 +210,19 @@ public class SimpleNode implements Node {
     //to be overwritten
   }
 
-  String getJasmin()
+  String getPreJasmin()
+  {
+    return "";
+  }
+
+  String getPostJasmin()
   {
     return "";
   }
 
   public String printJasmin()
   {
-    String j = getJasmin();
+    String j = getPreJasmin();
 
     if (children != null) {
       for (int i = 0; i < children.length; ++i) {
@@ -227,6 +232,8 @@ public class SimpleNode implements Node {
         }
       }
     }
+
+    j += getPostJasmin();
 
     return j;
   }

@@ -25,7 +25,7 @@ class ASTsum extends SimpleNode {
     }
   }
 
-  String getJasmin()
+  String getPreJasmin()
   {
     String out = "";
 

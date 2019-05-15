@@ -8,4 +8,6 @@ ldc 2
 imul
 isum
 putfield a/1
+.end method
 .method public hi(ZI[I)I
+.end method
