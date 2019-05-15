@@ -215,23 +215,20 @@ public class SimpleNode implements Node {
     return "";
   }
 
-  public void printJasmin()
+  public String printJasmin()
   {
     String j = getJasmin();
-
-    if(!j.isEmpty())
-    {
-      System.out.print("Jasmin: \n" + j);
-    }
 
     if (children != null) {
       for (int i = 0; i < children.length; ++i) {
         SimpleNode n = (SimpleNode) children[i];
         if (n != null) {
-          n.printJasmin();
+          j += n.printJasmin();
         }
       }
     }
+
+    return j;
   }
 
   public String getType() {
@@ -309,6 +306,10 @@ public class SimpleNode implements Node {
         return "[I";
       case "bool":
         return "Z";
+      case "String":
+        return "Ljava/lang/String;";
+      case "String[]":
+        return "[Ljava/lang/String;"; 
     }
 
     return "";

@@ -21,5 +21,16 @@ public  int global_order = 1;
     String extendsString = (ext != null) ? ("extends " + ext) : "";
     return "class " + id + " " + extendsString;
   }
+
+  public String getJasmin() {
+    String out = ".class public " + id + "\n";
+
+    if(ext != null)
+    {
+      out += ".super " + ext + "\n";
+    }
+
+    return out;
+  }
 }
 /* JavaCC - OriginalChecksum=18527d10e528b78e818ee6610e15139d (do not edit this line) */

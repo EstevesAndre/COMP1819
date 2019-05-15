@@ -19,11 +19,22 @@ class ASTVarDeclaration extends SimpleNode {
   void triggerSemanticAnalysis() throws SemanticException
   {
     /* Symbol Table insertions */
-    String type = ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : "");
+    String type = ((ASTType) children[0]).getType() + (((ASTType) children[0]).array ? "[]" : "");
     
     if(!addToSymbolTable(id, new STVar(-1, id, type, -1, -1))){
       throw new SemanticException("Variable already defined: " + id + " at line " + line + ", column " + column + ".");
     }
+  }
+
+  String getJasmin() {
+    String out = "";
+
+    if(parent instanceof ASTClassDeclaration)
+    {
+      out += ".field public " + id + " " + getJasminType(((ASTType)(children[0])).getType()) + "\n";
+    }
+
+    return out;
   }
 }
 /* JavaCC - OriginalChecksum=4e604d6a77c4c7fb01df67af0b175127 (do not edit this line) */

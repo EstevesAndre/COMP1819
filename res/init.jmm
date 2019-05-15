@@ -9,4 +9,8 @@ class init {
 
         a = b + c * 2;
     }
+
+    public int hi(boolean j, int z, int[] aaa) {
+        return 1;
+    }
 }

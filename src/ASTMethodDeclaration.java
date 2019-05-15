@@ -43,5 +43,19 @@ public  int global_order = 1;
       throw new SemanticException("Function already defined: " + id + " at line " + line + ", column " + column + ".");
     }
   }
+
+  String getJasmin() {
+    String out = ".method public " + id + "(";
+    
+    ASTArgs args = (ASTArgs) children[1];
+
+    for(Node arg : args.children) {
+      out += getJasminType(((ASTType)(((ASTArg)(arg)).children[0])).getType());
+    }
+
+    out += ")"+ getJasminType(((ASTType)(children[0])).getType()) + "\n";
+
+    return out;
+  }
 }
 /* JavaCC - OriginalChecksum=4db4e7d00203d02b3e258a10941c8c0e (do not edit this line) */

@@ -42,7 +42,7 @@ public
     root.dump("");
     root.semanticAnalysis();
     root.printSymbolTable();
-    root.printJasmin();
+    System.out.println("Jasmin:\n" + root.printJasmin());
   }
 
   static void reportError(ParseException e, String statement, boolean recover) {

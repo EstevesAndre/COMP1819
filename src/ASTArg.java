@@ -19,7 +19,7 @@ class ASTArg extends SimpleNode {
   void triggerSemanticAnalysis() throws SemanticException
   {
     /* Symbol Table insertions */
-    String type = ((ASTType) children[0]).type + (((ASTType) children[0]).array ? "[]" : "");
+    String type = ((ASTType) children[0]).getType() + (((ASTType) children[0]).array ? "[]" : "");
 
     if(!addToSymbolTable(id, new STVar(-1, id, type, line, column))){
       throw new SemanticException("Variable already defined: " + id + " at line " + line + ", column " + column + ".");

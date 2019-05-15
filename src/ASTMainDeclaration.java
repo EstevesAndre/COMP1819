@@ -29,5 +29,11 @@ public  int global_order = 1;
       throw new SemanticException("Variable already defined: " + id + " at line " + line + ", column " + column + ".");
     }
   }
+
+  String getJasmin() {
+    String out = ".method static public main(" + getJasminType("String[]") + ")" + getJasminType("void") + "\n";
+
+    return out;
+  }
 }
 /* JavaCC - OriginalChecksum=3ab5bbea112e01d51552a7af0e602a02 (do not edit this line) */
