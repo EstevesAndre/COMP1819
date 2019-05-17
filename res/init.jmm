@@ -1,9 +1,13 @@
 class init {
-        int a;
+        int aaa;
     public static void main(String[] a){
-        int i;
+        int j;
+        boolean k;
 
-        i = 1 + this.hi(2+3);
+        j = 1;
+        aaa = j;
+        k = (1 + this.hi(2)) < aaa;
+
     }
 
     public int hi(int i) {

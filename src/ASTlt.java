@@ -26,117 +26,127 @@ class ASTlt extends SimpleNode {
     }
   }
 
-  // String getPreJasmin()
-  // {
-  //   String out = "";
+  String getPreJasmin()
+  {
+    String out = "";
 
-  //   if(parent instanceof ASTand)
-  //     return out;
+    if(parent instanceof ASTand)
+      return out;
 
-  //   SimpleNode p = (SimpleNode) parent;
+    SimpleNode p = (SimpleNode) parent;
 
-  //   String assign = null;
-  //   if(p instanceof ASTStatement)
-  //     assign = ((ASTStatement) p).id;
+    String assign = null;
+    if(p instanceof ASTStatement)
+      assign = ((ASTStatement) p).id;
 
-  //   STEntry local = checkImediateSymbolTable(assign);
-  //   STEntry global = checkSymbolTable(assign);
+    STEntry local = checkImediateSymbolTable(assign);
+    STEntry global = checkSymbolTable(assign);
 
-  //   if(assign != null)
-  //     if(local == null)
-  //     {
-  //       if(global != null)
-  //         out += "aload_0\n";
-  //     }
+    if(assign != null)
+      if(local == null)
+      {
+        if(global != null)
+          out += "aload_0\n";
+      }
 
-  //   out += getJasminRecursive();
+    out += getJasminRecursive();
 
-  //   if(local == null)
-  //   {
-  //     if(global != null)
-  //       out += "putfield " + assign + "/" + global.order + "\n";
-  //   }
-  //   else
-  //   {
-  //     out += "istore " + local.order + "\n";
-  //   }
+    int label1 = SimpleNode.getNextLabel();
+    int label2 = SimpleNode.getNextLabel();
 
-  //   return out;
-  // }
+    out += "if_icmpge LABEL" + label1 + "\n"; 
+    out += "iconst_1\n";
+    out += "goto LABEL" + label2 + "\n";
+    out += "LABEL" + label1 + ": iconst_0\n";
 
-  // String getJasminRecursive()
-  // {
-  //   String out = "";
+    if(local == null)
+    {
+      if(global != null)
+        out += "LABEL" + label2 + ": putfield " + assign + "/" + global.order + "\n";
+    }
+    else
+    {
+      out += "LABEL" + label2 + ": istore " + local.order + "\n";
+    }
+
+    return out;
+  }
+
+  String getJasminRecursive()
+  {
+    String out = "";
     
 
-  //   if(children[0] instanceof ASTid)
-  //   {
-  //     String arg0 = ((ASTid) children[0]).info;
-  //     STEntry local_0 = checkImediateSymbolTable(arg0);
-  //     STEntry global_0 = checkSymbolTable(arg0);
+    if(children[0] instanceof ASTid)
+    {
+      String arg0 = ((ASTid) children[0]).info;
+      STEntry local_0 = checkImediateSymbolTable(arg0);
+      STEntry global_0 = checkSymbolTable(arg0);
 
-  //     if(local_0 == null)
-  //     {
-  //       if(global_0 != null)
-  //       {
-  //         out += "aload_0\n";
-  //         out += "getfield " + arg0 + "/" + global_0.order + "\n";
-  //       }
-  //     }
-  //     else
-  //     {
-  //       out += "iload " + local_0.order + "\n";
-  //     }
-  //   }
-  //   else if (children[0] instanceof ASTliteral)
-  //   {
-  //     out += "ldc " + ((ASTliteral) children[0]).info + "\n";
-  //   }
-  //   else if (children[0] instanceof ASTsum)
-  //     out += ((ASTsum) children[0]).getJasminRecursive();
-  //   else if (children[0] instanceof ASTsub)
-  //     out += ((ASTsub) children[0]).getJasminRecursive();
-  //   else if (children[0] instanceof ASTmult)
-  //     out += ((ASTmult) children[0]).getJasminRecursive();
-  //   else if (children[0] instanceof ASTdiv)
-  //     out += ((ASTdiv) children[0]).getJasminRecursive();
+      if(local_0 == null)
+      {
+        if(global_0 != null)
+        {
+          out += "aload_0\n";
+          out += "getfield " + arg0 + "/" + global_0.order + "\n";
+        }
+      }
+      else
+      {
+        out += "iload " + local_0.order + "\n";
+      }
+    }
+    else if (children[0] instanceof ASTliteral)
+    {
+      out += "ldc " + ((ASTliteral) children[0]).info + "\n";
+    }
+    else if (children[0] instanceof ASTsum)
+      out += ((ASTsum) children[0]).getJasminRecursive();
+    else if (children[0] instanceof ASTsub)
+      out += ((ASTsub) children[0]).getJasminRecursive();
+    else if (children[0] instanceof ASTmult)
+      out += ((ASTmult) children[0]).getJasminRecursive();
+    else if (children[0] instanceof ASTdiv)
+      out += ((ASTdiv) children[0]).getJasminRecursive();
+    else if (children[0] instanceof AST_this)
+      out += ((ASTfield) ((AST_this) children[0]).children[0]).getJasminRecursive();
 
-  //   if(children[1] instanceof ASTid)
-  //   {
-  //     String arg1 = ((ASTid) children[1]).info;
-  //     STEntry local_1 = checkImediateSymbolTable(arg1);
-  //     STEntry global_1 = checkSymbolTable(arg1);
+    if(children[1] instanceof ASTid)
+    {
+      String arg1 = ((ASTid) children[1]).info;
+      STEntry local_1 = checkImediateSymbolTable(arg1);
+      STEntry global_1 = checkSymbolTable(arg1);
 
-  //     if(local_1 == null)
-  //     {
-  //       if(global_1 != null)
-  //       {
-  //         out += "aload_0\n";
-  //         out += "getfield " + arg1 + "/" + global_1.order + "\n";
-  //       }
-  //     }
-  //     else
-  //     {
-  //       out += "iload " + local_1.order + "\n";
-  //     }
-  //   }
-  //   else if (children[1] instanceof ASTliteral)
-  //   {
-  //     out += "ldc " + ((ASTliteral) children[1]).info + "\n";
-  //   }
-  //   else if (children[1] instanceof ASTsum)
-  //     out += ((ASTsum) children[1]).getJasminRecursive();
-  //   else if (children[1] instanceof ASTsub)
-  //     out += ((ASTsub) children[1]).getJasminRecursive();
-  //   else if (children[1] instanceof ASTmult)
-  //     out += ((ASTmult) children[1]).getJasminRecursive();
-  //   else if (children[1] instanceof ASTdiv)
-  //     out += ((ASTdiv) children[1]).getJasminRecursive();
+      if(local_1 == null)
+      {
+        if(global_1 != null)
+        {
+          out += "aload_0\n";
+          out += "getfield " + arg1 + "/" + global_1.order + "\n";
+        }
+      }
+      else
+      {
+        out += "iload " + local_1.order + "\n";
+      }
+    }
+    else if (children[1] instanceof ASTliteral)
+    {
+      out += "ldc " + ((ASTliteral) children[1]).info + "\n";
+    }
+    else if (children[1] instanceof ASTsum)
+      out += ((ASTsum) children[1]).getJasminRecursive();
+    else if (children[1] instanceof ASTsub)
+      out += ((ASTsub) children[1]).getJasminRecursive();
+    else if (children[1] instanceof ASTmult)
+      out += ((ASTmult) children[1]).getJasminRecursive();
+    else if (children[1] instanceof ASTdiv)
+      out += ((ASTdiv) children[1]).getJasminRecursive();
+    else if (children[1] instanceof AST_this)
+      out += ((ASTfield) ((AST_this) children[1]).children[0]).getJasminRecursive();
 
-  //   out += "idiv\n";
-    
-  //   return out;
-  // }
+    return out;
+  }
 
 }
 /* JavaCC - OriginalChecksum=d93dfc0190a2180e38dcb1524cfa67e0 (do not edit this line) */

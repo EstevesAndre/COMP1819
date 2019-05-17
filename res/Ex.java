@@ -5,9 +5,18 @@ public static void main(String[] a){
 }
 
 public int oi(int i){
-    int j = hi(1);
+    boolean k;
 
-    return j;
+    a = 3;
+    k = (1 + this.hi(2)) < a;
+
+    if(a < 20){
+        a = 4;
+    } else{
+        a = 5;
+    }
+
+    return 2;
 }
 
 public int hi(int i) {

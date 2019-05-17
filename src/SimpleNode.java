@@ -13,6 +13,8 @@ public class SimpleNode implements Node {
   public int line;
   public int column;
 
+  static int labelCount = 0;
+
   public SimpleNode(int i) {
     id = i;
   }
@@ -322,6 +324,10 @@ public class SimpleNode implements Node {
     return "";
   }
 
+  public static int getNextLabel()
+  {
+    return ++labelCount;
+  }
 }
 
 /* JavaCC - OriginalChecksum=1170bfc765845a635efbe3cdd869fe92 (do not edit this line) */
