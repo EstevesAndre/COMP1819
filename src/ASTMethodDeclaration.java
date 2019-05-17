@@ -47,9 +47,10 @@ public class ASTMethodDeclaration extends SimpleNode {
 
     ASTArgs args = (ASTArgs) children[1];
 
-    for (Node arg : args.children) {
-      out += getJasminType(((ASTType) (((ASTArg) (arg)).children[0])).getType());
-    }
+    if(args.children != null)
+      for (Node arg : args.children) {
+        out += getJasminType(((ASTType) (((ASTArg) (arg)).children[0])).getType());
+      }
 
     out += ")" + getJasminType(((ASTType) (children[0])).getType()) + "\n";
 

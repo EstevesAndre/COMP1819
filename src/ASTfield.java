@@ -84,25 +84,59 @@ public class ASTfield extends SimpleNode {
   public String getPreJasmin() {
     String out = "";
 
+    if(((SimpleNode)(parent)).parent instanceof ASTsum ||
+    ((SimpleNode)(parent)).parent instanceof ASTsub ||
+    ((SimpleNode)(parent)).parent instanceof ASTmult ||
+    ((SimpleNode)(parent)).parent instanceof ASTdiv ||
+    ((SimpleNode)(parent)).parent instanceof ASTlt ||
+    ((SimpleNode)(parent)).parent instanceof ASTand ||
+    ((SimpleNode)(parent)).parent instanceof ASTfield)
+      return "";
+    else
+    {
+      out += getJasminRecursive();
+    }
+
+    return out;
+  }
+
+  public String getJasminRecursive()
+  {
+    String out = "";
     if (children != null)
       for (Node n : children) {
-        STEntry entry = null;
         if (n instanceof ASTid)
-          entry = checkImediateSymbolTable(((ASTid) n).info);
-
-        if (entry != null) {
-          if (entry.type == "int")
-            out += "iload " + entry.order + "\n";
-          else
-            out += "aload " + entry.order + "\n";
-        } else {
-          if (n instanceof ASTid)
+        {
+          STEntry entry = null;
             entry = checkImediateSymbolTable(((ASTid) n).info);
+  
           if (entry != null) {
-            out += "aload_0\n";
-            out += "getfield " + getClassName() + "/" + entry.order + " " + getJasminType(entry.type) + "\n";
+            if (entry.type == "int")
+              out += "iload " + entry.order + "\n";
+            else
+              out += "aload " + entry.order + "\n";
+          } else {
+            if (n instanceof ASTid)
+              entry = checkSymbolTable(((ASTid) n).info);
+            if (entry != null) {
+              out += "aload_0\n";
+              out += "getfield " + getClassName() + "/" + entry.order + " " + getJasminType(entry.type) + "\n";
+            }
           }
         }
+        else if (n instanceof ASTliteral)
+        {
+          out += "ldc " + ((ASTliteral) n).info + "\n";
+        }
+        else if (n instanceof ASTsum)
+          out += ((ASTsum) n).getJasminRecursive();
+        else if (n instanceof ASTsub)
+          out += ((ASTsub) n).getJasminRecursive();
+        else if (n instanceof ASTmult)
+          out += ((ASTmult) n).getJasminRecursive();
+        else if (n instanceof ASTdiv)
+          out += ((ASTdiv) n).getJasminRecursive();
+        
 
       }
 
@@ -128,16 +162,11 @@ public class ASTfield extends SimpleNode {
 
     if (children != null) {
       for (Node arg : children) {
-
-        if (arg instanceof ASTid) {
-          args.add(((ASTid) arg).getType());
-        }
-
-        if (arg instanceof ASTliteral) {
-          args.add(((ASTliteral) arg).getType());
-        }
+          args.add(((SimpleNode) arg).getType());
       }
     }
+
+    System.out.println(info + " - " + type);
 
     STFunc func = new STFunc(-1, info, type, line, column, args);
     STEntry entry = checkSymbolTable(func.getKeyName());
@@ -154,9 +183,18 @@ public class ASTfield extends SimpleNode {
               out += SimpleNode.getJasminType(t);
           }
 
-          if (arg instanceof ASTliteral) {
+          else if (arg instanceof ASTliteral) {
             out += SimpleNode.getJasminType(((SimpleNode) arg).getType());
           }
+
+          else if (arg instanceof ASTsum)
+            out += SimpleNode.getJasminType(((ASTsum) arg).getType());
+          else if (arg instanceof ASTsub)
+            out += SimpleNode.getJasminType(((ASTsub) arg).getType());
+          else if (arg instanceof ASTmult)
+            out += SimpleNode.getJasminType(((ASTmult) arg).getType());
+          else if (arg instanceof ASTdiv)
+            out += SimpleNode.getJasminType(((ASTdiv) arg).getType());
         }
       }
 
