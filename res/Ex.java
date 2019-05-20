@@ -9,6 +9,41 @@ public static void main(String[] a){
     x = !true;
 }
 
+public boolean lt(){
+
+    int a;
+    int b;
+    int c;
+    int d;
+    boolean x;
+
+    x = 2 < 3;
+
+    if(2 < 3){
+
+    }
+    else{
+
+    }
+
+    if(a < b){
+        a = 2;
+        b = 3;
+    }
+    else{
+        b = 1;
+    }
+
+    if(2 + a < 3){
+
+    }
+    else{
+
+    }
+
+    return true;
+}
+
 public int oi(int i){
     boolean k;
     boolean t;

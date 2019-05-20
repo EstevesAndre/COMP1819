@@ -74,7 +74,7 @@ class ASTand extends SimpleNode {
 
     return out;
   }
-
+  // TODO: orders estao todos mamados
   String getJasminRecursive(boolean assign, int label)
   {
     String out = "";

@@ -69,7 +69,7 @@ public class ASTMethodDeclaration extends SimpleNode {
 
   String getPostJasmin() {
 
-    // TODO: verificar return
+    // TODO: verificar load para dar return
 
     String out = "";
     System.out.println("CARALHO: " + id);

@@ -30,7 +30,7 @@ class ASTlt extends SimpleNode {
   {
     String out = "";
 
-    if(parent instanceof ASTand)
+    if(parent instanceof ASTand || parent instanceof ASTIf || parent instanceof ASTWhile)
       return out;
 
     SimpleNode p = (SimpleNode) parent;
