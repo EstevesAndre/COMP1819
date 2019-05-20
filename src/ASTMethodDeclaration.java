@@ -9,6 +9,8 @@ public class ASTMethodDeclaration extends SimpleNode {
 
   public String id;
 
+  private List<String> args;
+
   public ASTMethodDeclaration(int id) {
     super(id);
   }
@@ -21,13 +23,9 @@ public class ASTMethodDeclaration extends SimpleNode {
     return "method " + id;
   }
 
-  void triggerSemanticAnalysis() throws SemanticException {
+  private List<String> getArgs(){
     List<String> args = new ArrayList<>();
-    String type = null;
     SimpleNode argsNode = (SimpleNode) children[1];
-    if (children[0] instanceof ASTType) {
-      type = ((ASTType) (children[0])).getType();
-    }
 
     if (argsNode.children != null)
       for (Node arg : argsNode.children) {
@@ -35,6 +33,16 @@ public class ASTMethodDeclaration extends SimpleNode {
           args.add(((ASTArg) arg).getType());
         }
       }
+
+      return args;
+  }
+
+  void triggerSemanticAnalysis() throws SemanticException {
+    args = this.getArgs();
+    String type = null;
+    if (children[0] instanceof ASTType) {
+      type = ((ASTType) (children[0])).getType();
+    }
 
     STFunc func = new STFunc(-1, id, type, line, column, args);
     if (!addToSymbolTable(func.getKeyName(), func)) {
@@ -60,7 +68,42 @@ public class ASTMethodDeclaration extends SimpleNode {
   }
 
   String getPostJasmin() {
-    return ".end method\n";
+
+    // TODO: verificar return
+
+    String out = "";
+    System.out.println("CARALHO: " + id);
+    String st_id = new String(id);
+
+
+    for(String arg : args){
+      st_id += " " + arg;
+    }
+
+    STEntry naosei = checkSymbolTable(st_id);
+
+    if(naosei != null)
+    {
+
+      System.out.println("ID: " + naosei.id);
+      if(naosei.type != null)
+      System.out.println("TYPE: " + naosei.type);
+
+      switch(naosei.type){
+        case "bool":
+        case "int":
+        out+="ireturn";
+        break;
+        case "void":
+        out+="return";
+        break;
+        default:
+        out+="areturn";
+        break;
+      }
+     
+    }
+    return out + "\n.end method\n";
   }
 }
 /*

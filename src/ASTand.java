@@ -24,5 +24,131 @@ class ASTand extends SimpleNode {
   public String getType() {
     return "bool";
   }
+
+  String getPreJasmin()
+  {
+    String out = "";
+
+    if(parent instanceof ASTand)
+      return out;
+
+    SimpleNode p = (SimpleNode) parent;
+
+    String assign = null;
+    if(p instanceof ASTStatement)
+      assign = ((ASTStatement) p).id;
+
+    STEntry local = checkImediateSymbolTable(assign);
+    STEntry global = checkSymbolTable(assign);
+
+    if(assign != null)
+      if(local == null)
+      {
+        if(global != null)
+          out += "aload_0\n";
+      }
+
+      int label1 = SimpleNode.getNextLabel();
+      int label2 = SimpleNode.getNextLabel();
+
+      out += getJasminRecursive(true, label1);
+
+    if(children[1] instanceof ASTlt)
+      out += "if_icmpge LABEL" + label1 + "\n"; 
+    else
+      out += "ifeq LABEL" + label1 + "\n"; 
+
+    out += "iconst_1\n";
+    out += "goto LABEL" + label2 + "\n";
+    out += "LABEL" + label1 + ": iconst_0\n";
+
+    if(local == null)
+    {
+      if(global != null)
+        out += "LABEL" + label2 + ": putfield " + assign + "/" + global.order + "\n";
+    }
+    else
+    {
+      out += "LABEL" + label2 + ": istore " + local.order + "\n";
+    }
+
+    return out;
+  }
+
+  String getJasminRecursive(boolean assign, int label)
+  {
+    String out = "";
+    
+
+    if(children[0] instanceof ASTid)
+    {
+      String arg0 = ((ASTid) children[0]).info;
+      STEntry local_0 = checkImediateSymbolTable(arg0);
+      STEntry global_0 = checkSymbolTable(arg0);
+
+      if(local_0 == null)
+      {
+        if(global_0 != null)
+        {
+          out += "aload_0\n";
+          out += "getfield " + arg0 + "/" + global_0.order + "\n";
+        }
+      }
+      else
+      {
+        out += "iload " + local_0.order + "\n";
+      }
+    }
+    else if (children[0] instanceof ASTliteral)
+    {
+      out += "ldc " + ((ASTliteral) children[0]).info + "\n";
+    }
+    else if (children[0] instanceof ASTlt)
+      out += ((ASTlt) children[0]).getJasminRecursive();
+    else if (children[0] instanceof ASTand)
+      out += ((ASTand) children[0]).getJasminRecursive(false, 0);
+    else if (children[0] instanceof AST_this)
+      out += ((ASTfield) ((AST_this) children[0]).children[0]).getJasminRecursive();
+
+    if(assign)
+    {
+      if(children[0] instanceof ASTlt)
+        out += "if_icmpge LABEL" + label + "\n"; 
+      else
+        out += "ifeq LABEL" + label + "\n"; 
+    }
+
+    if(children[1] instanceof ASTid)
+    {
+      String arg1 = ((ASTid) children[1]).info;
+      STEntry local_1 = checkImediateSymbolTable(arg1);
+      STEntry global_1 = checkSymbolTable(arg1);
+
+      if(local_1 == null)
+      {
+        if(global_1 != null)
+        {
+          out += "aload_0\n";
+          out += "getfield " + arg1 + "/" + global_1.order + "\n";
+        }
+      }
+      else
+      {
+        out += "iload " + local_1.order + "\n";
+      }
+    }
+    else if (children[1] instanceof ASTliteral)
+    {
+      out += "ldc " + ((ASTliteral) children[1]).info + "\n";
+    }
+    else if (children[0] instanceof ASTlt)
+      out += ((ASTlt) children[0]).getJasminRecursive();
+    else if (children[0] instanceof ASTand)
+      out += ((ASTand) children[0]).getJasminRecursive(false, 0);
+    else if (children[0] instanceof AST_this)
+      out += ((ASTfield) ((AST_this) children[0]).children[0]).getJasminRecursive();
+
+    return out;
+  }
 }
 /* JavaCC - OriginalChecksum=f0e373d6ade899c6fe25fd68511409dc (do not edit this line) */

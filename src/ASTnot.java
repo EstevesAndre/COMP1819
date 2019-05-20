@@ -36,5 +36,11 @@ class ASTnot extends SimpleNode {
     }
 
   }
+
+  String getJasminRecursive(){
+    String out = "";
+
+    return out;
+  }
 }
 /* JavaCC - OriginalChecksum=fb8d63593e6952b5ae4d23414e6729e2 (do not edit this line) */

@@ -1,12 +1,11 @@
 class init {
         int aaa;
     public static void main(String[] a){
-        int j;
         boolean k;
 
-        j = 1;
-        aaa = j;
+        aaa = 1+1;
         k = (1 + this.hi(2)) < aaa;
+        k = true && true && true;
 
     }
 
