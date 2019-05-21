@@ -18,6 +18,12 @@ ireturn
 .end method
 .method public whilef()Z
 .limit locals 4
+iconst_true
+istore 1
+iconst_false
+istore 2
+iconst_true
+istore 3
 LABEL3:
 iload 1
 iload 2
@@ -32,7 +38,11 @@ ireturn
 .end method
 .method public arrays()I
 .limit locals 2
-ldc 1istore 1
+ldc 4
+newarray int
+astore 1
+ldc 1
+istore 1
 ldc 2
 ldc 3
 imul
