@@ -81,27 +81,7 @@ public class ASTfield extends SimpleNode {
     return ((SimpleNode) children[0]).getType();
   }
 
-  public String getPreJasmin() {
-    String out = "";
-
-    if(((SimpleNode)(parent)).parent instanceof ASTsum ||
-    ((SimpleNode)(parent)).parent instanceof ASTsub ||
-    ((SimpleNode)(parent)).parent instanceof ASTmult ||
-    ((SimpleNode)(parent)).parent instanceof ASTdiv ||
-    ((SimpleNode)(parent)).parent instanceof ASTlt ||
-    ((SimpleNode)(parent)).parent instanceof ASTand ||
-    ((SimpleNode)(parent)).parent instanceof ASTfield)
-      return "";
-    else
-    {
-      out += getJasminRecursive();
-    }
-
-    return out;
-  }
-
-  public String getJasminRecursive()
-  {
+  public String getJasmin() {
     String out = "";
     if (children != null)
       for (Node n : children) {

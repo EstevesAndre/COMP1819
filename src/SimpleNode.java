@@ -212,30 +212,18 @@ public class SimpleNode implements Node {
     //to be overwritten
   }
 
-  String getPreJasmin()
+  String getJasmin()
   {
-    return "";
-  }
-
-  String getPostJasmin()
-  {
-    return "";
-  }
-
-  public String printJasmin()
-  {
-    String j = getPreJasmin();
+    String j = "";
 
     if (children != null) {
       for (int i = 0; i < children.length; ++i) {
         SimpleNode n = (SimpleNode) children[i];
         if (n != null) {
-          j += n.printJasmin();
+          j += n.getJasmin();
         }
       }
     }
-
-    j += getPostJasmin();
 
     return j;
   }

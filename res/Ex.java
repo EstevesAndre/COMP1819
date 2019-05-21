@@ -16,6 +16,8 @@ public boolean lt(){
     int c;
     int d;
     boolean x;
+    a = 2;
+    b = 3;
 
     x = 2 < 3;
 

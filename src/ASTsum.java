@@ -25,18 +25,9 @@ class ASTsum extends SimpleNode {
     }
   }
 
-  String getPreJasmin()
+  String getJasmin()
   {
     String out = "";
-
-    if(parent instanceof ASTsum ||
-    parent instanceof ASTsub ||
-    parent instanceof ASTmult ||
-    parent instanceof ASTdiv ||
-    parent instanceof ASTlt ||
-    parent instanceof ASTand ||
-    parent instanceof ASTfield)
-    return "";
 
     SimpleNode p = (SimpleNode) parent;
 
@@ -107,7 +98,7 @@ class ASTsum extends SimpleNode {
     else if (children[0] instanceof ASTdiv)
       out += ((ASTdiv) children[0]).getJasminRecursive();
     else if (children[0] instanceof AST_this)
-      out += ((ASTfield) ((AST_this) children[0]).children[0]).getJasminRecursive();
+      out += ((ASTfield) ((AST_this) children[0]).children[0]).getJasmin();
 
     if(children[1] instanceof ASTid)
     {
@@ -141,7 +132,7 @@ class ASTsum extends SimpleNode {
     else if (children[1] instanceof ASTdiv)
       out += ((ASTdiv) children[1]).getJasminRecursive();
     else if (children[1] instanceof AST_this)
-      out += ((ASTfield) ((AST_this) children[1]).children[0]).getJasminRecursive();
+      out += ((ASTfield) ((AST_this) children[1]).children[0]).getJasmin();
     
     out += "isum\n";
 

@@ -3,9 +3,7 @@ class init {
     public static void main(String[] a){
         boolean k;
 
-        aaa = 1+1;
-        k = (1 + this.hi(2)) < aaa;
-        k = true && true && true;
+        k = true && false;
 
     }
 

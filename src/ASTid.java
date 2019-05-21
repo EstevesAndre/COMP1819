@@ -30,6 +30,5 @@ class ASTid extends SimpleNode {
       if(entry == null || (entry.compareTo(new STVar(-1, info, "", line, column)) < 0))
         throw new SemanticException("Variable may not have been initialized: " + info + " at line " + line + ", column " + column + ".");
     }
-
 }
 /* JavaCC - OriginalChecksum=26eb977e90f51861269bce1db317103c (do not edit this line) */

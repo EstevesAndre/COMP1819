@@ -25,7 +25,7 @@ class ASTand extends SimpleNode {
     return "bool";
   }
 
-  String getPreJasmin()
+  String getJasmin()
   {
     String out = "";
 
@@ -99,16 +99,16 @@ class ASTand extends SimpleNode {
         out += "iload " + local_0.order + "\n";
       }
     }
-    else if (children[0] instanceof ASTliteral)
+    else if (children[0] instanceof ASTbool)
     {
-      out += "ldc " + ((ASTliteral) children[0]).info + "\n";
+      out += "iconst_" + (((ASTbool) children[0]).info ? 1 : 0) + "\n";
     }
     else if (children[0] instanceof ASTlt)
       out += ((ASTlt) children[0]).getJasminRecursive();
     else if (children[0] instanceof ASTand)
       out += ((ASTand) children[0]).getJasminRecursive(false, 0);
     else if (children[0] instanceof AST_this)
-      out += ((ASTfield) ((AST_this) children[0]).children[0]).getJasminRecursive();
+      out += ((ASTfield) ((AST_this) children[0]).children[0]).getJasmin();
 
     if(assign)
     {
@@ -137,16 +137,16 @@ class ASTand extends SimpleNode {
         out += "iload " + local_1.order + "\n";
       }
     }
-    else if (children[1] instanceof ASTliteral)
+    else if (children[1] instanceof ASTbool)
     {
-      out += "ldc " + ((ASTliteral) children[1]).info + "\n";
+      out += "iconst_" + (((ASTbool) children[1]).info ? 1 : 0) + "\n";
     }
     else if (children[0] instanceof ASTlt)
       out += ((ASTlt) children[0]).getJasminRecursive();
     else if (children[0] instanceof ASTand)
       out += ((ASTand) children[0]).getJasminRecursive(false, 0);
     else if (children[0] instanceof AST_this)
-      out += ((ASTfield) ((AST_this) children[0]).children[0]).getJasminRecursive();
+      out += ((ASTfield) ((AST_this) children[0]).children[0]).getJasmin();
 
     return out;
   }

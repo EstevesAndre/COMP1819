@@ -50,7 +50,7 @@ public class ASTMethodDeclaration extends SimpleNode {
     }
   }
 
-  String getPreJasmin() {
+  String getJasmin() {
     String out = ".method public " + id + "(";
 
     ASTArgs args = (ASTArgs) children[1];
@@ -64,31 +64,30 @@ public class ASTMethodDeclaration extends SimpleNode {
 
     out += ".limit locals " + (symtbl.size() + 1) + "\n";
 
-    return out;
-  }
-
-  String getPostJasmin() {
-
-    // TODO: verificar load para dar return
-
-    String out = "";
-    System.out.println("CARALHO: " + id);
-    String st_id = new String(id);
-
-
-    for(String arg : args){
-      st_id += " " + arg;
+    if (children != null) {
+      for (int i = 0; i < children.length; ++i) {
+        SimpleNode n = (SimpleNode) children[i];
+        if (n != null) {
+          out += n.getJasmin();
+        }
+      }
     }
 
+    String st_id = new String(id);
+  
+    for(String arg : this.args){
+      st_id += " " + arg;
+    }
+  
     STEntry naosei = checkSymbolTable(st_id);
-
+  
     if(naosei != null)
     {
-
+  
       System.out.println("ID: " + naosei.id);
       if(naosei.type != null)
       System.out.println("TYPE: " + naosei.type);
-
+  
       switch(naosei.type){
         case "bool":
         case "int":

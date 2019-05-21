@@ -30,14 +30,23 @@ public  int global_order = 1;
     }
   }
 
-  String getPreJasmin() {
+  String getJasmin() {
     String out = ".method static public main(" + getJasminType("String[]") + ")" + getJasminType("void") + "\n";
     out += ".limit locals " + (symtbl.size() + 1) + "\n";
+    
+    if (children != null) {
+      for (int i = 0; i < children.length; ++i) {
+        SimpleNode n = (SimpleNode) children[i];
+        if (n != null) {
+          out += n.getJasmin();
+        }
+      }
+    }
+    
+    out += ".end method\n";
+
     return out;
   }
 
-  String getPostJasmin() {
-    return ".end method\n";
-  }
 }
 /* JavaCC - OriginalChecksum=3ab5bbea112e01d51552a7af0e602a02 (do not edit this line) */

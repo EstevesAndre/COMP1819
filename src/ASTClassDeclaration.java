@@ -22,12 +22,21 @@ public  int global_order = 1;
     return "class " + id + " " + extendsString;
   }
 
-  public String getPreJasmin() {
+  public String getJasmin() {
     String out = ".class public " + id + "\n";
 
     if(ext != null)
     {
       out += ".super " + ext + "\n";
+    }
+
+    if (children != null) {
+      for (int i = 0; i < children.length; ++i) {
+        SimpleNode n = (SimpleNode) children[i];
+        if (n != null) {
+          out += n.getJasmin();
+        }
+      }
     }
 
     return out;

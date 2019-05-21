@@ -9,67 +9,67 @@ public class ASTIf extends SimpleNode {
     super(p, id);
   }
 
-  public String getPreJasmin() {
-    String out = "";
+  // public String getJasmin() {
+  //   String out = "";
 
-    Node first_child = children[0];
-    Node true_statements = children[1];
-    Node else_statements = children[2];
+  //   Node first_child = children[0];
+  //   Node true_statements = children[1];
+  //   Node else_statements = children[2];
 
-    out+=getJasminRecursive();
-    int label1 = SimpleNode.getNextLabel();
-    int label2 = SimpleNode.getNextLabel();
+  //   out+=getJasminRecursive();
+  //   int label1 = SimpleNode.getNextLabel();
+  //   int label2 = SimpleNode.getNextLabel();
 
-    if(first_child instanceof ASTlt){
-      out+="if_icmpge LABEL" + label1 + "\n";
-      // codigo dos true_statements
-      out+="goto LABEL" + label2 + "\n";
-      out+="LABEL" + label1 + ":\n";
-      //codigo dos else statements
-    }
+  //   if(first_child instanceof ASTlt){
+  //     out+="if_icmpge LABEL" + label1 + "\n";
+  //     // codigo dos true_statements
+  //     out+="goto LABEL" + label2 + "\n";
+  //     out+="LABEL" + label1 + ":\n";
+  //     //codigo dos else statements
+  //   }
 
 
-    return out;
-  }
+  //   return out;
+  // }
 
-  public String getJasminRecursive() {
-    String out = "";
-    Node first_child = children[0];
+  // public String getJasminRecursive() {
+  //   String out = "";
+  //   Node first_child = children[0];
 
-    if(first_child instanceof ASTid)
-    {
-      String arg0 = ((ASTid) first_child).info;
-      STEntry local_0 = checkImediateSymbolTable(arg0);
-      STEntry global_0 = checkSymbolTable(arg0);
+  //   if(first_child instanceof ASTid)
+  //   {
+  //     String arg0 = ((ASTid) first_child).info;
+  //     STEntry local_0 = checkImediateSymbolTable(arg0);
+  //     STEntry global_0 = checkSymbolTable(arg0);
 
-      if(local_0 == null)
-      {
-        if(global_0 != null)
-        {
-          out += "aload_0\n";
-          out += "getfield " + arg0 + "/" + global_0.order + "\n";
-        }
-      }
-      else
-      {
-        out += "iload " + local_0.order + "\n";
-      }
-    }
-    else if (first_child instanceof ASTliteral)
-    {
-      out += "ldc " + ((ASTliteral) first_child).info + "\n";
-    }
-    else if(first_child instanceof ASTlt){
-      out += ((ASTlt) first_child).getJasminRecursive();
-    }
-    else if(first_child instanceof ASTand){
-      out += ((ASTand) first_child).getJasminRecursive(false, 0);
-    }
-    else if (first_child instanceof AST_this)
-      out += ((ASTfield) ((AST_this) first_child).children[0]).getJasminRecursive();
+  //     if(local_0 == null)
+  //     {
+  //       if(global_0 != null)
+  //       {
+  //         out += "aload_0\n";
+  //         out += "getfield " + arg0 + "/" + global_0.order + "\n";
+  //       }
+  //     }
+  //     else
+  //     {
+  //       out += "iload " + local_0.order + "\n";
+  //     }
+  //   }
+  //   else if (first_child instanceof ASTliteral)
+  //   {
+  //     out += "ldc " + ((ASTliteral) first_child).info + "\n";
+  //   }
+  //   else if(first_child instanceof ASTlt){
+  //     out += ((ASTlt) first_child).getJasminRecursive();
+  //   }
+  //   else if(first_child instanceof ASTand){
+  //     out += ((ASTand) first_child).getJasminRecursive(false, 0);
+  //   }
+  //   else if (first_child instanceof AST_this)
+  //     out += ((ASTfield) ((AST_this) first_child).children[0]).getJasminRecursive();
 
-    return out;
-  }
+  //   return out;
+  // }
 
 }
 /*

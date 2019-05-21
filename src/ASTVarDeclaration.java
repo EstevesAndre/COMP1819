@@ -26,12 +26,21 @@ class ASTVarDeclaration extends SimpleNode {
     }
   }
 
-  String getPreJasmin() {
+  String getJasmin() {
     String out = "";
 
     if(parent instanceof ASTClassDeclaration)
     {
       out += ".field public " + id + " " + getJasminType(((ASTType)(children[0])).getType()) + "\n";
+    }
+
+    if (children != null) {
+      for (int i = 0; i < children.length; ++i) {
+        SimpleNode n = (SimpleNode) children[i];
+        if (n != null) {
+          out += n.getJasmin();
+        }
+      }
     }
 
     return out;

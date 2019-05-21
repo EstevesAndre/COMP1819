@@ -43,7 +43,7 @@ public class jmm/* @bgen(jjtree) */ implements jmmTreeConstants, jmmConstants {/
     writeJasminFile(args[0], root);
 
    
-    System.out.println("Jasmin:\n" + root.printJasmin());
+    System.out.println("Jasmin:\n" + root.getJasmin());
   }
 
   static void writeJasminFile(String fileName, SimpleNode root){
@@ -52,7 +52,7 @@ public class jmm/* @bgen(jjtree) */ implements jmmTreeConstants, jmmConstants {/
     try {
       FileOutputStream fstream = new FileOutputStream(jasminFileName);
       BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fstream));
-      bw.write(root.printJasmin());
+      bw.write(root.getJasmin());
       bw.close();
     } catch (IOException e) {
       // TODO Auto-generated catch block
