@@ -7,7 +7,11 @@ class init {
 
     }
 
-    public int hi(int i) {
-        return i;
+    public boolean hi(int i) {
+        return this.fds();
+    }
+
+    public boolean fds(){
+        return true;
     }
 }

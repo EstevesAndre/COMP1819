@@ -11,7 +11,13 @@ goto LABEL2
 LABEL1: iconst_0
 LABEL2: istore 1
 .end method
-.method public hi(I)I
+.method public hi(I)Z
 .limit locals 2
+invokevirtual init/fds()Z
+ireturn
+.end method
+.method public fds()Z
+.limit locals 1
+iconst_ 1
 ireturn
 .end method

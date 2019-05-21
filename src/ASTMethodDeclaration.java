@@ -23,7 +23,7 @@ public class ASTMethodDeclaration extends SimpleNode {
     return "method " + id;
   }
 
-  private List<String> getArgs(){
+  private List<String> getArgs() {
     List<String> args = new ArrayList<>();
     SimpleNode argsNode = (SimpleNode) children[1];
 
@@ -34,7 +34,7 @@ public class ASTMethodDeclaration extends SimpleNode {
         }
       }
 
-      return args;
+    return args;
   }
 
   void triggerSemanticAnalysis() throws SemanticException {
@@ -55,7 +55,7 @@ public class ASTMethodDeclaration extends SimpleNode {
 
     ASTArgs args = (ASTArgs) children[1];
 
-    if(args.children != null)
+    if (args.children != null)
       for (Node arg : args.children) {
         out += getJasminType(((ASTType) (((ASTArg) (arg)).children[0])).getType());
       }
@@ -64,43 +64,70 @@ public class ASTMethodDeclaration extends SimpleNode {
 
     out += ".limit locals " + (symtbl.size() + 1) + "\n";
 
+    String st_id = new String(id);
+
+    for (String arg : this.args) {
+      st_id += " " + arg;
+    }
+
+    STEntry ret_val = checkSymbolTable(st_id);
+
     if (children != null) {
       for (int i = 0; i < children.length; ++i) {
         SimpleNode n = (SimpleNode) children[i];
+
+        if(i == children.length -1 && !ret_val.type.equals("void"))
+          break;
+
         if (n != null) {
           out += n.getJasmin();
         }
       }
     }
 
-    String st_id = new String(id);
-  
-    for(String arg : this.args){
-      st_id += " " + arg;
+
+
+    Node return_value = children[children.length - 1];
+
+    if (return_value instanceof ASTliteral) {
+      out += "ldc " + ((ASTliteral) return_value).info + "\n";
+    } else if (return_value instanceof ASTbool) {
+      out += "iconst_ " + (((ASTbool) return_value).info ? 1 : 0) + "\n";
+    } else if (return_value instanceof ASTid) {
+      String info = ((ASTid) return_value).info;
+      STEntry entry = checkImediateSymbolTable(info);
+
+      if (entry != null) {
+        if (entry.type == "int")
+          out += "iload " + entry.order + "\n";
+        else
+          out += "aload " + entry.order + "\n";
+      } else {
+        entry = checkSymbolTable(info);
+        if (entry != null) {
+          out += "aload_0\n";
+          out += "getfield " + getClassName() + "/" + entry.order + " " + getJasminType(entry.type) + "\n";
+        }
+      }
+    } else {
+      out += ((SimpleNode) return_value).getJasmin();
     }
-  
-    STEntry naosei = checkSymbolTable(st_id);
-  
-    if(naosei != null)
-    {
-  
-      System.out.println("ID: " + naosei.id);
-      if(naosei.type != null)
-      System.out.println("TYPE: " + naosei.type);
-  
-      switch(naosei.type){
-        case "bool":
-        case "int":
-        out+="ireturn";
+
+    if (ret_val != null) {
+
+      switch (ret_val.type) {
+      case "bool":
+      case "int":
+        out += "ireturn";
         break;
-        case "void":
-        out+="return";
+      case "void":
+        out += "return";
         break;
-        default:
-        out+="areturn";
+      default:
+        out += "areturn";
         break;
       }
-     
+
     }
     return out + "\n.end method\n";
   }
