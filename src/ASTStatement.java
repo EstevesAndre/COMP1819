@@ -92,5 +92,25 @@ class ASTStatement extends SimpleNode {
     }
   }
 
+  // public String getJasmin(){
+  //   String out = "";
+
+  //   if(assign) {
+      
+  //   }
+  //   else{
+  //     if (children != null) {
+  //       for (int i = 0; i < children.length; ++i) {
+  //         SimpleNode n = (SimpleNode) children[i];
+  //         if (n != null) {
+  //           out += n.getJasmin();
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   return out;
+  // }
+
 }
 /* JavaCC - OriginalChecksum=d080604f9202b38270c2414fd96b3d8a (do not edit this line) */

@@ -29,7 +29,7 @@ public boolean lt(){
     }
 
     if(a < b){
-        a = 2;
+        a = 2 * 3;
         b = 3;
     }
     else{

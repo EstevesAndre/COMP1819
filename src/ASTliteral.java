@@ -19,5 +19,38 @@ class ASTliteral extends SimpleNode {
   public String getType() {
     return "int";
   }
+
+  public String getJasmin()
+  {
+    String out = "";
+    SimpleNode p = (SimpleNode) parent;
+
+    String assign = null;
+    if(p instanceof ASTStatement)
+      assign = ((ASTStatement) p).id;
+
+    STEntry local = checkImediateSymbolTable(assign);
+    STEntry global = checkSymbolTable(assign);
+
+    if(assign != null)
+    {
+      if(local == null)
+      {
+        if(global != null)
+        {
+          out += "aload_0\n";
+          out += "ldc " + info + "\n";
+          out += "putfield " + assign + "/" + global.order + "\n";
+        }
+      }
+      else
+      {
+        out += "ldc " + info + "\n";
+        out += "istore " + local.order + "\n";
+      }
+    }
+      
+    return out;
+  }
 }
 /* JavaCC - OriginalChecksum=570004d639550726751648828304833a (do not edit this line) */

@@ -1,0 +1,70 @@
+Compiled from "init.java"
+class init {
+  int aaa;
+
+  init();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: iconst_0
+       1: istore_1
+       2: return
+
+  public boolean hi(int);
+    Code:
+       0: aload_0
+       1: invokevirtual #2                  // Method fds:()Z
+       4: ireturn
+
+  public boolean whilef();
+    Code:
+       0: iconst_1
+       1: istore_1
+       2: iconst_0
+       3: istore_2
+       4: iconst_1
+       5: istore_3
+       6: iload_1
+       7: ifeq          21
+      10: iload_2
+      11: ifeq          21
+      14: iload_3
+      15: ifeq          21
+      18: goto          6
+      21: iconst_1
+      22: ireturn
+
+  public void arrays();
+    Code:
+      CRIAR
+      ______
+       0: iconst_4      DAR LOAD AO TAMANHO
+       1: newarray       int     CRIAR ARRAY
+       3: astore_1      GUARDAR NA VARIAVEL
+       ______
+       GUARDAR VALOR
+       ________
+       4: aload_1       PUSH AO ARRAY
+       5: iconst_1      PUSH  AO INDICE
+       6: bipush        6    PUSH AO VALOR
+       8: iastore       GUARDAR NA VARIAVEL
+       __________
+       ACESSAR VALOR
+       _______ 
+       9: aload_1       PUSH AO ARRAY 
+      10: iconst_2      PUSH AO INDICE
+      11: iaload        POP DO VALOR
+      ________
+      12: iconst_2
+      13: if_icmpge     16
+      16: return
+
+  public boolean fds();
+    Code:
+       0: iconst_1
+       1: ireturn
+}

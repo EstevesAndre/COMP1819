@@ -20,5 +20,38 @@ class ASTbool extends SimpleNode {
     return "bool";
   }
 
+  public String getJasmin()
+  {
+    String out = "";
+    SimpleNode p = (SimpleNode) parent;
+
+    String assign = null;
+    if(p instanceof ASTStatement)
+      assign = ((ASTStatement) p).id;
+
+    STEntry local = checkImediateSymbolTable(assign);
+    STEntry global = checkSymbolTable(assign);
+
+    if(assign != null)
+    {
+      if(local == null)
+      {
+        if(global != null)
+        {
+          out += "aload_0\n";
+          out += "iconst_" + info + "\n";
+          out += "putfield " + assign + "/" + global.order + "\n";
+        }
+      }
+      else
+      {
+        out += "iconst_" + info + "\n";
+        out += "istore " + local.order + "\n";
+      }
+    }
+      
+    return out;
+  }
+
 }
 /* JavaCC - OriginalChecksum=7064e952aa942fd46131a1edde577da1 (do not edit this line) */
