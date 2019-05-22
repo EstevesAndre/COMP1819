@@ -54,6 +54,31 @@ class init {
         return 0;
     }
 
+    public boolean not(){
+
+        boolean x;
+        boolean y;
+
+        x = true;
+        y = false;
+
+        if(!!y){
+
+        }
+        else{
+
+        }
+
+        if(!x){
+
+        }
+        else{
+            
+        }
+
+        return true;
+    }
+
     public boolean fds(){
         return true;
     }

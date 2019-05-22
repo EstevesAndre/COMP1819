@@ -51,6 +51,21 @@ ldc 2
 ldc 0
 ireturn
 .end method
+.method public not()Z
+.limit locals 3
+iconst_true
+istore 1
+iconst_false
+istore 2
+iload 2
+iconst_1
+iload 1
+ifeq LABEL9
+goto LABEL10
+LABEL9:
+iconst_ 1
+ireturn
+.end method
 .method public fds()Z
 .limit locals 1
 iconst_ 1

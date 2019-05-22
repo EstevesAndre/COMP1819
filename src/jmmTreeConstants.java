@@ -19,12 +19,12 @@ public interface jmmTreeConstants
   public int JJTSUB = 15;
   public int JJTMULT = 16;
   public int JJTDIV = 17;
-  public int JJTLITERAL = 18;
-  public int JJTBOOL = 19;
-  public int JJTID = 20;
-  public int JJT_THIS = 21;
-  public int JJT_NEW = 22;
-  public int JJTNOT = 23;
+  public int JJTNOT = 18;
+  public int JJTLITERAL = 19;
+  public int JJTBOOL = 20;
+  public int JJTID = 21;
+  public int JJT_THIS = 22;
+  public int JJT_NEW = 23;
   public int JJTFIELD = 24;
 
 
@@ -47,13 +47,13 @@ public interface jmmTreeConstants
     "sub",
     "mult",
     "div",
+    "not",
     "literal",
     "bool",
     "id",
     "_this",
     "_new",
-    "not",
     "field",
   };
 }
-/* JavaCC - OriginalChecksum=d0befbf9c9c285c985f26ee7d2badd42 (do not edit this line) */
+/* JavaCC - OriginalChecksum=e30f052f2deea00be4bdac16eaf6c33f (do not edit this line) */
