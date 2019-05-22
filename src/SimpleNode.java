@@ -9,6 +9,7 @@ public class SimpleNode implements Node, ASTNode {
   protected int id;
   protected Object value;
   protected jmm parser;
+  protected SymbolTable symbolTable;
 
   public int line;
   public int column;
@@ -134,7 +135,7 @@ public class SimpleNode implements Node, ASTNode {
 
   // TODO: fazer analise semantica depois de ter symbol table completa
   public void semanticAnalysis() {
- 
+
     try {
       triggerSemanticAnalysis();
     } catch (SemanticException e) {
@@ -143,7 +144,7 @@ public class SimpleNode implements Node, ASTNode {
 
     if (children != null) {
       for (int i = 0; i < children.length; ++i) {
-        SimpleNode n = (SimpleNode)children[i];
+        SimpleNode n = (SimpleNode) children[i];
         if (n != null) {
           n.semanticAnalysis();
         }
@@ -151,55 +152,50 @@ public class SimpleNode implements Node, ASTNode {
     }
   }
 
-  public boolean addToSymbolTable(String id, STEntry entry)
-  {
+  public boolean addToSymbolTable(String id, STEntry entry) {
     Node n = parent;
     STEntry id_prev;
 
-    while(n != null)
-    {    
+    while (n != null) {
 
-      if(n instanceof ASTClassDeclaration)
-      {    
+      if (n instanceof ASTClassDeclaration) {
 
         id_prev = ((ASTClassDeclaration) n).symtbl.get(id);
 
-        if(id_prev != null)
+        if (id_prev != null)
           return false;
-        
+
         entry.order = ((ASTClassDeclaration) n).global_order;
         ((ASTClassDeclaration) n).global_order++;
         ((ASTClassDeclaration) n).symtbl.put(id, entry);
         return true;
       }
-      
-      if(n instanceof ASTMainDeclaration)
-      {    
+
+      if (n instanceof ASTMainDeclaration) {
 
         id_prev = ((ASTMainDeclaration) n).symtbl.get(id);
 
-        if(id_prev != null)
+        if (id_prev != null)
           return false;
-        
+
         entry.order = ((ASTMainDeclaration) n).global_order;
         ((ASTMainDeclaration) n).global_order++;
         ((ASTMainDeclaration) n).symtbl.put(id, entry);
         return true;
-      } 
+      }
 
-      if(n instanceof ASTMethodDeclaration)
-      {    
+      if (n instanceof ASTMethodDeclaration) {
 
         id_prev = ((ASTMethodDeclaration) n).symtbl.get(id);
 
-        if(id_prev != null)
+        if (id_prev != null)
           return false;
 
         entry.order = ((ASTMethodDeclaration) n).global_order;
         ((ASTMethodDeclaration) n).global_order++;
         ((ASTMethodDeclaration) n).symtbl.put(id, entry);
         return true;
-      } 
+      }
 
       n = ((SimpleNode) n).parent;
     }
@@ -207,25 +203,8 @@ public class SimpleNode implements Node, ASTNode {
     return false;
   }
 
-  void triggerSemanticAnalysis() throws SemanticException
-  {
-    //to be overwritten
-  }
-
-  String getJasmin()
-  {
-    String j = "";
-
-    if (children != null) {
-      for (int i = 0; i < children.length; ++i) {
-        SimpleNode n = (SimpleNode) children[i];
-        if (n != null) {
-          j += n.getJasmin();
-        }
-      }
-    }
-
-    return j;
+  void triggerSemanticAnalysis() throws SemanticException {
+    // to be overwritten
   }
 
   public String getType() {
@@ -233,87 +212,80 @@ public class SimpleNode implements Node, ASTNode {
     return "Error";
   }
 
-  STEntry checkSymbolTable(String info)
-  {
-    SimpleNode tempParent = (SimpleNode)parent;
+  STEntry checkSymbolTable(String info) {
+    SimpleNode tempParent = (SimpleNode) parent;
     STEntry answer = null;
-    while(tempParent != null){
+    while (tempParent != null) {
       if (tempParent instanceof ASTClassDeclaration) {
         answer = ((ASTClassDeclaration) tempParent).symtbl.get(info);
-      }
-      else if (tempParent instanceof ASTMainDeclaration) {
+      } else if (tempParent instanceof ASTMainDeclaration) {
         answer = ((ASTMainDeclaration) tempParent).symtbl.get(info);
-      }
-      else if (tempParent instanceof ASTMethodDeclaration) {
+      } else if (tempParent instanceof ASTMethodDeclaration) {
         answer = ((ASTMethodDeclaration) tempParent).symtbl.get(info);
       }
-      if(answer != null) break;
-      tempParent = (SimpleNode)tempParent.parent;
+      if (answer != null)
+        break;
+      tempParent = (SimpleNode) tempParent.parent;
     }
 
     return answer;
   }
 
-  STEntry checkImediateSymbolTable(String info)
-  {
-    SimpleNode tempParent = (SimpleNode)parent;
+  STEntry checkImediateSymbolTable(String info) {
+    SimpleNode tempParent = (SimpleNode) parent;
     STEntry answer = null;
-    while(tempParent != null){
+    while (tempParent != null) {
       if (tempParent instanceof ASTClassDeclaration) {
         answer = ((ASTClassDeclaration) tempParent).symtbl.get(info);
         return answer;
-      }
-      else if (tempParent instanceof ASTMainDeclaration) {
+      } else if (tempParent instanceof ASTMainDeclaration) {
         answer = ((ASTMainDeclaration) tempParent).symtbl.get(info);
         return answer;
-      }
-      else if (tempParent instanceof ASTMethodDeclaration) {
+      } else if (tempParent instanceof ASTMethodDeclaration) {
         answer = ((ASTMethodDeclaration) tempParent).symtbl.get(info);
         return answer;
       }
-      if(answer != null) break;
-      tempParent = (SimpleNode)tempParent.parent;
+      if (answer != null)
+        break;
+      tempParent = (SimpleNode) tempParent.parent;
     }
 
     return answer;
   }
 
-  String getClassName()
-  {
-    SimpleNode tempParent = (SimpleNode)parent;
-    while(tempParent != null){
+  String getClassName() {
+    SimpleNode tempParent = (SimpleNode) parent;
+    while (tempParent != null) {
       if (tempParent instanceof ASTClassDeclaration) {
         return ((ASTClassDeclaration) tempParent).id;
       }
 
-      tempParent = (SimpleNode)tempParent.parent;
+      tempParent = (SimpleNode) tempParent.parent;
     }
 
     return "";
   }
 
   public static String getJasminType(String type) {
-    switch(type)
-    {
-      case "void":
-        return "V";
-      case "int":
-        return "I";
-      case "int[]":
-        return "[I";
-      case "bool":
-        return "Z";
-      case "String":
-        return "Ljava/lang/String;";
-      case "String[]":
-        return "[Ljava/lang/String;"; 
+    switch (type) {
+    case "void":
+      return "V";
+    case "int":
+      return "I";
+    case "int[]":
+      return "[I";
+    case "bool":
+      return "Z";
+    case "String":
+      return "Ljava/lang/String;";
+    case "String[]":
+      return "[Ljava/lang/String;";
     }
 
     return "";
   }
 
-  public static int getNextLabel()
-  {
+  public static int getNextLabel() {
     return ++labelCount;
   }
 
@@ -325,7 +297,7 @@ public class SimpleNode implements Node, ASTNode {
       for (int i = 0; i < children.length; ++i) {
         SimpleNode n = (SimpleNode) children[i];
         if (n != null) {
-         j += n.accept(visitor);
+          j += n.accept(visitor);
         }
       }
 
@@ -337,4 +309,7 @@ public class SimpleNode implements Node, ASTNode {
 
 }
 
-/* JavaCC - OriginalChecksum=1170bfc765845a635efbe3cdd869fe92 (do not edit this line) */
+/*
+ * JavaCC - OriginalChecksum=1170bfc765845a635efbe3cdd869fe92 (do not edit this
+ * line)
+ */

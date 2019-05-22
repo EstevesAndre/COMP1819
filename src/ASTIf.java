@@ -9,67 +9,10 @@ public class ASTIf extends SimpleNode {
     super(p, id);
   }
 
-  public String getJasmin() {
-    String out = "";
-
-    Node first_child = children[0];
-    Node true_statements = children[1];
-    Node else_statements = children[2];
-
-    out += getJasminRecursive();
-    int label1 = SimpleNode.getNextLabel();
-    int label2 = SimpleNode.getNextLabel();
-
-    if (first_child instanceof ASTlt) {
-      out += "if_icmpge LABEL" + label1 + "\n";
-      // codigo dos true_statements
-      out += ((SimpleNode) true_statements).getJasmin();
-      out += "goto LABEL" + label2 + "\n";
-      out += "LABEL" + label1 + ":\n";
-      // codigo dos else statements
-      out += ((SimpleNode) else_statements).getJasmin();
-    } else if (first_child instanceof ASTand) {
-
-    } else if (first_child instanceof ASTfield || first_child instanceof ASTid || first_child instanceof ASTbool) {
-      out += "ifeq LABEL" + label1 + "\n";
-      out += ((SimpleNode) true_statements).getJasmin();
-      out += "goto LABEL" + label2 + "\n";
-      out += "LABEL" + label1 + ":\n";
-      out += ((SimpleNode) else_statements).getJasmin();
-    }
-
-    return out;
+  @Override
+  public String accept(ASTNodeVisitor visitor) {
+    return visitor.visit(this);
   }
-
-  public String getJasminRecursive() {
-    String out = "";
-    Node first_child = children[0];
-
-    if (first_child instanceof ASTid) {
-      String arg0 = ((ASTid) first_child).info;
-      STEntry local_0 = checkImediateSymbolTable(arg0);
-      STEntry global_0 = checkSymbolTable(arg0);
-
-      if (local_0 == null) {
-        if (global_0 != null) {
-          out += "aload_0\n";
-          out += "getfield " + arg0 + "/" + global_0.order + "\n";
-        }
-      } else {
-        out += "iload " + local_0.order + "\n";
-      }
-    } else if (first_child instanceof ASTliteral) {
-      out += "ldc " + ((ASTliteral) first_child).info + "\n";
-    } else if (first_child instanceof ASTlt) {
-      out += ((ASTlt) first_child).getJasminRecursive();
-    } else if (first_child instanceof ASTand) {
-      out += ((ASTand) first_child).getJasminRecursive(false, 0);
-    } else if (first_child instanceof AST_this)
-      out += ((ASTfield) ((AST_this) first_child).children[0]).getJasmin();
-
-    return out;
-  }
-
 }
 /*
  * JavaCC - OriginalChecksum=f65b4deee7227c436781445f6f65a2d5 (do not edit this

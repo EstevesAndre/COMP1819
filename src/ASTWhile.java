@@ -9,60 +9,9 @@ public class ASTWhile extends SimpleNode {
     super(p, id);
   }
 
-  public String getJasmin() {
-    String out = "";
-    Node first_child = children[0];
-    Node statements = children[1];
-    int label1 = SimpleNode.getNextLabel();
-    int label2 = SimpleNode.getNextLabel();
-
-    out += "LABEL" + label1 + ":\n";
-    out += getJasminRecursive();
-
-    if (first_child instanceof ASTlt) {
-      out += "if_icmpge LABEL" + label2 + "\n";
-      out += ((SimpleNode) statements).getJasmin();
-      out += "goto LABEL" + label1 + "\n";
-      out+= "LABEL" + label2 + "\n";
-    } else if (first_child instanceof ASTand) {
-
-    } else if (first_child instanceof ASTfield || first_child instanceof ASTid || first_child instanceof ASTbool) {
-      out += "ifeq LABEL" + label2 + "\n";
-      out += ((SimpleNode) statements).getJasmin();
-      out += "goto LABEL" + label1 + "\n";
-      out+= "LABEL" + label2 + "\n";
-    }
-
-    return out;
-  }
-
-  public String getJasminRecursive() {
-    String out = "";
-    Node first_child = children[0];
-
-    if (first_child instanceof ASTid) {
-      String arg0 = ((ASTid) first_child).info;
-      STEntry local_0 = checkImediateSymbolTable(arg0);
-      STEntry global_0 = checkSymbolTable(arg0);
-
-      if (local_0 == null) {
-        if (global_0 != null) {
-          out += "aload_0\n";
-          out += "getfield " + arg0 + "/" + global_0.order + "\n";
-        }
-      } else {
-        out += "iload " + local_0.order + "\n";
-      }
-    } else if (first_child instanceof ASTliteral) {
-      out += "ldc " + ((ASTliteral) first_child).info + "\n";
-    } else if (first_child instanceof ASTlt) {
-      out += ((ASTlt) first_child).getJasminRecursive();
-    } else if (first_child instanceof ASTand) {
-      out += ((ASTand) first_child).getJasminRecursive(false, 0);
-    } else if (first_child instanceof AST_this)
-      out += ((ASTfield) ((AST_this) first_child).children[0]).getJasmin();
-
-    return out;
+  @Override
+  public String accept(ASTNodeVisitor visitor) {
+    return visitor.visit(this);
   }
 }
 /*
