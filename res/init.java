@@ -1,6 +1,7 @@
 class init {
-        int aaa;
-    public static void main(String[] a){
+    int aaa;
+
+    public static void main(String[] a) {
         boolean k;
 
         k = true && false;
@@ -11,75 +12,73 @@ class init {
         return this.fds();
     }
 
-    public boolean whilef(){
+    // public boolean whilef(){
 
-        boolean a;
-        boolean b;
-        boolean c;
+    // boolean a;
+    // boolean b;
+    // boolean c;
 
-        a = true;
-        b = false;
-        c = true;
+    // a = true;
+    // b = false;
+    // c = true;
 
-        while(a && b && c){
+    // while(a && b && c){
 
-        }
+    // }
 
-        return true;
-    }
+    // return true;
+    // }
 
-    public int classs(){
+    // public int classs(){
 
-        exemplo a;
+    // exemplo a;
 
-        a = new exemplo();
+    // a = new exemplo();
 
-        return 0;
-    }
+    // return 0;
+    // }
 
-    public int arrays(){
-        int[] a;
+    // public int arrays(){
+    // int[] a;
 
-        a = new int[4];
+    // a = new int[4];
 
-        a[1] = 2 * 3;
+    // a[1] = 2 * 3;
 
-        if(a[2] < 2){
+    // if(a[2] < 2){
 
-        }
-        else{
+    // }
+    // else{
 
-        }
+    // }
 
-        return 0;
-    }
+    // return 0;
+    // }
 
-    public boolean not(){
+    public boolean not() {
 
         boolean x;
         boolean y;
 
         x = true;
-        y = false;
+        y = true;
 
-        if(!y){
-
-        }
-        else{
-
-        }
-
-        if(!x){
+        if (!y) {
+            x = false;
+        } else {
 
         }
-        else{
-            
+
+        if (!(x && Y)) {
+
+        } else {
+
         }
 
         return true;
     }
 
-    public boolean fds(){
+    public boolean fds() {
         return true;
     }
 }
