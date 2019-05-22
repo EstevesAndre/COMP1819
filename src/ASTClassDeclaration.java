@@ -1,11 +1,10 @@
 import java.util.HashMap;
 
 /* Gen /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
-public
-class ASTClassDeclaration extends SimpleNode {
-public  int global_order = 1;
+public class ASTClassDeclaration extends SimpleNode {
+  public int global_order = 1;
   public HashMap<String, STEntry> symtbl = new HashMap<String, STEntry>();
-  
+
   public String id;
   public String ext;
 
@@ -22,24 +21,25 @@ public  int global_order = 1;
     return "class " + id + " " + extendsString;
   }
 
-  public String getJasmin() {
-    String out = ".class public " + id + "\n";
+  @Override
+  public String accept(ASTNodeVisitor visitor) {
+    return visitor.visit(this);
+  }
 
-    if(ext != null)
-    {
-      out += ".super " + ext + "\n";
-    }
+  public void acceptSemanticAnalysis(SemanticAnalyzer semanticAnalyzer) {
+    semanticAnalyzer.visit(this);
 
     if (children != null) {
       for (int i = 0; i < children.length; ++i) {
         SimpleNode n = (SimpleNode) children[i];
         if (n != null) {
-          out += n.getJasmin();
+          n.acceptSemanticAnalysis(semanticAnalyzer);
         }
       }
     }
-
-    return out;
   }
 }
-/* JavaCC - OriginalChecksum=18527d10e528b78e818ee6610e15139d (do not edit this line) */
+/*
+ * JavaCC - OriginalChecksum=18527d10e528b78e818ee6610e15139d (do not edit this
+ * line)
+ */

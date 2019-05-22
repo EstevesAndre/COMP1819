@@ -18,152 +18,23 @@ public class ASTStatement extends SimpleNode {
     return "statement " + type + ((id != null) ? (" " + id) : "") + (array ? "[]" : "") + (assign ? " =" : "");
   }
 
-  void triggerSemanticAnalysis() throws SemanticException {
-    if (array) {
-      if (!((SimpleNode) children[0]).getType().equals("int")) {
-        throw new SemanticException("Invalid array access: " + id + " at line " + line + ", column " + column + ".");
-      }
-
-      STEntry entry = checkSymbolTable(id);
-
-      if (!entry.type.equals("int[]")) {
-        throw new SemanticException(id + " is not an array at line " + line + ", column " + column + ".");
-      }
-
-    }
-
-    if (assign) {
-      // entry is the entry of the variable for the value to the left of assign
-      STEntry entry = checkSymbolTable(id);
-
-      Node p = parent;
-      while (p != null) {
-        if ((p instanceof ASTIf) || (p instanceof ASTWhile))
-          break;
-
-        p = ((SimpleNode) p).parent;
-      }
-
-      if (p == null && entry.line == -1) {
-        entry.line = line;
-        entry.column = column;
-      }
-
-      if (entry.type != null) {
-        if (entry.type.equals("int[]")) {
-          if (children[0] instanceof AST_new) {
-            AST_new new_node = ((AST_new) (children[0]));
-            if (new_node.info != "new") {
-              throw new SemanticException("Invalid assignment: expected int array, found " + new_node.info + " at line "
-                  + new_node.line + ", column " + new_node.column + ".");
-            }
-          }
-
-          if (children.length > 1 && !((SimpleNode) children[1]).getType().equals("int")) {
-            throw new SemanticException("Invalid assignment: expected int, found "
-                + ((SimpleNode) children[1]).getType() + " at line " + line + ", column " + column + ".");
-          }
-        } else if (!((SimpleNode) children[0]).getType().equals(entry.type)) {
-          throw new SemanticException("Invalid assignment: expected " + entry.type + ", found "
-              + ((SimpleNode) children[0]).getType() + " at line " + line + ", column " + column + ".");
-        }
-      } else {
-        throw new SemanticException("Undeclared variable: " + id + " at line " + line + ", column " + column + ".");
-      }
-    }
-
-    if (type != null && !assign && type.equals("id")) {
-      STEntry entry = checkSymbolTable(id);
-
-      if (entry != null && entry.compareTo(new STVar(-1, id, type, line, column)) < 0)
-        throw new SemanticException(
-            "Variable may not have been initialized: " + id + " at line " + line + ", column " + column + ".");
-    }
+  @Override
+  public String accept(ASTNodeVisitor visitor) {
+    return visitor.visit(this);
   }
 
-  public String getJasmin() {
-    String out = "";
+  public void acceptSemanticAnalysis(SemanticAnalyzer semanticAnalyzer) {
+    semanticAnalyzer.visit(this);
 
-    if (array && assign) {
-      System.out.println("CENAS");
-      SimpleNode p = (SimpleNode) parent;
-
-      String assign = null;
-      if (p instanceof ASTStatement)
-        assign = ((ASTStatement) p).id;
-
-      STEntry local = checkImediateSymbolTable(assign);
-      STEntry global = checkSymbolTable(assign);
-
-      Node index = children[0];
-      Node val = children[1];
-
-      if (assign != null) {
-        if (local == null) {
-          if (global != null) {
-            out += "aload_0\n";
-            
-            if(index instanceof ASTid){
-              out += "ldc " + ((ASTid) index).info;
-            }
-            else if (index instanceof ASTliteral){
-              out += "ldc " + ((ASTliteral) index).info;
-            }
-            else {
-              out += ((SimpleNode)index).getJasmin();
-            }
-
-            if(val instanceof ASTid){
-              out += "ldc " + ((ASTid) val).info;
-            }
-            else if (val instanceof ASTliteral){
-              out += "ldc " + ((ASTliteral) val).info;
-            }
-            else {
-              out += ((SimpleNode)val).getJasmin();
-            }
-            out += "putfield " + assign + "/" + global.order + "\n";
-          }
-        } else {
-          out += "aload \n" + local.order + "\n";
-
-          if(index instanceof ASTid){
-            out += "ldc " + ((ASTid) index).info;
-          }
-          else if (index instanceof ASTliteral){
-            out += "ldc " + ((ASTliteral) index).info;
-          }
-          else {
-            out += ((SimpleNode)index).getJasmin();
-          }
-
-          if(val instanceof ASTid){
-            out += "ldc " + ((ASTid) val).info;
-          }
-          else if (val instanceof ASTliteral){
-            out += "ldc " + ((ASTliteral) val).info;
-          }
-          else {
-            out += ((SimpleNode)val).getJasmin();
-          }
-
-          out += "iastore\n";
-        }
-      }
-    }
-    
     if (children != null) {
       for (int i = 0; i < children.length; ++i) {
         SimpleNode n = (SimpleNode) children[i];
         if (n != null) {
-          out += n.getJasmin();
+          n.acceptSemanticAnalysis(semanticAnalyzer);
         }
       }
     }
-
-    return out;
   }
-
 }
 /*
  * JavaCC - OriginalChecksum=d080604f9202b38270c2414fd96b3d8a (do not edit this
