@@ -19,6 +19,19 @@ public class ASTVarDeclaration extends SimpleNode {
   public String accept(ASTNodeVisitor visitor) {
     return visitor.visit(this);
   }
+
+  public void acceptSemanticAnalysis(SemanticAnalyzer semanticAnalyzer) {
+    semanticAnalyzer.visit(this);
+
+    if (children != null) {
+      for (int i = 0; i < children.length; ++i) {
+        SimpleNode n = (SimpleNode) children[i];
+        if (n != null) {
+          n.acceptSemanticAnalysis(semanticAnalyzer);
+        }
+      }
+    }
+  }
 }
 /*
  * JavaCC - OriginalChecksum=4e604d6a77c4c7fb01df67af0b175127 (do not edit this

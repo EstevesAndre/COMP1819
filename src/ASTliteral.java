@@ -23,6 +23,19 @@ public class ASTliteral extends SimpleNode {
   public String accept(ASTNodeVisitor visitor) {
     return visitor.visit(this);
   }
+
+  public void acceptSemanticAnalysis(SemanticAnalyzer semanticAnalyzer) {
+    semanticAnalyzer.visit(this);
+
+    if (children != null) {
+      for (int i = 0; i < children.length; ++i) {
+        SimpleNode n = (SimpleNode) children[i];
+        if (n != null) {
+          n.acceptSemanticAnalysis(semanticAnalyzer);
+        }
+      }
+    }
+  }
 }
 /*
  * JavaCC - OriginalChecksum=570004d639550726751648828304833a (do not edit this

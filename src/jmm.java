@@ -40,7 +40,7 @@ public class jmm/* @bgen(jjtree) */ implements jmmTreeConstants, jmmConstants {/
     // root.semanticAnalysis();
     // root.printSymbolTable();
 
-    root.accept(new SemanticAnalyzer());
+    root.acceptSemanticAnalysis(new SemanticAnalyzer());
 
     writeJasminFile(args[0], root);
   }

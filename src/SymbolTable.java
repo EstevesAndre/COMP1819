@@ -4,6 +4,10 @@ class SymbolTable {
   public HashMap<String, STEntry> symtbl = new HashMap<String, STEntry>();
   public SimpleNode node;
 
+  public SymbolTable(SimpleNode node) {
+    this.node = node;
+  }
+
   public boolean addToSymbolTable(String id, STEntry entry) {
     Node n = node.parent;
     STEntry id_prev;

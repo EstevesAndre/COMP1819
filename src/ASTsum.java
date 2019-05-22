@@ -18,6 +18,19 @@ public class ASTsum extends SimpleNode {
   public String accept(ASTNodeVisitor visitor) {
     return visitor.visit(this);
   }
+
+  public void acceptSemanticAnalysis(SemanticAnalyzer semanticAnalyzer) {
+    semanticAnalyzer.visit(this);
+
+    if (children != null) {
+      for (int i = 0; i < children.length; ++i) {
+        SimpleNode n = (SimpleNode) children[i];
+        if (n != null) {
+          n.acceptSemanticAnalysis(semanticAnalyzer);
+        }
+      }
+    }
+  }
 }
 /*
  * JavaCC - OriginalChecksum=fd58adc0663531e5eea42a153c98a773 (do not edit this

@@ -17,6 +17,19 @@ public class AST_this extends SimpleNode {
   public String accept(ASTNodeVisitor visitor) {
     return visitor.visit(this);
   }
+
+  public void acceptSemanticAnalysis(SemanticAnalyzer semanticAnalyzer) {
+    semanticAnalyzer.visit(this);
+
+    if (children != null) {
+      for (int i = 0; i < children.length; ++i) {
+        SimpleNode n = (SimpleNode) children[i];
+        if (n != null) {
+          n.acceptSemanticAnalysis(semanticAnalyzer);
+        }
+      }
+    }
+  }
 }
 /*
  * JavaCC - OriginalChecksum=fba6d607a89996b150d2254a9d0a41a2 (do not edit this

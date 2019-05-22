@@ -4,13 +4,6 @@ import java.util.List;
 public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
-    public String visit(SimpleNode node) {
-        System.out.println("Displaying SimpleNode");
-
-        return "ya";
-    }
-
-    @Override
     public String visit(ASTlt node) {
         System.out.println("Displaying ASTlt");
 
@@ -87,7 +80,7 @@ public class JasminGenerator implements ASTNodeVisitor {
     @Override
     public String visit(ASTnot node) {
         System.out.println("Displaying ASTnot");
-        return "ya";
+        return "";
 
     }
 
@@ -171,7 +164,7 @@ public class JasminGenerator implements ASTNodeVisitor {
             for (int i = 0; i < node.children.length; ++i) {
                 SimpleNode n = (SimpleNode) node.children[i];
                 if (n != null) {
-                    out += visit(n);
+                    out += n.accept(this);
                 }
             }
         }
@@ -226,19 +219,19 @@ public class JasminGenerator implements ASTNodeVisitor {
         if (first_child instanceof ASTlt) {
             out += "if_icmpge LABEL" + label1 + "\n";
             // codigo dos true_statements
-            out += visit((SimpleNode) true_statements);
+            out += ((SimpleNode) true_statements).accept(this);
             out += "goto LABEL" + label2 + "\n";
             out += "LABEL" + label1 + ":\n";
             // codigo dos else statements
-            out += visit((SimpleNode) else_statements);
+            out += ((SimpleNode) else_statements).accept(this);
         } else if (first_child instanceof ASTand) {
 
         } else if (first_child instanceof ASTfield || first_child instanceof ASTid || first_child instanceof ASTbool) {
             out += "ifeq LABEL" + label1 + "\n";
-            out += visit((SimpleNode) true_statements);
+            out += ((SimpleNode) true_statements).accept(this);
             out += "goto LABEL" + label2 + "\n";
             out += "LABEL" + label1 + ":\n";
-            out += visit((SimpleNode) else_statements);
+            out += ((SimpleNode) else_statements).accept(this);
         }
 
         return out;
@@ -247,7 +240,7 @@ public class JasminGenerator implements ASTNodeVisitor {
     @Override
     public String visit(ASTid node) {
         System.out.println("Displaying ASTid");
-        return "ya";
+        return "";
 
     }
 
@@ -287,7 +280,7 @@ public class JasminGenerator implements ASTNodeVisitor {
     @Override
     public String visit(ASTType node) {
         System.out.println("Displaying ASTType");
-        return "ya";
+        return "";
 
     }
 
@@ -321,7 +314,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                         } else if (index instanceof ASTliteral) {
                             out += "ldc " + ((ASTliteral) index).info;
                         } else {
-                            out += visit((SimpleNode) index);
+                            out += ((SimpleNode) index).accept(this);
                         }
 
                         if (val instanceof ASTid) {
@@ -329,7 +322,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                         } else if (val instanceof ASTliteral) {
                             out += "ldc " + ((ASTliteral) val).info;
                         } else {
-                            out += visit((SimpleNode) val);
+                            out += ((SimpleNode) val).accept(this);
                         }
                         out += "putfield " + assign + "/" + global.order + "\n";
                     }
@@ -341,7 +334,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                     } else if (index instanceof ASTliteral) {
                         out += "ldc " + ((ASTliteral) index).info;
                     } else {
-                        out += visit((SimpleNode) index);
+                        out += ((SimpleNode) index).accept(this);
                     }
 
                     if (val instanceof ASTid) {
@@ -349,7 +342,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                     } else if (val instanceof ASTliteral) {
                         out += "ldc " + ((ASTliteral) val).info;
                     } else {
-                        out += visit((SimpleNode) val);
+                        out += ((SimpleNode) val).accept(this);
                     }
 
                     out += "iastore\n";
@@ -361,7 +354,7 @@ public class JasminGenerator implements ASTNodeVisitor {
             for (int i = 0; i < node.children.length; ++i) {
                 SimpleNode n = (SimpleNode) node.children[i];
                 if (n != null) {
-                    out += visit(n);
+                    out += n.accept(this);
                 }
             }
         }
@@ -412,7 +405,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                     break;
 
                 if (n != null) {
-                    out += visit(n);
+                    out += n.accept(this);
                 }
             }
         }
@@ -441,7 +434,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                 }
             }
         } else {
-            out += visit((SimpleNode) return_value);
+            out += ((SimpleNode) return_value).accept(this);
         }
 
         if (ret_val != null) {
@@ -476,7 +469,7 @@ public class JasminGenerator implements ASTNodeVisitor {
             for (int i = 0; i < node.children.length; ++i) {
                 SimpleNode n = (SimpleNode) node.children[i];
                 if (n != null) {
-                    out += visit(n);
+                    out += n.accept(this);
                 }
             }
         }
@@ -519,14 +512,14 @@ public class JasminGenerator implements ASTNodeVisitor {
     @Override
     public String visit(ASTArg node) {
         System.out.println("Displaying ASTArg");
-        return "ya";
+        return "";
 
     }
 
     @Override
     public String visit(ASTArgs node) {
         System.out.println("Displaying ASTArgs");
-        return "ya";
+        return "";
 
     }
 
@@ -595,7 +588,7 @@ public class JasminGenerator implements ASTNodeVisitor {
     @Override
     public String visit(AST_this node) {
         System.out.println("Displaying AST_this");
-        return "ya";
+        return "";
 
     }
 

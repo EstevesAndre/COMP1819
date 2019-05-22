@@ -12,4 +12,12 @@ class semanticError {
         b = 2;
     }
 
+    public int ya(){
+        return 0;
+    }
+
+    public int ya(){
+        return 0;
+    }
+
 }

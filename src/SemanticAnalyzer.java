@@ -4,12 +4,6 @@ import java.util.List;
 public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
-    public String visit(SimpleNode node) {
-        System.out.println("Displaying SimpleNode");
-        return null;
-    }
-
-    @Override
     public String visit(ASTlt node) {
         System.out.println("Displaying ASTlt");
 
@@ -86,7 +80,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
         System.out.println("Displaying ASTVarDeclaration");
 
         /* Symbol Table insertions */
-        String type = ((ASTType) node.children[0]).getType() + (((ASTType) node.children[0]).array ? "[]" : "");
+        String type = ((ASTType) node.children[0]).getType();
 
         if (!node.symbolTable.addToSymbolTable(node.id, new STVar(-1, node.id, type, -1, -1))) {
             System.err.println(
@@ -155,7 +149,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
             }
 
             STEntry entry = node.symbolTable.checkSymbolTable(node.id);
-
+            System.out.println("CRL: " + entry.type);
             if (!entry.type.equals("int[]")) {
                 System.err.println(node.id + " is not an array at line " + node.line + ", column " + node.column + ".");
             }
@@ -236,6 +230,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
         }
 
         STFunc func = new STFunc(-1, node.id, type, node.line, node.column, args);
+        System.out.println("aqui crl");
         if (!node.symbolTable.addToSymbolTable(func.getKeyName(), func)) {
             System.err.println(
                     "Function already defined: " + node.id + " at line " + node.line + ", column " + node.column + ".");

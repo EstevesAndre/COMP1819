@@ -9,7 +9,7 @@ public class SimpleNode implements Node, ASTNode {
   protected int id;
   protected Object value;
   protected jmm parser;
-  protected SymbolTable symbolTable;
+  protected SymbolTable symbolTable = new SymbolTable(this);
 
   public int line;
   public int column;
@@ -301,10 +301,22 @@ public class SimpleNode implements Node, ASTNode {
         }
       }
 
-      visitor.visit(this);
     }
 
     return j;
+  }
+
+  @Override
+  public void acceptSemanticAnalysis(SemanticAnalyzer semanticAnalyzer) {
+
+    if (children != null) {
+      for (int i = 0; i < children.length; ++i) {
+        SimpleNode n = (SimpleNode) children[i];
+        if (n != null) {
+          n.acceptSemanticAnalysis(semanticAnalyzer);
+        }
+      }
+    }
   }
 
 }
