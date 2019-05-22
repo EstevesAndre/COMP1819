@@ -40,6 +40,8 @@ public class jmm/* @bgen(jjtree) */ implements jmmTreeConstants, jmmConstants {/
     root.semanticAnalysis();
     root.printSymbolTable();
 
+    root.accept(new SemanticAnalyzer());
+
     writeJasminFile(args[0], root);
 
    
@@ -52,7 +54,7 @@ public class jmm/* @bgen(jjtree) */ implements jmmTreeConstants, jmmConstants {/
     try {
       FileOutputStream fstream = new FileOutputStream(jasminFileName);
       BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fstream));
-      bw.write(root.getJasmin());
+      bw.write(root.accept(new JasminGenerator()));
       bw.close();
     } catch (IOException e) {
       // TODO Auto-generated catch block
