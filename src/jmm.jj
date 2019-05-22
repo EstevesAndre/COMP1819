@@ -50,6 +50,23 @@ public
     }
 
     root.dump("");
+
+    root.acceptSemanticAnalysis(new SemanticAnalyzer());
+    writeJasminToFile(args[0], root);
+  }
+
+  static void writeJasminFile(String fileName, SimpleNode root){
+    String jasminFileName = fileName.replaceFirst("[.][^.]+$", "") + ".j";
+
+    try {
+      FileOutputStream fstream = new FileOutputStream(jasminFileName);
+      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fstream));
+      bw.write(root.accept(new JasminGenerator()));
+      bw.close();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   static void reportError(ParseException e, String statement, boolean recover) {

@@ -62,7 +62,7 @@ class init {
         x = true;
         y = false;
 
-        if(!!y){
+        if(!y){
 
         }
         else{
