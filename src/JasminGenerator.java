@@ -721,18 +721,23 @@ public class JasminGenerator implements ASTNodeVisitor {
             }
 
             // TODO: nao pode ser sempre invokestatic
-        out += "invokestatic ";
 
         if (!(node.parent instanceof ASTStatement)) {
             Node n = node.parent;
             while (n != null) {
                 if (n instanceof ASTClassDeclaration) {
-                    out += ((ASTClassDeclaration) n).id;
+                    out += "invokevirtual " + ((ASTClassDeclaration) n).id;
                     break;
                 }
                 n = ((SimpleNode) n).parent;
             }
         } else {
+            if(node.checkSymbolTable(((ASTStatement) node.parent).id) != null){
+                out += "invokevirtual ";
+            }
+            else{
+                out += "invokestatic ";
+            }
             out += ((ASTStatement) node.parent).id;
         }
 
