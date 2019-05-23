@@ -2,14 +2,17 @@ class arrays {
     public int test() {
         int[] a;
         int b;
+        int c;
 
         b = 4;
-        a = new int[4-2];
+        c = b;
+        a = new int[4 - 2];
         b = a.length;
 
-        // a[b] = this.oi();
+        a[b] = this.oi();
+        a[b] = 2;
 
-        if (a[2*3] < 2) {
+        if (a.length < 2) {
 
         } else {
 
@@ -18,7 +21,7 @@ class arrays {
         return 0;
     }
 
-    public int oi(){
+    public int oi() {
         return 2;
     }
 }
