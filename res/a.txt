@@ -57,7 +57,7 @@ class init {
        _______ 
        9: aload_1       PUSH AO ARRAY 
       10: iconst_2      PUSH AO INDICE
-      11: iaload        POP DO VALOR
+      11: iaload        PUSH DO VALOR
       ________
       12: iconst_2
       13: if_icmpge     16
