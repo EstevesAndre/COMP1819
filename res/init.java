@@ -67,7 +67,11 @@ class init {
     //     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     //     if (!(x && Y)) {
+=======
+        if (!(x && y)) {
+>>>>>>> Stashed changes
 =======
         if (!(x && y)) {
 >>>>>>> Stashed changes
