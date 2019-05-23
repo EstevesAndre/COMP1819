@@ -34,6 +34,11 @@ public class AST_new extends SimpleNode {
     }
   }
 
+  @Override
+  public String accept(ASTNodeVisitor visitor) {
+    return visitor.visit(this);
+  }
+
   public String getJasmin() {
     String out = "";
 

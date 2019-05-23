@@ -1,5 +1,5 @@
 class test_class {
-    public int yo(){
-        return 2;
+    public void yo(){
+        return;
     }
 }
