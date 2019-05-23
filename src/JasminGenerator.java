@@ -452,7 +452,8 @@ public class JasminGenerator implements ASTNodeVisitor {
             out += "iconst_" + (((ASTbool) return_value).info ? 1 : 0) + "\n";
         } else if (return_value instanceof ASTid) {
             out += getJasminRecursive((ASTid) return_value);
-
+            String info = ((ASTid) return_value).info;
+            STEntry entry = node.checkImediateSymbolTable(info);
             if (entry != null) {
                 if (entry.type.equals("int"))
                     out += "iload " + entry.order + "\n";
