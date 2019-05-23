@@ -48,21 +48,7 @@ public
     root.dump("");
 
     root.acceptSemanticAnalysis(new SemanticAnalyzer());
-    writeJasminFile(args[0], root);
-  }
-
-  static void writeJasminFile(String fileName, SimpleNode root){
-    String jasminFileName = fileName.replaceFirst("[.][^.]+$", "") + ".j";
-
-    try {
-      FileOutputStream fstream = new FileOutputStream(jasminFileName);
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fstream));
-      bw.write(root.accept(new JasminGenerator()));
-      bw.close();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    SimpleNode.writeJasminFile(args[0], root);
   }
 
   static void reportError(ParseException e, String statement, boolean recover) {
@@ -243,8 +229,15 @@ void Statement() : {Token id;} {
   (<L_BRACE> (Statement())* < R_BRACE >) |
   (If()) {jjtThis.type = "if";} | 
   (While()) {jjtThis.type = "while";} |
-  (id=<IDENTIFIER> {jjtThis.type = "id"; jjtThis.id = id.image;} (<L_BRACKET> Expression() < R_BRACKET > {jjtThis.array = true;} | {}) ( (<ASSIGN> Expression() < SEMICOLON > {jjtThis.assign = true;} ) | (Expression_Alt() < SEMICOLON > ))) |
+  (id=<IDENTIFIER> {jjtThis.type = "id"; jjtThis.id = id.image;} (<L_BRACKET> Expression() < R_BRACKET > {jjtThis.array = true;} | {}) ( (<ASSIGN> Expression() < SEMICOLON > {jjtThis.assign = true;} ) | (Expression_Alt() < SEMICOLON > ) | (IDField()))) |
   (ExpressionNoId() < SEMICOLON > {jjtThis.type = "no_id";})
+}
+
+void IDField() #void : {Token t;}
+{
+  ( <DOT> (( t=<LENGTH> Expression_Alt() {jjtThis.type = "length"; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;} ) |
+           ( t=<IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t.image; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;} ) ) #field() ) < SEMICOLON >
+    
 }
 
 void If() : {} {
@@ -308,8 +301,15 @@ void Div() #void : {}
 
 void Not() #void : {}
 {
-    LowerExpression() |
+    Field() |
     (<NOT> Not() #not)
+}
+
+void Field() #void : {Token t;}
+{
+  LowerExpression() ( <DOT> (( t=<LENGTH> Expression_Alt() {jjtThis.type = "length"; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;} ) |
+                            ( t=<IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t.image; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;} ) ) #field(1) )?
+    
 }
 
 void LowerExpression() #void : {Token t;}
@@ -344,7 +344,5 @@ void ExpressionNoId() #void : {Token t;}
 void Expression_Alt() #void : {Token t;}
 {
     ( <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
-    ( <DOT> (( <LENGTH> Expression_Alt() {jjtThis.type = "length";} ) |
-             ( t=<IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t.image; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;} ) ) #field ) |
     {}
 }

@@ -1,15 +1,10 @@
 class init {
-    int aaa;
+    int[] aaa;
 
-    public static void main(String[] a) {
-        boolean k;
+    public int hi(int i) {
+        aaa = new int[i];
 
-        k = true && false;
-
-    }
-
-    public boolean hi(int i) {
-        return this.fds();
+        return aaa.length;
     }
 
     // public boolean whilef(){
@@ -55,30 +50,30 @@ class init {
     // return 0;
     // }
 
-    public boolean not() {
+    // public boolean not() {
 
-        boolean x;
-        boolean y;
+    //     boolean x;
+    //     boolean y;
 
-        x = true;
-        y = true;
+    //     x = true;
+    //     y = true;
 
-        if (!y) {
-            x = false;
-        } else {
+    //     if (!y) {
+    //         x = false;
+    //     } else {
 
-        }
+    //     }
 
-        if (!(x && Y)) {
+    //     if (!(x && Y)) {
 
-        } else {
+    //     } else {
 
-        }
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
-    public boolean fds() {
-        return true;
-    }
+    // public boolean fds() {
+    //     return true;
+    // }
 }

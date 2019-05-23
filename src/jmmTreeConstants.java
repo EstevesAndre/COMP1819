@@ -10,22 +10,22 @@ public interface jmmTreeConstants
   public int JJTARG = 6;
   public int JJTTYPE = 7;
   public int JJTSTATEMENT = 8;
-  public int JJTIF = 9;
-  public int JJTWHILE = 10;
-  public int JJTVOID = 11;
-  public int JJTAND = 12;
-  public int JJTLT = 13;
-  public int JJTSUM = 14;
-  public int JJTSUB = 15;
-  public int JJTMULT = 16;
-  public int JJTDIV = 17;
-  public int JJTNOT = 18;
-  public int JJTLITERAL = 19;
-  public int JJTBOOL = 20;
-  public int JJTID = 21;
-  public int JJT_THIS = 22;
-  public int JJT_NEW = 23;
-  public int JJTFIELD = 24;
+  public int JJTVOID = 9;
+  public int JJTFIELD = 10;
+  public int JJTIF = 11;
+  public int JJTWHILE = 12;
+  public int JJTAND = 13;
+  public int JJTLT = 14;
+  public int JJTSUM = 15;
+  public int JJTSUB = 16;
+  public int JJTMULT = 17;
+  public int JJTDIV = 18;
+  public int JJTNOT = 19;
+  public int JJTLITERAL = 20;
+  public int JJTBOOL = 21;
+  public int JJTID = 22;
+  public int JJT_THIS = 23;
+  public int JJT_NEW = 24;
 
 
   public String[] jjtNodeName = {
@@ -38,9 +38,10 @@ public interface jmmTreeConstants
     "Arg",
     "Type",
     "Statement",
+    "void",
+    "field",
     "If",
     "While",
-    "void",
     "and",
     "lt",
     "sum",
@@ -53,7 +54,6 @@ public interface jmmTreeConstants
     "id",
     "_this",
     "_new",
-    "field",
   };
 }
-/* JavaCC - OriginalChecksum=e30f052f2deea00be4bdac16eaf6c33f (do not edit this line) */
+/* JavaCC - OriginalChecksum=1f793e4e70b35c15281d4a8c6657a9b1 (do not edit this line) */
