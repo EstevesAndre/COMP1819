@@ -42,6 +42,7 @@ public
     root.dump("");
 
     root.acceptSemanticAnalysis(new SemanticAnalyzer());
+    root.printSymbolTable();
     SimpleNode.writeJasminFile(args[0], root);
   }
 

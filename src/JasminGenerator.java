@@ -466,7 +466,7 @@ public class JasminGenerator implements ASTNodeVisitor {
             STEntry entry = node.checkImediateSymbolTable(info);
 
             if (entry != null) {
-                if (entry.type == "int")
+                if (entry.type.equals("int"))
                     out += "iload " + entry.order + "\n";
                 else
                     out += "aload " + entry.order + "\n";
@@ -725,8 +725,87 @@ public class JasminGenerator implements ASTNodeVisitor {
             entry = node.checkImediateSymbolTable(((ASTStatement) n).id);
             if (node.checkSymbolTable(((ASTStatement) node.parent).id) != null) {
                 out += "aload " + entry.order + "\n";
+
+                if (node.children != null) {
+                    for (Node arg : node.children) {
+                        if (arg instanceof ASTid) {
+                            String arg0 = ((ASTid) arg).info;
+                            STEntry local_0 = node.checkImediateSymbolTable(arg0);
+                            STEntry global_0 = node.checkSymbolTable(arg0);
+                
+                            if (local_0 == null) {
+                                if (global_0 != null) {
+                                    out += "aload_0\n";
+                                    out += "getfield " + arg0 + "/" + global_0.order + "\n";
+                                }
+                            } else {
+                                out += "iload " + local_0.order + "\n";
+                            }
+                        } 
+                        else if (arg instanceof ASTbool)
+                            out += "iconst_" + (((ASTbool) arg).info ? 1 : 0) + "\n";
+                        else if (arg instanceof ASTlt)
+                            out += getJasminRecursive((ASTlt) arg);
+                        else if (arg instanceof ASTand)
+                            out += getJasminRecursive((ASTand) arg, false, 0);
+                        else if (arg instanceof ASTnot)
+                            out += getJasminRecursive((ASTnot) arg);
+                        else if (arg instanceof AST_this)
+                            out += visit((ASTfield) ((AST_this) arg).children[0]);
+                        else if (arg instanceof ASTliteral) 
+                            out += "ldc " + ((ASTliteral) arg).info + "\n";
+                        else if (arg instanceof ASTsum)
+                            out += getJasminRecursive((ASTsum) arg);
+                        else if (arg instanceof ASTsub)
+                            out += getJasminRecursive((ASTsub) arg);
+                        else if (arg instanceof ASTmult)
+                            out += getJasminRecursive((ASTmult) arg);
+                        else if (arg instanceof ASTdiv)
+                            out += getJasminRecursive((ASTdiv) arg);
+                
+                    }
+                }
+
                 out += "invokevirtual ";
             } else {
+
+                if (node.children != null) {
+                    for (Node arg : node.children) {
+                        if (arg instanceof ASTid) {
+                            String arg0 = ((ASTid) arg).info;
+                            STEntry local_0 = node.checkImediateSymbolTable(arg0);
+                            STEntry global_0 = node.checkSymbolTable(arg0);
+                
+                            if (local_0 == null) {
+                                if (global_0 != null) {
+                                    out += "aload_0\n";
+                                    out += "getfield " + arg0 + "/" + global_0.order + "\n";
+                                }
+                            } else {
+                                out += "iload " + local_0.order + "\n";
+                            }
+                        } else if (arg instanceof ASTbool) {
+                            out += "iconst_" + (((ASTbool) arg).info ? 1 : 0) + "\n";
+                        } else if (arg instanceof ASTlt)
+                            out += getJasminRecursive((ASTlt) arg);
+                        else if (arg instanceof ASTand)
+                            out += getJasminRecursive((ASTand) arg, false, 0);
+                        else if (arg instanceof ASTnot)
+                            out += getJasminRecursive((ASTnot) arg);
+                        else if (arg instanceof AST_this)
+                            out += visit((ASTfield) ((AST_this) arg).children[0]);
+                        else if (arg instanceof ASTliteral) 
+                            out += "ldc " + ((ASTliteral) arg).info + "\n";
+                        else if (arg instanceof ASTsum)
+                            out += getJasminRecursive((ASTsum) arg);
+                        else if (arg instanceof ASTsub)
+                            out += getJasminRecursive((ASTsub) arg);
+                        else if (arg instanceof ASTmult)
+                            out += getJasminRecursive((ASTmult) arg);
+                        else if (arg instanceof ASTdiv)
+                            out += getJasminRecursive((ASTdiv) arg);
+                   }
+                }
                 out += "invokestatic ";
             }
 
@@ -740,6 +819,45 @@ public class JasminGenerator implements ASTNodeVisitor {
             while (n != null) {
                 if (n instanceof ASTClassDeclaration) {
                     out += "aload_0\n";
+
+                    if (node.children != null) {
+                        for (Node arg : node.children) {
+                            if (arg instanceof ASTid) {
+                                String arg0 = ((ASTid) arg).info;
+                                STEntry local_0 = node.checkImediateSymbolTable(arg0);
+                                STEntry global_0 = node.checkSymbolTable(arg0);
+                    
+                                if (local_0 == null) {
+                                    if (global_0 != null) {
+                                        out += "aload_0\n";
+                                        out += "getfield " + arg0 + "/" + global_0.order + "\n";
+                                    }
+                                } else {
+                                    out += "iload " + local_0.order + "\n";
+                                }
+                            } else if (arg instanceof ASTbool) {
+                                out += "iconst_" + (((ASTbool) arg).info ? 1 : 0) + "\n";
+                            } else if (arg instanceof ASTlt)
+                                out += getJasminRecursive((ASTlt) arg);
+                            else if (arg instanceof ASTand)
+                                out += getJasminRecursive((ASTand) arg, false, 0);
+                            else if (arg instanceof ASTnot)
+                                out += getJasminRecursive((ASTnot) arg);
+                            else if (arg instanceof AST_this)
+                                out += visit((ASTfield) ((AST_this) arg).children[0]);
+                            else if (arg instanceof ASTliteral) 
+                                out += "ldc " + ((ASTliteral) arg).info + "\n";
+                            else if (arg instanceof ASTsum)
+                                out += getJasminRecursive((ASTsum) arg);
+                            else if (arg instanceof ASTsub)
+                                out += getJasminRecursive((ASTsub) arg);
+                            else if (arg instanceof ASTmult)
+                                out += getJasminRecursive((ASTmult) arg);
+                            else if (arg instanceof ASTdiv)
+                                out += getJasminRecursive((ASTdiv) arg);
+                       }
+                    }
+
                     out += "invokevirtual " + ((ASTClassDeclaration) n).id;
                     break;
                 }

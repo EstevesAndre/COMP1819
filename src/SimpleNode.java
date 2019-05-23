@@ -216,7 +216,7 @@ public class SimpleNode implements Node, ASTNode {
   }
 
   STEntry checkSymbolTable(String info) {
-    SimpleNode tempParent = (SimpleNode) parent;
+    SimpleNode tempParent = this;
     STEntry answer = null;
     while (tempParent != null) {
       if (tempParent instanceof ASTClassDeclaration) {
@@ -235,7 +235,7 @@ public class SimpleNode implements Node, ASTNode {
   }
 
   STEntry checkImediateSymbolTable(String info) {
-    SimpleNode tempParent = (SimpleNode) parent;
+    SimpleNode tempParent = this;
     STEntry answer = null;
     while (tempParent != null) {
       if (tempParent instanceof ASTClassDeclaration) {
