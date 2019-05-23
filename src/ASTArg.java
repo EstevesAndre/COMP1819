@@ -16,16 +16,18 @@ class ASTArg extends SimpleNode {
     return "arg " + id;
   }
   
-  void triggerSemanticAnalysis() throws SemanticException
-  {
-    /* Symbol Table insertions */
-    String type = ((ASTType) children[0]).getType() + (((ASTType) children[0]).array ? "[]" : "");
+  public void acceptSemanticAnalysis(SemanticAnalyzer semanticAnalyzer) {
+    semanticAnalyzer.visit(this);
 
-    if(!addToSymbolTable(id, new STVar(-1, id, type, line, column))){
-      throw new SemanticException("Variable already defined: " + id + " at line " + line + ", column " + column + ".");
+    if (children != null) {
+      for (int i = 0; i < children.length; ++i) {
+        SimpleNode n = (SimpleNode) children[i];
+        if (n != null) {
+          n.acceptSemanticAnalysis(semanticAnalyzer);
+        }
+      }
     }
   }
-
   public String getType() {
     return ((SimpleNode) children[0]).getType();
   }

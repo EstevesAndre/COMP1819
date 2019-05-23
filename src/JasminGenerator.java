@@ -15,8 +15,8 @@ public class JasminGenerator implements ASTNodeVisitor {
         if (p instanceof ASTStatement)
             assign = ((ASTStatement) p).id;
 
-        STEntry local = node.symbolTable.checkImediateSymbolTable(assign);
-        STEntry global = node.symbolTable.checkSymbolTable(assign);
+        STEntry local = node.checkImediateSymbolTable(assign);
+        STEntry global = node.checkSymbolTable(assign);
 
         if (assign != null)
             if (local == null) {
@@ -56,8 +56,8 @@ public class JasminGenerator implements ASTNodeVisitor {
         if (p instanceof ASTStatement)
             assign = ((ASTStatement) p).id;
 
-        STEntry local = node.symbolTable.checkImediateSymbolTable(assign);
-        STEntry global = node.symbolTable.checkSymbolTable(assign);
+        STEntry local = node.checkImediateSymbolTable(assign);
+        STEntry global = node.checkSymbolTable(assign);
 
         if (assign != null)
             if (local == null) {
@@ -89,8 +89,8 @@ public class JasminGenerator implements ASTNodeVisitor {
         if (p instanceof ASTStatement)
             assign = ((ASTStatement) p).id;
 
-        STEntry local = node.symbolTable.checkImediateSymbolTable(assign);
-        STEntry global = node.symbolTable.checkSymbolTable(assign);
+        STEntry local = node.checkImediateSymbolTable(assign);
+        STEntry global = node.checkSymbolTable(assign);
 
         if (assign != null)
             if (local == null) {
@@ -129,8 +129,8 @@ public class JasminGenerator implements ASTNodeVisitor {
         if (p instanceof ASTStatement)
             assign = ((ASTStatement) p).id;
 
-        STEntry local = node.symbolTable.checkImediateSymbolTable(assign);
-        STEntry global = node.symbolTable.checkSymbolTable(assign);
+        STEntry local = node.checkImediateSymbolTable(assign);
+        STEntry global = node.checkSymbolTable(assign);
 
         if (assign != null)
             if (local == null) {
@@ -162,8 +162,8 @@ public class JasminGenerator implements ASTNodeVisitor {
         if (p instanceof ASTStatement)
             assign = ((ASTStatement) p).id;
 
-        STEntry local = node.symbolTable.checkImediateSymbolTable(assign);
-        STEntry global = node.symbolTable.checkSymbolTable(assign);
+        STEntry local = node.checkImediateSymbolTable(assign);
+        STEntry global = node.checkSymbolTable(assign);
 
         if (assign != null)
             if (local == null) {
@@ -300,8 +300,8 @@ public class JasminGenerator implements ASTNodeVisitor {
         if (p instanceof ASTStatement)
             assign = ((ASTStatement) p).id;
 
-        STEntry local = node.symbolTable.checkImediateSymbolTable(assign);
-        STEntry global = node.symbolTable.checkSymbolTable(assign);
+        STEntry local = node.checkImediateSymbolTable(assign);
+        STEntry global = node.checkSymbolTable(assign);
 
         if (assign != null)
             if (local == null) {
@@ -342,8 +342,8 @@ public class JasminGenerator implements ASTNodeVisitor {
             if (p instanceof ASTStatement)
                 assign = ((ASTStatement) p).id;
 
-            STEntry local = node.symbolTable.checkImediateSymbolTable(assign);
-            STEntry global = node.symbolTable.checkSymbolTable(assign);
+            STEntry local = node.checkImediateSymbolTable(assign);
+            STEntry global = node.checkSymbolTable(assign);
 
             Node index = node.children[0];
             Node val = node.children[1];
@@ -422,7 +422,7 @@ public class JasminGenerator implements ASTNodeVisitor {
         out += ")" + SimpleNode.getJasminType(((ASTType) (node.children[0])).getType()) + "\n";
 
         out += ".limit stack 100\n"; //TODO: melhorar na proxima entrega
-        out += ".limit locals " + (node.symbolTable.size() + 1) + "\n";
+        out += ".limit locals " + (node.symtbl.size() + 1) + "\n";
 
         String st_id = new String(node.id);
 
@@ -440,7 +440,7 @@ public class JasminGenerator implements ASTNodeVisitor {
             st_id += " " + arg;
         }
 
-        STEntry ret_val = node.symbolTable.checkSymbolTable(st_id);
+        STEntry ret_val = node.checkSymbolTable(st_id);
 
         if (node.children != null) {
             for (int i = 0; i < node.children.length; ++i) {
@@ -463,7 +463,7 @@ public class JasminGenerator implements ASTNodeVisitor {
             out += "iconst_" + (((ASTbool) return_value).info ? 1 : 0) + "\n";
         } else if (return_value instanceof ASTid) {
             String info = ((ASTid) return_value).info;
-            STEntry entry = node.symbolTable.checkImediateSymbolTable(info);
+            STEntry entry = node.checkImediateSymbolTable(info);
 
             if (entry != null) {
                 if (entry.type == "int")
@@ -471,7 +471,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                 else
                     out += "aload " + entry.order + "\n";
             } else {
-                entry = node.symbolTable.checkSymbolTable(info);
+                entry = node.checkSymbolTable(info);
                 if (entry != null) {
                     out += "aload_0\n";
                     out += "getfield " + node.getClassName() + "/" + entry.order + " "
@@ -510,7 +510,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                 + SimpleNode.getJasminType("void") + "\n";
                 
         out += ".limit stack 100\n"; // TODO: rever na proxima entrega
-        out += ".limit locals " + (node.symbolTable.size() + 1) + "\n";
+        out += ".limit locals " + (node.symtbl.size() + 1) + "\n";
 
         if (node.children != null) {
             for (int i = 0; i < node.children.length; ++i) {
@@ -537,8 +537,8 @@ public class JasminGenerator implements ASTNodeVisitor {
         if (p instanceof ASTStatement)
             assign = ((ASTStatement) p).id;
 
-        STEntry local = node.symbolTable.checkImediateSymbolTable(assign);
-        STEntry global = node.symbolTable.checkSymbolTable(assign);
+        STEntry local = node.checkImediateSymbolTable(assign);
+        STEntry global = node.checkSymbolTable(assign);
 
         if (assign != null) {
             if (local == null) {
@@ -603,8 +603,8 @@ public class JasminGenerator implements ASTNodeVisitor {
             if (p instanceof ASTStatement)
                 assign = ((ASTStatement) p).id;
 
-            STEntry local = node.symbolTable.checkImediateSymbolTable(assign);
-            STEntry global = node.symbolTable.checkSymbolTable(assign);
+            STEntry local = node.checkImediateSymbolTable(assign);
+            STEntry global = node.checkSymbolTable(assign);
 
             int size = Integer.parseInt(((ASTliteral) node.children[0]).info);
 
@@ -651,8 +651,8 @@ public class JasminGenerator implements ASTNodeVisitor {
         if (p instanceof ASTStatement)
             assign = ((ASTStatement) p).id;
 
-        STEntry local = node.symbolTable.checkImediateSymbolTable(assign);
-        STEntry global = node.symbolTable.checkSymbolTable(assign);
+        STEntry local = node.checkImediateSymbolTable(assign);
+        STEntry global = node.checkSymbolTable(assign);
 
         if (assign != null)
             if (local == null) {
@@ -694,7 +694,7 @@ public class JasminGenerator implements ASTNodeVisitor {
             for (Node n : node.children) {
                 if (n instanceof ASTid) {
                     STEntry entry = null;
-                    entry = node.symbolTable.checkImediateSymbolTable(((ASTid) n).info);
+                    entry = node.checkImediateSymbolTable(((ASTid) n).info);
 
                     if (entry != null) {
                         if (entry.type == "int")
@@ -703,7 +703,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                             out += "aload " + entry.order + "\n";
                     } else {
                         if (n instanceof ASTid)
-                            entry = node.symbolTable.checkSymbolTable(((ASTid) n).info);
+                            entry = node.checkSymbolTable(((ASTid) n).info);
                         if (entry != null) {
                             out += "aload_0\n";
                             out += "getfield " + node.getClassName() + "/" + entry.order + " "
@@ -750,7 +750,7 @@ public class JasminGenerator implements ASTNodeVisitor {
         System.out.println(node.info + " - " + type);
 
         STFunc func = new STFunc(-1, node.info, type, node.line, node.column, args);
-        STEntry entry = node.symbolTable.checkSymbolTable(func.getKeyName());
+        STEntry entry = node.checkSymbolTable(func.getKeyName());
 
         if (entry != null) {
             if (node.children != null) {
@@ -798,8 +798,8 @@ public class JasminGenerator implements ASTNodeVisitor {
         if (p instanceof ASTStatement)
             assign = ((ASTStatement) p).id;
 
-        STEntry local = node.symbolTable.checkImediateSymbolTable(assign);
-        STEntry global = node.symbolTable.checkSymbolTable(assign);
+        STEntry local = node.checkImediateSymbolTable(assign);
+        STEntry global = node.checkSymbolTable(assign);
 
         if (assign != null) {
             if (local == null) {
@@ -825,8 +825,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (first_child instanceof ASTid) {
             String arg0 = ((ASTid) first_child).info;
-            STEntry local_0 = node.symbolTable.checkImediateSymbolTable(arg0);
-            STEntry global_0 = node.symbolTable.checkSymbolTable(arg0);
+            STEntry local_0 = node.checkImediateSymbolTable(arg0);
+            STEntry global_0 = node.checkSymbolTable(arg0);
 
             if (local_0 == null) {
                 if (global_0 != null) {
@@ -856,8 +856,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (second_child instanceof ASTid) {
             String arg1 = ((ASTid) second_child).info;
-            STEntry local_1 = node.symbolTable.checkImediateSymbolTable(arg1);
-            STEntry global_1 = node.symbolTable.checkSymbolTable(arg1);
+            STEntry local_1 = node.checkImediateSymbolTable(arg1);
+            STEntry global_1 = node.checkSymbolTable(arg1);
 
             if (local_1 == null) {
                 if (global_1 != null) {
@@ -887,8 +887,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (first_child instanceof ASTid) {
             String arg0 = ((ASTid) first_child).info;
-            STEntry local_0 = node.symbolTable.checkImediateSymbolTable(arg0);
-            STEntry global_0 = node.symbolTable.checkSymbolTable(arg0);
+            STEntry local_0 = node.checkImediateSymbolTable(arg0);
+            STEntry global_0 = node.checkSymbolTable(arg0);
 
             if (local_0 == null) {
                 if (global_0 != null) {
@@ -913,8 +913,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (second_child instanceof ASTid) {
             String arg1 = ((ASTid) second_child).info;
-            STEntry local_1 = node.symbolTable.checkImediateSymbolTable(arg1);
-            STEntry global_1 = node.symbolTable.checkSymbolTable(arg1);
+            STEntry local_1 = node.checkImediateSymbolTable(arg1);
+            STEntry global_1 = node.checkSymbolTable(arg1);
 
             if (local_1 == null) {
                 if (global_1 != null) {
@@ -948,8 +948,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (first_child instanceof ASTid) {
             String arg0 = ((ASTid) first_child).info;
-            STEntry local_0 = node.symbolTable.checkImediateSymbolTable(arg0);
-            STEntry global_0 = node.symbolTable.checkSymbolTable(arg0);
+            STEntry local_0 = node.checkImediateSymbolTable(arg0);
+            STEntry global_0 = node.checkSymbolTable(arg0);
 
             if (local_0 == null) {
                 if (global_0 != null) {
@@ -981,8 +981,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (first_child instanceof ASTid) {
             String arg0 = ((ASTid) first_child).info;
-            STEntry local_0 = node.symbolTable.checkImediateSymbolTable(arg0);
-            STEntry global_0 = node.symbolTable.checkSymbolTable(arg0);
+            STEntry local_0 = node.checkImediateSymbolTable(arg0);
+            STEntry global_0 = node.checkSymbolTable(arg0);
 
             if (local_0 == null) {
                 if (global_0 != null) {
@@ -1007,8 +1007,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (second_child instanceof ASTid) {
             String arg1 = ((ASTid) second_child).info;
-            STEntry local_1 = node.symbolTable.checkImediateSymbolTable(arg1);
-            STEntry global_1 = node.symbolTable.checkSymbolTable(arg1);
+            STEntry local_1 = node.checkImediateSymbolTable(arg1);
+            STEntry global_1 = node.checkSymbolTable(arg1);
 
             if (local_1 == null) {
                 if (global_1 != null) {
@@ -1039,8 +1039,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (node.children[0] instanceof ASTid) {
             String arg0 = ((ASTid) node.children[0]).info;
-            STEntry local_0 = node.symbolTable.checkImediateSymbolTable(arg0);
-            STEntry global_0 = node.symbolTable.checkSymbolTable(arg0);
+            STEntry local_0 = node.checkImediateSymbolTable(arg0);
+            STEntry global_0 = node.checkSymbolTable(arg0);
 
             if (local_0 == null) {
                 if (global_0 != null) {
@@ -1065,8 +1065,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (node.children[1] instanceof ASTid) {
             String arg1 = ((ASTid) node.children[1]).info;
-            STEntry local_1 = node.symbolTable.checkImediateSymbolTable(arg1);
-            STEntry global_1 = node.symbolTable.checkSymbolTable(arg1);
+            STEntry local_1 = node.checkImediateSymbolTable(arg1);
+            STEntry global_1 = node.checkSymbolTable(arg1);
 
             if (local_1 == null) {
                 if (global_1 != null) {
@@ -1099,8 +1099,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (node.children[0] instanceof ASTid) {
             String arg0 = ((ASTid) node.children[0]).info;
-            STEntry local_0 = node.symbolTable.checkImediateSymbolTable(arg0);
-            STEntry global_0 = node.symbolTable.checkSymbolTable(arg0);
+            STEntry local_0 = node.checkImediateSymbolTable(arg0);
+            STEntry global_0 = node.checkSymbolTable(arg0);
 
             if (local_0 == null) {
                 if (global_0 != null) {
@@ -1125,8 +1125,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (node.children[1] instanceof ASTid) {
             String arg1 = ((ASTid) node.children[1]).info;
-            STEntry local_1 = node.symbolTable.checkImediateSymbolTable(arg1);
-            STEntry global_1 = node.symbolTable.checkSymbolTable(arg1);
+            STEntry local_1 = node.checkImediateSymbolTable(arg1);
+            STEntry global_1 = node.checkSymbolTable(arg1);
 
             if (local_1 == null) {
                 if (global_1 != null) {
@@ -1159,8 +1159,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (node.children[0] instanceof ASTid) {
             String arg0 = ((ASTid) node.children[0]).info;
-            STEntry local_0 = node.symbolTable.checkImediateSymbolTable(arg0);
-            STEntry global_0 = node.symbolTable.checkSymbolTable(arg0);
+            STEntry local_0 = node.checkImediateSymbolTable(arg0);
+            STEntry global_0 = node.checkSymbolTable(arg0);
 
             if (local_0 == null) {
                 if (global_0 != null) {
@@ -1185,8 +1185,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (node.children[1] instanceof ASTid) {
             String arg1 = ((ASTid) node.children[1]).info;
-            STEntry local_1 = node.symbolTable.checkImediateSymbolTable(arg1);
-            STEntry global_1 = node.symbolTable.checkSymbolTable(arg1);
+            STEntry local_1 = node.checkImediateSymbolTable(arg1);
+            STEntry global_1 = node.checkSymbolTable(arg1);
 
             if (local_1 == null) {
                 if (global_1 != null) {
@@ -1220,8 +1220,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (first_child instanceof ASTid) {
             String arg0 = ((ASTid) first_child).info;
-            STEntry local_0 = node.symbolTable.checkImediateSymbolTable(arg0);
-            STEntry global_0 = node.symbolTable.checkSymbolTable(arg0);
+            STEntry local_0 = node.checkImediateSymbolTable(arg0);
+            STEntry global_0 = node.checkSymbolTable(arg0);
 
             if (local_0 == null) {
                 if (global_0 != null) {
@@ -1250,8 +1250,8 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         if (first_child instanceof ASTid) {
             String arg0 = ((ASTid) first_child).info;
-            STEntry local_0 = node.symbolTable.checkImediateSymbolTable(arg0);
-            STEntry global_0 = node.symbolTable.checkSymbolTable(arg0);
+            STEntry local_0 = node.checkImediateSymbolTable(arg0);
+            STEntry global_0 = node.checkSymbolTable(arg0);
 
             if (local_0 == null) {
                 if (global_0 != null) {

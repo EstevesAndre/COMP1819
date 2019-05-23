@@ -10,5 +10,18 @@ class ASTArgs extends SimpleNode {
     super(p, id);
   }
 
+  public void acceptSemanticAnalysis(SemanticAnalyzer semanticAnalyzer) {
+    semanticAnalyzer.visit(this);
+
+    if (children != null) {
+      for (int i = 0; i < children.length; ++i) {
+        SimpleNode n = (SimpleNode) children[i];
+        if (n != null) {
+          n.acceptSemanticAnalysis(semanticAnalyzer);
+        }
+      }
+    }
+  }
+
 }
 /* JavaCC - OriginalChecksum=3b31490a561081bd69d997efacc92b9d (do not edit this line) */

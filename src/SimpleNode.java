@@ -9,7 +9,6 @@ public class SimpleNode implements Node, ASTNode {
   protected int id;
   protected Object value;
   protected jmm parser;
-  protected SymbolTable symbolTable = new SymbolTable(this);
 
   public int line;
   public int column;

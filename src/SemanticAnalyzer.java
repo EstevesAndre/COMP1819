@@ -82,7 +82,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
         /* Symbol Table insertions */
         String type = ((ASTType) node.children[0]).getType();
 
-        if (!node.symbolTable.addToSymbolTable(node.id, new STVar(-1, node.id, type, -1, -1))) {
+        if (!node.addToSymbolTable(node.id, new STVar(-1, node.id, type, -1, -1))) {
             System.err.println(
                     "Variable already defined: " + node.id + " at line " + node.line + ", column " + node.column + ".");
         }
@@ -108,7 +108,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
     public String visit(ASTid node) {
         System.out.println("Displaying ASTid");
 
-        STEntry entry = node.symbolTable.checkSymbolTable(node.info);
+        STEntry entry = node.checkSymbolTable(node.info);
 
         if (entry == null || (entry.compareTo(new STVar(-1, node.info, "", node.line, node.column)) < 0))
             System.err.println("Variable may not have been initialized: " + node.info + " at line " + node.line
@@ -148,7 +148,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
                         "Invalid array access: " + node.id + " at line " + node.line + ", column " + node.column + ".");
             }
 
-            STEntry entry = node.symbolTable.checkSymbolTable(node.id);
+            STEntry entry = node.checkSymbolTable(node.id);
             System.out.println("CRL: " + entry.type);
             if (!entry.type.equals("int[]")) {
                 System.err.println(node.id + " is not an array at line " + node.line + ", column " + node.column + ".");
@@ -158,7 +158,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
         if (node.assign) {
             // entry is the entry of the variable for the value to the left of assign
-            STEntry entry = node.symbolTable.checkSymbolTable(node.id);
+            STEntry entry = node.checkSymbolTable(node.id);
 
             Node p = node.parent;
             while (p != null) {
@@ -200,7 +200,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
         }
 
         if (node.type != null && !node.assign && node.type.equals("id")) {
-            STEntry entry = node.symbolTable.checkSymbolTable(node.id);
+            STEntry entry = node.checkSymbolTable(node.id);
 
             if (entry != null && entry.compareTo(new STVar(-1, node.id, node.type, node.line, node.column)) < 0)
                 System.err.println("Variable may not have been initialized: " + node.id + " at line " + node.line
@@ -231,7 +231,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
         STFunc func = new STFunc(-1, node.id, type, node.line, node.column, args);
         System.out.println("aqui crl");
-        if (!node.symbolTable.addToSymbolTable(func.getKeyName(), func)) {
+        if (!node.addToSymbolTable(func.getKeyName(), func)) {
             System.err.println(
                     "Function already defined: " + node.id + " at line " + node.line + ", column " + node.column + ".");
         }
@@ -244,7 +244,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
         /* Symbol Table insertions */
 
-        if (!node.symbolTable.addToSymbolTable(node.id, new STVar(-1, node.id, "String[]", node.line, node.column))) {
+        if (!node.addToSymbolTable(node.id, new STVar(-1, node.id, "String[]", node.line, node.column))) {
             System.out.println(
                     "Variable already defined: " + node.id + " at line " + node.line + ", column " + node.column + ".");
         }
@@ -265,7 +265,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
         /* Symbol Table insertions */
         String type = ((ASTType) node.children[0]).getType() + (((ASTType) node.children[0]).array ? "[]" : "");
 
-        if (!node.symbolTable.addToSymbolTable(node.id, new STVar(-1, node.id, type, node.line, node.column))) {
+        if (!node.addToSymbolTable(node.id, new STVar(-1, node.id, type, node.line, node.column))) {
             System.err.println(
                     "Variable already defined: " + node.id + " at line " + node.line + ", column " + node.column + ".");
         }
@@ -331,7 +331,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
         if (node.type.equals("length")) {
             STEntry entry = null;
             if (node.parent instanceof ASTid)
-                entry = node.symbolTable.checkSymbolTable(((ASTid) node.parent).info);
+                entry = node.checkSymbolTable(((ASTid) node.parent).info);
             if (entry != null && !entry.type.equals("int[]")) {
                 System.err.println("Invalid field access: Expecting int[], found " + entry.type + " at line "
                         + node.line + ", column " + node.column + ".");
@@ -369,7 +369,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
             }
             STFunc func = new STFunc(-1, node.info, type, node.line, node.column, args);
 
-            if (node.symbolTable.checkSymbolTable(func.getKeyName()) == null) {
+            if (node.checkSymbolTable(func.getKeyName()) == null) {
                 System.err.println("Function not defined: " + node.info + "() at line " + node.line + ", column "
                         + node.column + ".");
             }
