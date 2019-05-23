@@ -706,49 +706,21 @@ public class JasminGenerator implements ASTNodeVisitor {
         System.out.println("Displaying ASTfield");
 
         String out = "";
-        if (node.children != null)
-            for (Node n : node.children) {
-                if (n instanceof ASTid) {
-                    STEntry entry = null;
-                    entry = node.checkImediateSymbolTable(((ASTid) n).info);
-
-                    if (entry != null) {
-                        if (entry.type == "int")
-                            out += "iload " + entry.order + "\n";
-                        else
-                            out += "aload " + entry.order + "\n";
-                    } else {
-                        if (n instanceof ASTid)
-                            entry = node.checkSymbolTable(((ASTid) n).info);
-                        if (entry != null) {
-                            out += "aload_0\n";
-                            out += "getfield " + node.getClassName() + "/" + entry.order + " "
-                                    + SimpleNode.getJasminType(entry.type) + "\n";
-                        }
-                    }
-                } else if (n instanceof ASTliteral) {
-                    out += "ldc " + ((ASTliteral) n).info + "\n";
-                } else if (n instanceof ASTlt) {
-                    out += getJasminRecursive((ASTlt) n);
-                } else if (n instanceof ASTand) {
-                    out += getJasminRecursive((ASTand) n, false, 0);
-                } else if (n instanceof AST_this)
-                    out += visit((ASTfield) ((AST_this) n).children[0]);
-            }
-
+       
         Node n = node.parent;
+        String id = null;
 
-        if (!(n instanceof ASTStatement)) {
+        if(n instanceof ASTStatement)
+        {
+            id = ((ASTStatement) n).id;
+        }
+        else if (n instanceof ASTid)
+        {
+            id = ((ASTid) n).info;
+        }
 
-            while (n != null) {
-                if (n instanceof ASTClassDeclaration) {
-                    out += "aload_0\n";
-                    out += "invokevirtual " + ((ASTClassDeclaration) n).id;
-                    break;
-                }
-                n = ((SimpleNode) n).parent;
-            }
-        } else {
+        if(id != null)
+        {
             STEntry entry = null;
             entry = node.checkImediateSymbolTable(((ASTStatement) n).id);
             if (node.checkSymbolTable(((ASTStatement) node.parent).id) != null) {
@@ -757,10 +729,22 @@ public class JasminGenerator implements ASTNodeVisitor {
             } else {
                 out += "invokestatic ";
             }
+
             if (entry != null)
                 out += entry.type;
             else
                 out += ((ASTStatement) node.parent).id;
+        }
+        else
+        {
+            while (n != null) {
+                if (n instanceof ASTClassDeclaration) {
+                    out += "aload_0\n";
+                    out += "invokevirtual " + ((ASTClassDeclaration) n).id;
+                    break;
+                }
+                n = ((SimpleNode) n).parent;
+            }
         }
 
         out += "/" + node.info + "(";

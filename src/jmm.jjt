@@ -229,7 +229,7 @@ void Statement() : {Token id;} {
   (<L_BRACE> (Statement())* < R_BRACE >) |
   (If()) {jjtThis.type = "if";} | 
   (While()) {jjtThis.type = "while";} |
-  (id=<IDENTIFIER> {jjtThis.type = "id"; jjtThis.id = id.image;} (<L_BRACKET> Expression() < R_BRACKET > {jjtThis.array = true;} | {}) ( (<ASSIGN> Expression() < SEMICOLON > {jjtThis.assign = true;} ) | (Expression_Alt() < SEMICOLON > ) | (IDField()))) |
+  (id=<IDENTIFIER> {jjtThis.type = "id"; jjtThis.id = id.image;} (<L_BRACKET> Expression() < R_BRACKET > {jjtThis.array = true;} | {}) ( (<ASSIGN> Expression() < SEMICOLON > {jjtThis.assign = true;} ) | (Expression_Alt() < SEMICOLON > ))) |
   (ExpressionNoId() < SEMICOLON > {jjtThis.type = "no_id";})
 }
 
@@ -301,14 +301,14 @@ void Div() #void : {}
 
 void Not() #void : {}
 {
-    Field() |
+    LowerExpression() |
     (<NOT> Not() #not)
 }
 
 void Field() #void : {Token t;}
 {
   LowerExpression() ( <DOT> (( t=<LENGTH> Expression_Alt() {jjtThis.type = "length"; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;} ) |
-                            ( t=<IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t.image; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;} ) ) #field(1) )?
+                            ( t=<IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t.image; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;} ) ) #field )?
     
 }
 
@@ -317,7 +317,7 @@ void LowerExpression() #void : {Token t;}
     ( t=<INTEGER_LITERAL> Expression_Alt() {jjtThis.info = t.image; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;} #literal)| 
     ( <T> Expression_Alt() {jjtThis.info = true;} #bool) |
     ( <F> Expression_Alt() #bool ) |
-    ( t=<IDENTIFIER> Expression_Alt() {jjtThis.info = t.image; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;} #id ) |
+    ( id() ) |
     ( <THIS> Expression_Alt() #_this ) |
     ( <NEW> ( 
        ( <INT> <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() {jjtThis.type = "array";} ) 
@@ -325,6 +325,11 @@ void LowerExpression() #void : {Token t;}
        ( t=<IDENTIFIER> <L_PAR> <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t.image; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;}) 
       ) #_new ) |
     ( <L_PAR> Expression() <R_PAR> Expression_Alt() )
+}
+
+void id() : {Token t;}
+{
+  ( t=<IDENTIFIER> {jjtThis.info = t.image; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;} Expression_Alt() )
 }
 
 void ExpressionNoId() #void : {Token t;}
@@ -344,5 +349,7 @@ void ExpressionNoId() #void : {Token t;}
 void Expression_Alt() #void : {Token t;}
 {
     ( <L_BRACKET> Expression() <R_BRACKET> Expression_Alt() ) |
+    ( <DOT> (( t=<LENGTH> Expression_Alt() {jjtThis.type = "length"; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;} ) |
+                            ( t=<IDENTIFIER> <L_PAR> ( Expression() ( <COMMA> Expression() )* )? <R_PAR> Expression_Alt() {jjtThis.type = "id"; jjtThis.info = t.image; jjtThis.line = t.beginLine; jjtThis.column = t.beginColumn;} ) ) #field )|
     {}
 }

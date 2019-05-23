@@ -11,8 +11,11 @@ class AST_this extends SimpleNode {
   }
 
   public String getType() {
-    return ((SimpleNode) children[0]).getType();
-  }
+    if(children != null)
+      return ((SimpleNode) children[0]).getType();
+
+    return "";
+    }
 
 }
 /* JavaCC - OriginalChecksum=fba6d607a89996b150d2254a9d0a41a2 (do not edit this line) */

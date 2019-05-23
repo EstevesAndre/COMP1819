@@ -18,12 +18,11 @@ return
 .limit stack 100
 .limit locals 1
 aload_0
-invokevirtual funcs/ya()I
+invokevirtual funcs/ya(II)I
 ireturn
 .end method
-.method public ya()I
+.method public ya(II)I
 .limit stack 100
-.limit locals 1
-ldc 2
+.limit locals 3
 ireturn
 .end method

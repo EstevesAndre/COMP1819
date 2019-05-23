@@ -10,10 +10,10 @@ class funcs {
 	}
 
 	public int oi(){
-		return this.ya();
+		return this.ya(1, 2);
 	}
 
-	public int ya(){
-		return 2;
+	public int ya(int i, int j){
+		return i;
 	}
 }

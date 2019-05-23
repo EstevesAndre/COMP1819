@@ -23,9 +23,9 @@ public interface jmmTreeConstants
   public int JJTNOT = 19;
   public int JJTLITERAL = 20;
   public int JJTBOOL = 21;
-  public int JJTID = 22;
-  public int JJT_THIS = 23;
-  public int JJT_NEW = 24;
+  public int JJT_THIS = 22;
+  public int JJT_NEW = 23;
+  public int JJTID = 24;
 
 
   public String[] jjtNodeName = {
@@ -51,9 +51,9 @@ public interface jmmTreeConstants
     "not",
     "literal",
     "bool",
-    "id",
     "_this",
     "_new",
+    "id",
   };
 }
-/* JavaCC - OriginalChecksum=1f793e4e70b35c15281d4a8c6657a9b1 (do not edit this line) */
+/* JavaCC - OriginalChecksum=526f098e8c02fc3108755dcbd8e514f9 (do not edit this line) */
