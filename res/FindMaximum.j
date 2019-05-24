@@ -15,11 +15,7 @@ istore 2
 aload 1
 ldc 0
 iaload
-ldc 2
-aload 1
-arraylength
-isum
-istore 4
+istore 3
 LABEL1:
 iload 2
 aload 1
@@ -28,10 +24,12 @@ if_icmpge LABEL2
 aload 1
 iload 2
 iaload
+istore 4
 iload 3
 iload 4
 if_icmpge LABEL3
 iload 4
+istore 3
 goto LABEL4
 LABEL3:
 LABEL4:
@@ -47,7 +45,7 @@ ireturn
 .end method
 .method public build_test_arr()I
 .limit stack 100
-.limit locals 2
+.limit locals 1
 aload_0
 ldc 5
 newarray int
@@ -108,13 +106,6 @@ putfield FindMaximum/test_arr [I
 aload_0
 ldc 12
 putfield FindMaximum/test_arr [I
-ldc 5
-newarray int
-astore 1
-aload 1
-ldc 1
-ldc 12
-iastore
 ldc 0
 ireturn
 .end method
