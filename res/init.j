@@ -3,14 +3,24 @@
 .field public aaa [I
 .method public hi(I)I
 .limit stack 100
-.limit locals 2
-aload_0
-aload 1
-newarray int
-putfield aaa/1
-getfield init/1 [I
-iaload
-aload_0
-getfield init/1 [I
+.limit locals 7
+ldc 2
+istore 5
+ldc 1
+istore 6
+iconst_1
+istore 2
+iconst_0
+istore 4
+iconst_0
+istore 3
+ifeq LABEL1
+iload 4
+ifeq LABEL1
+iconst_1
+goto LABEL2
+LABEL1: iconst_0
+LABEL2: istore 4
+ldc 0
 ireturn
 .end method

@@ -263,7 +263,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
         System.out.println("Displaying ASTArg");
 
         /* Symbol Table insertions */
-        String type = ((ASTType) node.children[0]).getType() + (((ASTType) node.children[0]).array ? "[]" : "");
+        String type = ((ASTType) node.children[0]).getType();
 
         if (!node.addToSymbolTable(node.id, new STVar(-1, node.id, type, node.line, node.column))) {
             System.err.println(

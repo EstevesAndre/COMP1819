@@ -2,9 +2,34 @@ class init {
     int[] aaa;
 
     public int hi(int i) {
-        aaa = new int[i];
+        boolean a;
+        boolean b;
+        boolean c;
+        int d;
+        int e;
 
-        return aaa.length;
+        d = 2;
+        e = 1;
+        a = true;
+        c = false;
+
+        b = false;
+
+        // a = true && (false && b);
+
+        // c = (d < e) && b;
+
+        // c = !b && (d < 3);
+
+        c = a && b && c;
+
+        // if (a && b && c) {
+        // d = 2;
+        // } else {
+
+        // }
+
+        return 0;
     }
 
     // public boolean whilef(){
@@ -52,28 +77,28 @@ class init {
 
     // public boolean not() {
 
-    //     boolean x;
-    //     boolean y;
+    // boolean x;
+    // boolean y;
 
-    //     x = true;
-    //     y = true;
+    // x = true;
+    // y = true;
 
-    //     if (!y) {
-    //         x = false;
-    //     } else {
+    // if (!y) {
+    // x = false;
+    // } else {
 
-    //     }
+    // }
 
-    //     if (!(x && Y)) {
+    // if (!(x && Y)) {
 
-    //     } else {
+    // } else {
 
-    //     }
+    // }
 
-    //     return true;
+    // return true;
     // }
 
     // public boolean fds() {
-    //     return true;
+    // return true;
     // }
 }
