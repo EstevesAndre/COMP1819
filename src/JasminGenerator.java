@@ -436,7 +436,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                 if (global != null) {
                     out += "aload_0\n";
 
-                    out += getJasminRecursive(val);
+                    out += getJasminRecursive(index);
 
                     if (val instanceof ASTid) {
                         out += getJasminRecursive((ASTid) index);
@@ -451,7 +451,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                     } else if (val instanceof ASTsub) {
                         out += getJasminRecursive((ASTsub) val);
                     }
-
+//TODO consider if array and not class -> use iastore instead of putfield
                     out += "putfield " + node.getClassName() + "/" + global.id + " "
                             + SimpleNode.getJasminType(global.type) + "\n";
                 }
@@ -468,14 +468,14 @@ public class JasminGenerator implements ASTNodeVisitor {
             }
         }
 
-        if (node.children != null) {
-            for (int i = 0; i < node.children.length; ++i) {
-                SimpleNode n = (SimpleNode) node.children[i];
-                if (n != null) {
-                    out += n.accept(this);
-                }
-            }
-        }
+        // if (node.children != null) {
+        //     for (int i = 0; i < node.children.length; ++i) {
+        //         SimpleNode n = (SimpleNode) node.children[i];
+        //         if (n != null) {
+        //             out += n.accept(this);
+        //         }
+        //     }
+        // }
 
         return out;
     }
@@ -1389,7 +1389,7 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         out += getJasminRecursive(node.children[1]);
 
-        out += "isum\n";
+        out += "iadd\n";
 
         return out;
     }
