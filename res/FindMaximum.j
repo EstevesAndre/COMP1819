@@ -1,12 +1,6 @@
 .class public FindMaximum
 .super java/lang/Object
 .field public test_arr [I
-; standard initializer
-.method public <init>()V
-aload_0
-invokenonvirtual java/lang/Object/<init>()V
-return
-.end method
 .method public find_maximum([I)I
 .limit stack 100
 .limit locals 5
@@ -100,5 +94,11 @@ aload 1
 invokevirtual FindMaximum/get_array()[I
 invokevirtual FindMaximum/find_maximum([I)I
 invokestatic ioPlus/printResult(I)V
+return
+.end method
+; standard initializer
+.method public <init>()V
+aload_0
+invokenonvirtual java/lang/Object/<init>()V
 return
 .end method

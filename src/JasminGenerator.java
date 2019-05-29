@@ -691,17 +691,17 @@ public class JasminGenerator implements ASTNodeVisitor {
                 if (n != null) {
                     out += n.accept(this);
                 }
-
-                if (n instanceof ASTVarDeclaration && (node.children[i + 1] instanceof ASTMainDeclaration
-                        || node.children[i + 1] instanceof ASTMethodDeclaration)) {
-                    out += "; standard initializer\n";
-                    out += ".method public <init>()V\n";
-                    out += "aload_0\n";
-                    out += "invokenonvirtual java/lang/Object/<init>()V\n";
-                    out += "return\n";
-                    out += ".end method\n";
-                }
             }
+        }
+
+        if(node.checkSymbolTable(node.id) == null)
+        {
+            out += "; standard initializer\n";
+            out += ".method public <init>()V\n";
+            out += "aload_0\n";
+            out += "invokenonvirtual java/lang/Object/<init>()V\n";
+            out += "return\n";
+            out += ".end method\n";
         }
 
         return out;

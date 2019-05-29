@@ -30,9 +30,11 @@ dup
 invokespecial Quicksort/<init>()V
 astore 3
 aload 3
+aload 1
 iload 1
 invokevirtual Quicksort/quicksort([I)Z
 aload 3
+aload 1
 iload 1
 invokevirtual Quicksort/printL([I)Z
 return
@@ -47,8 +49,11 @@ iload 2
 aload 1
 arraylength
 if_icmpge LABEL4
+aload 1
+iload 2
+iaload
 iload 1
-invokestatic io/println()V
+invokestatic io/println([I)V
 iload 2
 ldc 1
 iadd
@@ -62,12 +67,13 @@ ireturn
 .limit stack 100
 .limit locals 2
 aload_0
+aload 1
 iload 1
 ldc 0
 iload 1
 ldc 1
 isub
-invokevirtual Quicksort/quicksort([III)Z
+invokevirtual Quicksort/quicksort([I)Z
 ireturn
 .end method
 .method public quicksort([III)Z
@@ -77,24 +83,31 @@ iload 2
 iload 3
 if_icmpge LABEL5
 aload_0
+aload 1
+iload 2
+iload 3
 iload 1
 iload 2
 iload 3
 invokevirtual Quicksort/partition([III)I
 aload_0
+aload 1
+iload 2
 iload 1
 iload 2
 iload 4
 ldc 1
 isub
-invokevirtual Quicksort/quicksort([III)Z
+invokevirtual Quicksort/quicksort([I)Z
 aload_0
+aload 1
+iload 3
 iload 1
 iload 4
 ldc 1
 iadd
 iload 3
-invokevirtual Quicksort/quicksort([III)Z
+invokevirtual Quicksort/quicksort([I)Z
 goto LABEL6
 LABEL5:
 LABEL6:
@@ -164,4 +177,10 @@ iload 7
 iastore
 iload 5
 ireturn
+.end method
+; standard initializer
+.method public <init>()V
+aload_0
+invokenonvirtual java/lang/Object/<init>()V
+return
 .end method
