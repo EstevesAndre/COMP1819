@@ -5,8 +5,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTlt node) {
-        System.out.println("Displaying ASTlt");
-
         String out = "";
 
         SimpleNode p = (SimpleNode) node.parent;
@@ -47,8 +45,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTmult node) {
-        System.out.println("Displaying ASTmult");
-
         String out = "";
 
         SimpleNode p = (SimpleNode) node.parent;
@@ -81,8 +77,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTnot node) {
-        System.out.println("Displaying ASTnot");
-
         String out = "";
 
         SimpleNode p = (SimpleNode) node.parent;
@@ -123,7 +117,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTsub node) {
-        System.out.println("Displaying ASTsub");
         String out = "";
 
         SimpleNode p = (SimpleNode) node.parent;
@@ -156,8 +149,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTdiv node) {
-        System.out.println("Displaying ASTdiv");
-
         String out = "";
 
         SimpleNode p = (SimpleNode) node.parent;
@@ -190,8 +181,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTVarDeclaration node) {
-        System.out.println("Displaying ASTVarDeclaration");
-
         String out = "";
 
         if (node.parent instanceof ASTClassDeclaration) {
@@ -213,8 +202,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTWhile node) {
-        System.out.println("Displaying ASTWhile");
-
         String out = "";
         Node first_child = node.children[0];
         Node statements = node.children[1];
@@ -243,8 +230,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTIf node) {
-        System.out.println("Displaying ASTIf");
-
         String out = "";
 
         Node first_child = node.children[0];
@@ -288,8 +273,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTid node) {
-        System.out.println("Displaying ASTid");
-
         String out = "";
         SimpleNode p = (SimpleNode) node.parent;
 
@@ -373,8 +356,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTsum node) {
-        System.out.println("Displaying ASTsum");
-
         String out = "";
 
         SimpleNode p = (SimpleNode) node.parent;
@@ -407,19 +388,15 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTType node) {
-        System.out.println("Displaying ASTType");
         return "";
 
     }
 
     @Override
     public String visit(ASTStatement node) {
-        System.out.println("Displaying ASTStatement");
-
         String out = "";
 
         if (node.array && node.assign) {
-            System.out.println("CENAS");
             SimpleNode p = (SimpleNode) node.parent;
 
             // String assign = null;
@@ -492,8 +469,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTMethodDeclaration node) {
-        System.out.println("Displaying ASTMethodDeclaration");
-
         String out = ".method public " + node.id + "(";
 
         ASTArgs args = (ASTArgs) node.children[1];
@@ -594,7 +569,6 @@ public class JasminGenerator implements ASTNodeVisitor {
         String info = ((ASTid) node).info;
         STEntry entry = node.checkImediateSymbolTable(info);
         String out = "";
-        System.out.println(info);
 
         if (entry != null) {
             if (entry.type.equals("int"))
@@ -645,8 +619,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTMainDeclaration node) {
-        System.out.println("Displaying ASTMainDeclaration");
-
         String out = ".method static public main(" + SimpleNode.getJasminType("String[]") + ")"
                 + SimpleNode.getJasminType("void") + "\n";
 
@@ -669,8 +641,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTbool node) {
-        System.out.println("Displaying ASTbool");
-
         String out = "";
         SimpleNode p = (SimpleNode) node.parent;
 
@@ -700,22 +670,18 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTArg node) {
-        System.out.println("Displaying ASTArg");
         return "";
 
     }
 
     @Override
     public String visit(ASTArgs node) {
-        System.out.println("Displaying ASTArgs");
         return "";
 
     }
 
     @Override
     public String visit(ASTClassDeclaration node) {
-        System.out.println("Displaying ASTClassDeclaration");
-
         String out = ".class public " + node.id + "\n";
         out += ".super " + (node.ext != null ? node.ext : "java/lang/Object") + "\n";
 
@@ -743,8 +709,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(AST_new node) {
-        System.out.println("Displaying AST_new");
-
         String out = "";
 
         SimpleNode p = (SimpleNode) node.parent;
@@ -811,14 +775,12 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(AST_this node) {
-        System.out.println("Displaying AST_this");
         return "";
 
     }
 
     @Override
     public String visit(ASTand node) {
-        System.out.println("Displaying ASTand");
         String out = "";
 
         if (node.parent instanceof ASTand)
@@ -869,8 +831,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTfield node) {
-        System.out.println("Displaying ASTfield");
-
         String out = "";
 
         SimpleNode n = (SimpleNode) node.parent;
@@ -1068,11 +1028,6 @@ public class JasminGenerator implements ASTNodeVisitor {
             }
         }
 
-        if (args.size() != 0)
-            System.out.println(node.info + " - " + args.get(0));
-        else
-            System.out.println(node.info + " - " + type);
-
         STEntry entry = node.checkSymbolTable(node.info);
 
         if (entry != null) {
@@ -1147,8 +1102,6 @@ public class JasminGenerator implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTliteral node) {
-        System.out.println("Displaying ASTliteral");
-
         String out = "";
         SimpleNode p = (SimpleNode) node.parent;
 
@@ -1308,7 +1261,6 @@ public class JasminGenerator implements ASTNodeVisitor {
             out += "ldc " + ((ASTliteral) first_child).info + "\n";
         } else if (first_child instanceof ASTlt) {
 
-            System.out.println("AQUI CRL");
             out += getJasminRecursive((ASTlt) first_child);
         } else if (first_child instanceof ASTand) {
             out += getJasminRecursive((ASTand) first_child, false, 0);
@@ -1327,7 +1279,6 @@ public class JasminGenerator implements ASTNodeVisitor {
         Node second_child = node.children[1];
 
         if (first_child instanceof ASTid) {
-            System.out.println("QASAS");
             out += getJasminRecursive(first_child);
         } else if (first_child instanceof ASTliteral) {
             out += "ldc " + ((ASTliteral) first_child).info + "\n";

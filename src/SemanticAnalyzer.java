@@ -5,8 +5,6 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTlt node) {
-        System.out.println("Displaying ASTlt");
-
         SimpleNode left = (SimpleNode) node.children[0];
         SimpleNode right = (SimpleNode) node.children[1];
 
@@ -19,8 +17,6 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTmult node) {
-        System.out.println("Displaying ASTmult");
-
         SimpleNode left = (SimpleNode) node.children[0];
         SimpleNode right = (SimpleNode) node.children[1];
 
@@ -34,8 +30,6 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTnot node) {
-        System.out.println("Displaying ASTnot");
-
         if (node.children[0] != null) {
             if (!((SimpleNode) node.children[0]).getType().equals("bool")) {
                 System.err.println("Operand of ! is not a bool at line " + node.line + ", column " + node.column + ".");
@@ -47,8 +41,6 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTsub node) {
-        System.out.println("Displaying ASTsub");
-
         SimpleNode left = (SimpleNode) node.children[0];
         SimpleNode right = (SimpleNode) node.children[1];
 
@@ -61,8 +53,6 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTdiv node) {
-        System.out.println("Displaying ASTdiv");
-
         SimpleNode left = (SimpleNode) node.children[0];
         SimpleNode right = (SimpleNode) node.children[1];
 
@@ -77,8 +67,6 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTVarDeclaration node) {
-        System.out.println("Displaying ASTVarDeclaration");
-
         /* Symbol Table insertions */
         String type = ((ASTType) node.children[0]).getType();
 
@@ -92,22 +80,18 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
     @Override
     public String visit(ASTWhile node) {
 
-        System.out.println("Displaying ASTWhile");
         return null;
 
     }
 
     @Override
     public String visit(ASTIf node) {
-        System.out.println("Displaying ASTIf");
         return null;
 
     }
 
     @Override
     public String visit(ASTid node) {
-        System.out.println("Displaying ASTid");
-
         STEntry entry = node.checkSymbolTable(node.info);
 
         if (entry == null || (entry.compareTo(new STVar(-1, node.info, "", node.line, node.column)) < 0))
@@ -119,8 +103,6 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTsum node) {
-        System.out.println("Displaying ASTsum");
-
         SimpleNode left = (SimpleNode) node.children[0];
         SimpleNode right = (SimpleNode) node.children[1];
 
@@ -133,15 +115,12 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTType node) {
-        System.out.println("Displaying ASTType");
         return null;
 
     }
 
     @Override
     public String visit(ASTStatement node) {
-        System.out.println("Displaying ASTStatement");
-
         if (node.array) {
             if (!((SimpleNode) node.children[0]).getType().equals("int")) {
                 System.err.println(
@@ -149,7 +128,6 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
             }
 
             STEntry entry = node.checkSymbolTable(node.id);
-            System.out.println("CRL: " + entry.type);
             if (!entry.type.equals("int[]")) {
                 System.err.println(node.id + " is not an array at line " + node.line + ", column " + node.column + ".");
             }
@@ -212,8 +190,6 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTMethodDeclaration node) {
-        System.out.println("Displaying ASTMethodDeclaration");
-
         List<String> args = new ArrayList<>();
         SimpleNode argsNode = (SimpleNode) node.children[1];
 
@@ -239,8 +215,6 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTMainDeclaration node) {
-        System.out.println("Displaying ASTMainDeclaration");
-
         /* Symbol Table insertions */
 
         if (!node.addToSymbolTable(node.id, new STVar(-1, node.id, "String[]", node.line, node.column))) {
@@ -252,15 +226,12 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTbool node) {
-        System.out.println("Displaying ASTbool");
         return null;
 
     }
 
     @Override
     public String visit(ASTArg node) {
-        System.out.println("Displaying ASTArg");
-
         /* Symbol Table insertions */
         String type = ((ASTType) node.children[0]).getType();
 
@@ -275,21 +246,18 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTArgs node) {
-        System.out.println("Displaying ASTArgs");
         return null;
 
     }
 
     @Override
     public String visit(ASTClassDeclaration node) {
-        System.out.println("Displaying ASTClassDeclaration");
         return null;
 
     }
 
     @Override
     public String visit(AST_new node) {
-        System.out.println("Displaying AST_new");
         if (node.type.equals("array")) {
             if (!((SimpleNode) node.children[0]).getType().equals("int")) {
                 System.err.println("Invalid array initialization: " + node.id + " at line " + node.line + ", column "
@@ -302,15 +270,12 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(AST_this node) {
-        System.out.println("Displaying AST_this");
         return null;
 
     }
 
     @Override
     public String visit(ASTand node) {
-        System.out.println("Displaying ASTand");
-
         SimpleNode left = (SimpleNode) node.children[0];
         SimpleNode right = (SimpleNode) node.children[1];
 
@@ -325,8 +290,6 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTfield node) {
-        System.out.println("Displaying ASTfield");
-
         if (node.type.equals("length")) {
             STEntry entry = null;
             if (node.parent instanceof ASTid)
@@ -377,7 +340,6 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
 
     @Override
     public String visit(ASTliteral node) {
-        System.out.println("Displaying ASTliteral");
         return null;
 
     }
