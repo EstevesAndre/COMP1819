@@ -20,6 +20,9 @@ public class ASTid extends SimpleNode {
     
     STEntry entry = checkSymbolTable(info);
 
+    if(entry != null && entry.type.equals("int[]") && children != null)
+      return "int";
+      
     return (entry == null) ? "Error" : entry.type;
   }
 

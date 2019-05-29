@@ -206,7 +206,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
         }
 
         STFunc func = new STFunc(-1, node.id, type, node.line, node.column, args);
-        if (!node.addToSymbolTable(node.id, func)) {
+        if (!node.addToSymbolTable(node.id + args.size(), func)) {
             System.err.println(
                     "Function already defined: " + node.id + " at line " + node.line + ", column " + node.column + ".");
         }

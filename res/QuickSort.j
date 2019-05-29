@@ -53,7 +53,7 @@ aload 1
 iload 2
 iaload
 iload 1
-invokestatic io/println([I)V
+invokestatic io/println(I)V
 iload 2
 ldc 1
 iadd
@@ -73,7 +73,7 @@ ldc 0
 iload 1
 ldc 1
 isub
-invokevirtual Quicksort/quicksort([I)Z
+invokevirtual Quicksort/quicksort([III)Z
 ireturn
 .end method
 .method public quicksort([III)Z
@@ -98,7 +98,7 @@ iload 2
 iload 4
 ldc 1
 isub
-invokevirtual Quicksort/quicksort([I)Z
+invokevirtual Quicksort/quicksort([III)Z
 aload_0
 aload 1
 iload 3
@@ -107,7 +107,7 @@ iload 4
 ldc 1
 iadd
 iload 3
-invokevirtual Quicksort/quicksort([I)Z
+invokevirtual Quicksort/quicksort([III)Z
 goto LABEL6
 LABEL5:
 LABEL6:
