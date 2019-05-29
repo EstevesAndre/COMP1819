@@ -17,6 +17,7 @@ public class ASTid extends SimpleNode {
 
   public String getType() {
     // Check if it is in the symbol table of simpleNode
+    
     STEntry entry = checkSymbolTable(info);
 
     return (entry == null) ? "Error" : entry.type;

@@ -230,8 +230,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
         }
 
         STFunc func = new STFunc(-1, node.id, type, node.line, node.column, args);
-        System.out.println("aqui crl");
-        if (!node.addToSymbolTable(func.getKeyName(), func)) {
+        if (!node.addToSymbolTable(node.id, func)) {
             System.err.println(
                     "Function already defined: " + node.id + " at line " + node.line + ", column " + node.column + ".");
         }
@@ -367,9 +366,7 @@ public class SemanticAnalyzer implements ASTNodeVisitor {
                     }
                 }
             }
-            STFunc func = new STFunc(-1, node.info, type, node.line, node.column, args);
-
-            if (node.checkSymbolTable(func.getKeyName()) == null) {
+            if (node.checkSymbolTable(node.info) == null) {
                 System.err.println("Function not defined: " + node.info + "() at line " + node.line + ", column "
                         + node.column + ".");
             }
