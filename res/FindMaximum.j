@@ -96,11 +96,9 @@ astore 1
 aload 1
 invokevirtual FindMaximum/build_test_arr()I
 aload 1
-invokevirtual FindMaximum/get_array()[I
 aload 1
-iload 1
+invokevirtual FindMaximum/get_array()[I
 invokevirtual FindMaximum/find_maximum([I)I
-iload 1
 invokestatic ioPlus/printResult(I)V
 return
 .end method
