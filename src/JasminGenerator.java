@@ -249,7 +249,14 @@ public class JasminGenerator implements ASTNodeVisitor {
             // codigo dos else statements
             out += ((SimpleNode) else_statements).accept(this);
         } else if (first_child instanceof ASTnot) {
-            out += "ifne LABEL" + label1 + "\n";
+            
+            if(((ASTnot)first_child).children[0] instanceof ASTlt){
+                out += "if_icmplt LABEL" + label1 + "\n";
+            }
+            else{
+                out += "ifne LABEL" + label1 + "\n";
+            }
+            
             // codigo dos true_statements
             out += ((SimpleNode) true_statements).accept(this);
             out += "goto LABEL" + label2 + "\n";
@@ -289,6 +296,7 @@ public class JasminGenerator implements ASTNodeVisitor {
         if (assign != null) {
             if (local == null) {
                 if (global != null) {
+                    out += "aload_0\n";
                     outinst += "putfield " + node.getClassName() + "/" + global.id + " "
                             + SimpleNode.getJasminType(global.type) + "\n";
                 }
@@ -517,7 +525,7 @@ public class JasminGenerator implements ASTNodeVisitor {
             }
 
         }
-        return out + "\n.end method\n";
+        return out + "\n.end method\n\n";
 
     }
 
@@ -534,7 +542,7 @@ public class JasminGenerator implements ASTNodeVisitor {
         String out = "";
 
         if (entry != null) {
-            if (entry.type.equals("int"))
+            if (entry.type.equals("int") || entry.type.equals("bool"))
                 out += "iload " + entry.order + "\n";
             else
                 out += "aload " + entry.order + "\n";
@@ -597,7 +605,7 @@ public class JasminGenerator implements ASTNodeVisitor {
             }
         }
 
-        out += "return\n.end method\n";
+        out += "return\n.end method\n\n";
 
         return out;
     }
@@ -663,7 +671,7 @@ public class JasminGenerator implements ASTNodeVisitor {
             out += "aload_0\n";
             out += "invokenonvirtual java/lang/Object/<init>()V\n";
             out += "return\n";
-            out += ".end method\n";
+            out += ".end method\n\n";
         }
 
         return out;
@@ -732,7 +740,7 @@ public class JasminGenerator implements ASTNodeVisitor {
             }
         }
 
-        if (node.children != null)
+        if (node.children != null && !node.type.equals("array"))
             for (int i = 0; i < node.children.length; ++i) {
                 SimpleNode n = (SimpleNode) node.children[i];
                 if (n != null) {

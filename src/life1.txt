@@ -1,0 +1,960 @@
+Program
+ class Life 
+  var UNDERPOP_LIM
+   type int
+  var OVERPOP_LIM
+   type int
+  var REPRODUCE_NUM
+   type int
+  var LOOPS_PER_MS
+   type int
+  var xMax
+   type int
+  var yMax
+   type int
+  var field
+   type int[]
+  main args=a
+   var l
+    type Life
+   var unused
+    type int
+   statement id l =
+    new id Life
+   statement id l
+    field id init
+   statement while
+    While
+     bool true
+     statement null
+      statement id l
+       field id printField
+      statement id l
+       field id update
+      statement id unused =
+       id io
+        field id read
+  method init
+   type bool
+   Args
+   var lineLenA
+    type int[]
+   var lineLen
+    type int
+   statement id lineLenA =
+    new array null
+     literal 1
+   statement id UNDERPOP_LIM =
+    literal 2
+   statement id OVERPOP_LIM =
+    literal 3
+   statement id REPRODUCE_NUM =
+    literal 3
+   statement id LOOPS_PER_MS =
+    literal 225000
+   statement id field =
+    _this
+     field id field
+      id lineLenA
+   statement id lineLen =
+    id lineLenA
+     literal 0
+   statement id xMax =
+    sub
+     id lineLen
+     literal 1
+   statement id yMax =
+    sub
+     div
+      id field
+       field length null
+      id lineLen
+     literal 1
+   bool true
+  method field
+   type int[]
+   Args
+    arg lineLen
+     type int[]
+   var field
+    type int[]
+   statement id field =
+    new array null
+     literal 100
+   statement id lineLen[] =
+    literal 0
+    literal 10
+   statement id field[] =
+    literal 0
+    literal 0
+   statement id field[] =
+    literal 1
+    literal 0
+   statement id field[] =
+    literal 2
+    literal 1
+   statement id field[] =
+    literal 3
+    literal 0
+   statement id field[] =
+    literal 4
+    literal 0
+   statement id field[] =
+    literal 5
+    literal 0
+   statement id field[] =
+    literal 6
+    literal 0
+   statement id field[] =
+    literal 7
+    literal 0
+   statement id field[] =
+    literal 8
+    literal 0
+   statement id field[] =
+    literal 9
+    literal 0
+   statement id field[] =
+    literal 10
+    literal 1
+   statement id field[] =
+    literal 11
+    literal 0
+   statement id field[] =
+    literal 12
+    literal 1
+   statement id field[] =
+    literal 13
+    literal 0
+   statement id field[] =
+    literal 14
+    literal 0
+   statement id field[] =
+    literal 15
+    literal 0
+   statement id field[] =
+    literal 16
+    literal 0
+   statement id field[] =
+    literal 17
+    literal 0
+   statement id field[] =
+    literal 18
+    literal 0
+   statement id field[] =
+    literal 19
+    literal 0
+   statement id field[] =
+    literal 20
+    literal 0
+   statement id field[] =
+    literal 21
+    literal 1
+   statement id field[] =
+    literal 22
+    literal 1
+   statement id field[] =
+    literal 23
+    literal 0
+   statement id field[] =
+    literal 24
+    literal 0
+   statement id field[] =
+    literal 25
+    literal 0
+   statement id field[] =
+    literal 26
+    literal 0
+   statement id field[] =
+    literal 27
+    literal 0
+   statement id field[] =
+    literal 28
+    literal 0
+   statement id field[] =
+    literal 29
+    literal 0
+   statement id field[] =
+    literal 30
+    literal 0
+   statement id field[] =
+    literal 31
+    literal 0
+   statement id field[] =
+    literal 32
+    literal 0
+   statement id field[] =
+    literal 33
+    literal 0
+   statement id field[] =
+    literal 34
+    literal 0
+   statement id field[] =
+    literal 35
+    literal 0
+   statement id field[] =
+    literal 36
+    literal 0
+   statement id field[] =
+    literal 37
+    literal 0
+   statement id field[] =
+    literal 38
+    literal 0
+   statement id field[] =
+    literal 39
+    literal 0
+   statement id field[] =
+    literal 40
+    literal 0
+   statement id field[] =
+    literal 41
+    literal 0
+   statement id field[] =
+    literal 42
+    literal 0
+   statement id field[] =
+    literal 43
+    literal 0
+   statement id field[] =
+    literal 44
+    literal 0
+   statement id field[] =
+    literal 45
+    literal 0
+   statement id field[] =
+    literal 46
+    literal 0
+   statement id field[] =
+    literal 47
+    literal 0
+   statement id field[] =
+    literal 48
+    literal 0
+   statement id field[] =
+    literal 49
+    literal 0
+   statement id field[] =
+    literal 50
+    literal 0
+   statement id field[] =
+    literal 51
+    literal 0
+   statement id field[] =
+    literal 52
+    literal 0
+   statement id field[] =
+    literal 53
+    literal 0
+   statement id field[] =
+    literal 54
+    literal 0
+   statement id field[] =
+    literal 55
+    literal 0
+   statement id field[] =
+    literal 56
+    literal 0
+   statement id field[] =
+    literal 57
+    literal 0
+   statement id field[] =
+    literal 58
+    literal 0
+   statement id field[] =
+    literal 59
+    literal 0
+   statement id field[] =
+    literal 60
+    literal 0
+   statement id field[] =
+    literal 61
+    literal 0
+   statement id field[] =
+    literal 62
+    literal 0
+   statement id field[] =
+    literal 63
+    literal 0
+   statement id field[] =
+    literal 64
+    literal 0
+   statement id field[] =
+    literal 65
+    literal 0
+   statement id field[] =
+    literal 66
+    literal 0
+   statement id field[] =
+    literal 67
+    literal 0
+   statement id field[] =
+    literal 68
+    literal 0
+   statement id field[] =
+    literal 69
+    literal 0
+   statement id field[] =
+    literal 70
+    literal 0
+   statement id field[] =
+    literal 71
+    literal 0
+   statement id field[] =
+    literal 72
+    literal 0
+   statement id field[] =
+    literal 73
+    literal 0
+   statement id field[] =
+    literal 74
+    literal 0
+   statement id field[] =
+    literal 75
+    literal 0
+   statement id field[] =
+    literal 76
+    literal 0
+   statement id field[] =
+    literal 77
+    literal 0
+   statement id field[] =
+    literal 78
+    literal 0
+   statement id field[] =
+    literal 79
+    literal 0
+   statement id field[] =
+    literal 80
+    literal 0
+   statement id field[] =
+    literal 81
+    literal 0
+   statement id field[] =
+    literal 82
+    literal 0
+   statement id field[] =
+    literal 83
+    literal 0
+   statement id field[] =
+    literal 84
+    literal 0
+   statement id field[] =
+    literal 85
+    literal 0
+   statement id field[] =
+    literal 86
+    literal 0
+   statement id field[] =
+    literal 87
+    literal 0
+   statement id field[] =
+    literal 88
+    literal 0
+   statement id field[] =
+    literal 89
+    literal 0
+   statement id field[] =
+    literal 90
+    literal 0
+   statement id field[] =
+    literal 91
+    literal 0
+   statement id field[] =
+    literal 92
+    literal 0
+   statement id field[] =
+    literal 93
+    literal 0
+   statement id field[] =
+    literal 94
+    literal 0
+   statement id field[] =
+    literal 95
+    literal 0
+   statement id field[] =
+    literal 96
+    literal 0
+   statement id field[] =
+    literal 97
+    literal 0
+   statement id field[] =
+    literal 98
+    literal 0
+   statement id field[] =
+    literal 99
+    literal 0
+   id field
+  method update
+   type bool
+   Args
+   var i
+    type int
+   var cur
+    type int
+   var neighN
+    type int
+   var goodPop
+    type bool
+   var newField
+    type int[]
+   statement id newField =
+    new array null
+     id field
+      field length null
+   statement id i =
+    literal 0
+   statement while
+    While
+     lt
+      id i
+      id field
+       field length null
+     statement null
+      statement id cur =
+       id field
+        id i
+      statement id neighN =
+       _this
+        field id getLiveNeighborN
+         id i
+      statement if
+       If
+        not
+         lt
+          id cur
+          literal 1
+        statement null
+         statement id goodPop =
+          and
+           _this
+            field id ge
+             id neighN
+             id UNDERPOP_LIM
+           _this
+            field id le
+             id neighN
+             id OVERPOP_LIM
+         statement if
+          If
+           not
+            id goodPop
+           statement null
+            statement id newField[] =
+             id i
+             literal 0
+           statement null
+            statement id newField[] =
+             id i
+             id field
+              id i
+        statement null
+         statement if
+          If
+           _this
+            field id eq
+             id neighN
+             id REPRODUCE_NUM
+           statement null
+            statement id newField[] =
+             id i
+             literal 1
+           statement null
+            statement id newField[] =
+             id i
+             id field
+              id i
+      statement id i =
+       sum
+        id i
+        literal 1
+   statement id field =
+    id newField
+   bool true
+  method printField
+   type bool
+   Args
+   var i
+    type int
+   var j
+    type int
+   statement id i =
+    literal 0
+   statement id j =
+    literal 0
+   statement while
+    While
+     lt
+      id i
+      id field
+       field length null
+     statement null
+      statement if
+       If
+        _this
+         field id gt
+          id j
+          id xMax
+        statement null
+         statement id io
+          field id println
+         statement id j =
+          literal 0
+        statement null
+      statement id io
+       field id print
+        id field
+         id i
+      statement id i =
+       sum
+        id i
+        literal 1
+      statement id j =
+       sum
+        id j
+        literal 1
+   statement id io
+    field id println
+   statement id io
+    field id println
+   bool true
+  method trIdx
+   type int
+   Args
+    arg x
+     type int
+    arg y
+     type int
+   sum
+    id x
+    mult
+     sum
+      id xMax
+      literal 1
+     id y
+  method cartIdx
+   type int[]
+   Args
+    arg absPos
+     type int
+   var x
+    type int
+   var y
+    type int
+   var xLim
+    type int
+   var ret
+    type int[]
+   statement id xLim =
+    sum
+     id xMax
+     literal 1
+   statement id y =
+    div
+     id absPos
+     id xLim
+   statement id x =
+    sub
+     id absPos
+     mult
+      id y
+      id xLim
+   statement id ret =
+    new array null
+     literal 2
+   statement id ret[] =
+    literal 0
+    id x
+   statement id ret[] =
+    literal 1
+    id y
+   id ret
+  method getNeighborCoords
+   type int[]
+   Args
+    arg absPos
+     type int
+   var x
+    type int
+   var y
+    type int
+   var upX
+    type int
+   var upY
+    type int
+   var downX
+    type int
+   var downY
+    type int
+   var cart
+    type int[]
+   var ret
+    type int[]
+   statement id cart =
+    _this
+     field id cartIdx
+      id absPos
+   statement id x =
+    id cart
+     literal 0
+   statement id y =
+    id cart
+     literal 1
+   statement if
+    If
+     lt
+      id x
+      id xMax
+     statement null
+      statement id downX =
+       sum
+        id x
+        literal 1
+      statement if
+       If
+        _this
+         field id gt
+          id x
+          literal 0
+        statement id upX =
+         sub
+          id x
+          literal 1
+        statement id upX =
+         id xMax
+     statement null
+      statement id downX =
+       literal 0
+      statement id upX =
+       sub
+        id x
+        literal 1
+   statement if
+    If
+     lt
+      id y
+      id yMax
+     statement null
+      statement id downY =
+       sum
+        id y
+        literal 1
+      statement if
+       If
+        _this
+         field id gt
+          id y
+          literal 0
+        statement id upY =
+         sub
+          id y
+          literal 1
+        statement id upY =
+         id yMax
+     statement null
+      statement id downY =
+       literal 0
+      statement id upY =
+       sub
+        id y
+        literal 1
+   statement id ret =
+    new array null
+     literal 8
+   statement id ret[] =
+    literal 0
+    _this
+     field id trIdx
+      id x
+      id upY
+   statement id ret[] =
+    literal 1
+    _this
+     field id trIdx
+      id upX
+      id upY
+   statement id ret[] =
+    literal 2
+    _this
+     field id trIdx
+      id upX
+      id y
+   statement id ret[] =
+    literal 3
+    _this
+     field id trIdx
+      id upX
+      id downY
+   statement id ret[] =
+    literal 4
+    _this
+     field id trIdx
+      id x
+      id downY
+   statement id ret[] =
+    literal 5
+    _this
+     field id trIdx
+      id downX
+      id downY
+   statement id ret[] =
+    literal 6
+    _this
+     field id trIdx
+      id downX
+      id y
+   statement id ret[] =
+    literal 7
+    _this
+     field id trIdx
+      id downX
+      id upY
+   id ret
+  method getLiveNeighborN
+   type int
+   Args
+    arg absPos
+     type int
+   var neigh
+    type int[]
+   var i
+    type int
+   var ret
+    type int
+   statement id ret =
+    literal 0
+   statement id neigh =
+    _this
+     field id getNeighborCoords
+      id absPos
+   statement id i =
+    literal 0
+   statement while
+    While
+     lt
+      id i
+      id neigh
+       field length null
+     statement null
+      statement if
+       If
+        _this
+         field id ne
+          id field
+           id neigh
+            id i
+          literal 0
+        statement id ret =
+         sum
+          id ret
+          literal 1
+        statement null
+      statement id i =
+       sum
+        id i
+        literal 1
+   id ret
+  method busyWait
+   type bool
+   Args
+    arg ms
+     type int
+   var i
+    type int
+   var n
+    type int
+   statement id n =
+    mult
+     id ms
+     id LOOPS_PER_MS
+   statement id i =
+    literal 0
+   statement while
+    While
+     lt
+      id i
+      id n
+     statement null
+      statement id i =
+       sum
+        id i
+        literal 1
+   bool true
+  method eq
+   type bool
+   Args
+    arg a
+     type int
+    arg b
+     type int
+   and
+    not
+     _this
+      field id lt
+       id a
+       id b
+    not
+     _this
+      field id lt
+       id b
+       id a
+  method ne
+   type bool
+   Args
+    arg a
+     type int
+    arg b
+     type int
+   not
+    _this
+     field id eq
+      id a
+      id b
+  method lt
+   type bool
+   Args
+    arg a
+     type int
+    arg b
+     type int
+   lt
+    id a
+    id b
+  method le
+   type bool
+   Args
+    arg a
+     type int
+    arg b
+     type int
+   not
+    and
+     not
+      _this
+       field id lt
+        id a
+        id b
+     not
+      _this
+       field id eq
+        id a
+        id b
+  method gt
+   type bool
+   Args
+    arg a
+     type int
+    arg b
+     type int
+   not
+    _this
+     field id le
+      id a
+      id b
+  method ge
+   type bool
+   Args
+    arg a
+     type int
+    arg b
+     type int
+   not
+    and
+     not
+      _this
+       field id gt
+        id a
+        id b
+     not
+      _this
+       field id eq
+        id a
+        id b
+Symbol table for Life
+a: String[] (8)
+update0: bool (11)
+gt2: bool (22)
+getLiveNeighborN1: int (16)
+eq2: bool (18)
+OVERPOP_LIM: int (2)
+trIdx2: int (13)
+cartIdx1: int[] (14)
+lt2: bool (20)
+REPRODUCE_NUM: int (3)
+printField0: bool (12)
+field1: int[] (10)
+yMax: int (6)
+field: int[] (7)
+ge2: bool (23)
+le2: bool (21)
+UNDERPOP_LIM: int (1)
+busyWait1: bool (17)
+ne2: bool (19)
+xMax: int (5)
+init0: bool (9)
+LOOPS_PER_MS: int (4)
+getNeighborCoords1: int[] (15)
+Symbol table for main
+unused: int (2)
+l: Life (1)
+Symbol table for init
+lineLenA: int[] (1)
+lineLen: int (2)
+Symbol table for field
+field: int[] (2)
+lineLen: int[] (1)
+Symbol table for update
+cur: int (2)
+goodPop: bool (4)
+i: int (1)
+newField: int[] (5)
+neighN: int (3)
+Symbol table for printField
+i: int (1)
+j: int (2)
+Symbol table for trIdx
+x: int (1)
+y: int (2)
+Symbol table for cartIdx
+ret: int[] (5)
+absPos: int (1)
+x: int (2)
+y: int (3)
+xLim: int (4)
+Symbol table for getNeighborCoords
+ret: int[] (9)
+absPos: int (1)
+downY: int (7)
+downX: int (6)
+x: int (2)
+y: int (3)
+upX: int (4)
+cart: int[] (8)
+upY: int (5)
+Symbol table for getLiveNeighborN
+ret: int (4)
+absPos: int (1)
+i: int (3)
+neigh: int[] (2)
+Symbol table for busyWait
+ms: int (1)
+i: int (2)
+n: int (3)
+Symbol table for eq
+a: int (1)
+b: int (2)
+Symbol table for ne
+a: int (1)
+b: int (2)
+Symbol table for lt
+a: int (1)
+b: int (2)
+Symbol table for le
+a: int (1)
+b: int (2)
+Symbol table for gt
+a: int (1)
+b: int (2)
+Symbol table for ge
+a: int (1)
+b: int (2)

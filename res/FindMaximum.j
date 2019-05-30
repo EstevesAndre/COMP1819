@@ -36,6 +36,7 @@ LABEL2:
 iload 3
 ireturn
 .end method
+
 .method public build_test_arr()I
 .limit stack 100
 .limit locals 1
@@ -73,6 +74,7 @@ iastore
 ldc 0
 ireturn
 .end method
+
 .method public get_array()[I
 .limit stack 100
 .limit locals 1
@@ -80,6 +82,7 @@ aload_0
 getfield FindMaximum/test_arr [I
 areturn
 .end method
+
 .method static public main([Ljava/lang/String;)V
 .limit stack 100
 .limit locals 2
@@ -96,9 +99,11 @@ invokevirtual FindMaximum/find_maximum([I)I
 invokestatic ioPlus/printResult(I)V
 return
 .end method
+
 ; standard initializer
 .method public <init>()V
 aload_0
 invokenonvirtual java/lang/Object/<init>()V
 return
 .end method
+

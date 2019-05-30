@@ -30,6 +30,7 @@ goto LABEL1
 LABEL2:
 return
 .end method
+
 .method public init()Z
 .limit stack 100
 .limit locals 3
@@ -73,6 +74,7 @@ putfield Life/yMax I
 iconst_1
 ireturn
 .end method
+
 .method public field([I)[I
 .limit stack 100
 .limit locals 3
@@ -486,6 +488,7 @@ iastore
 aload 2
 areturn
 .end method
+
 .method public update()Z
 .limit stack 100
 .limit locals 6
@@ -494,9 +497,6 @@ getfield Life/field [I
 arraylength
 newarray int
 astore 5
-aload_0
-getfield Life/field [I
-arraylength
 ldc 0
 istore 1
 LABEL3:
@@ -516,7 +516,7 @@ invokevirtual Life/getLiveNeighborN(I)I
 istore 3
 iload 2
 ldc 1
-ifne LABEL5
+if_icmplt LABEL5
 aload_0
 iload 3
 aload_0
@@ -533,7 +533,7 @@ iconst_1
 goto LABEL8
 LABEL7: iconst_0
 LABEL8: istore 4
-aload 4
+iload 4
 ifne LABEL9
 aload 5
 iload 1
@@ -578,11 +578,13 @@ iadd
 istore 1
 goto LABEL3
 LABEL4:
+aload_0
 aload 5
 putfield Life/field [I
 iconst_1
 ireturn
 .end method
+
 .method public printField()Z
 .limit stack 100
 .limit locals 3
@@ -626,6 +628,7 @@ invokestatic io/println()V
 iconst_1
 ireturn
 .end method
+
 .method public trIdx(II)I
 .limit stack 100
 .limit locals 3
@@ -639,6 +642,7 @@ imul
 iadd
 ireturn
 .end method
+
 .method public cartIdx(I)[I
 .limit stack 100
 .limit locals 6
@@ -671,6 +675,7 @@ iastore
 aload 5
 areturn
 .end method
+
 .method public getNeighborCoords(I)[I
 .limit stack 100
 .limit locals 10
@@ -780,6 +785,7 @@ iastore
 aload 9
 areturn
 .end method
+
 .method public getLiveNeighborN(I)I
 .limit stack 100
 .limit locals 5
@@ -818,6 +824,7 @@ LABEL26:
 iload 4
 ireturn
 .end method
+
 .method public busyWait(I)Z
 .limit stack 100
 .limit locals 4
@@ -841,6 +848,7 @@ LABEL30:
 iconst_1
 ireturn
 .end method
+
 .method public eq(II)Z
 .limit stack 100
 .limit locals 3
@@ -859,6 +867,7 @@ goto LABEL32
 LABEL31: iconst_0
 ireturn
 .end method
+
 .method public ne(II)Z
 .limit stack 100
 .limit locals 3
@@ -872,6 +881,7 @@ goto LABEL34
 LABEL33: iconst_1
 ireturn
 .end method
+
 .method public lt(II)Z
 .limit stack 100
 .limit locals 3
@@ -883,6 +893,7 @@ goto LABEL36
 LABEL35: iconst_0
 ireturn
 .end method
+
 .method public le(II)Z
 .limit stack 100
 .limit locals 3
@@ -900,6 +911,7 @@ goto LABEL38
 LABEL37: iconst_1
 ireturn
 .end method
+
 .method public gt(II)Z
 .limit stack 100
 .limit locals 3
@@ -913,6 +925,7 @@ goto LABEL40
 LABEL39: iconst_1
 ireturn
 .end method
+
 .method public ge(II)Z
 .limit stack 100
 .limit locals 3
@@ -930,9 +943,11 @@ goto LABEL42
 LABEL41: iconst_1
 ireturn
 .end method
+
 ; standard initializer
 .method public <init>()V
 aload_0
 invokenonvirtual java/lang/Object/<init>()V
 return
 .end method
+

@@ -38,6 +38,7 @@ LABEL2:
 iload 3
 ireturn
 .end method
+
 .method public estimatePi100(I)I
 .limit stack 100
 .limit locals 5
@@ -74,6 +75,7 @@ istore 4
 iload 4
 ireturn
 .end method
+
 .method static public main([Ljava/lang/String;)V
 .limit stack 100
 .limit locals 3
@@ -89,9 +91,11 @@ iload 1
 invokestatic ioPlus/printResult(I)V
 return
 .end method
+
 ; standard initializer
 .method public <init>()V
 aload_0
 invokenonvirtual java/lang/Object/<init>()V
 return
 .end method
+
