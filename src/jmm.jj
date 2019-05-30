@@ -731,9 +731,41 @@ void Sum()       : {}
 
 void Sub()       : {}
 {
-    Mult() ( LOOKAHEAD(2) <SUB>/*@bgen(jjtree) #sub( 2) */
+    Div() ( LOOKAHEAD(2) <SUB>/*@bgen(jjtree) #sub( 2) */
+                               {
+                                 ASTsub jjtn001 = new ASTsub(JJTSUB);
+                                 boolean jjtc001 = true;
+                                 jjtree.openNodeScope(jjtn001);
+                               }
+                               try {
+/*@egen*/ Div()/*@bgen(jjtree)*/
+                               } catch (Throwable jjte001) {
+                                 if (jjtc001) {
+                                   jjtree.clearNodeScope(jjtn001);
+                                   jjtc001 = false;
+                                 } else {
+                                   jjtree.popNode();
+                                 }
+                                 if (jjte001 instanceof RuntimeException) {
+                                   throw (RuntimeException)jjte001;
+                                 }
+                                 if (jjte001 instanceof ParseException) {
+                                   throw (ParseException)jjte001;
+                                 }
+                                 throw (Error)jjte001;
+                               } finally {
+                                 if (jjtc001) {
+                                   jjtree.closeNodeScope(jjtn001,  2);
+                                 }
+                               }
+/*@egen*/        )*
+}
+
+void Div()       : {}
+{
+    Mult() ( LOOKAHEAD(2) <DIV>/*@bgen(jjtree) #div( 2) */
                                 {
-                                  ASTsub jjtn001 = new ASTsub(JJTSUB);
+                                  ASTdiv jjtn001 = new ASTdiv(JJTDIV);
                                   boolean jjtc001 = true;
                                   jjtree.openNodeScope(jjtn001);
                                 }
@@ -763,14 +795,14 @@ void Sub()       : {}
 
 void Mult()       : {}
 {
-    Div() ( LOOKAHEAD(2) <MULT>/*@bgen(jjtree) #mult( 2) */
+    Not() ( LOOKAHEAD(2) <MULT>/*@bgen(jjtree) #mult( 2) */
                                 {
                                   ASTmult jjtn001 = new ASTmult(JJTMULT);
                                   boolean jjtc001 = true;
                                   jjtree.openNodeScope(jjtn001);
                                 }
                                 try {
-/*@egen*/ Div()/*@bgen(jjtree)*/
+/*@egen*/ Not()/*@bgen(jjtree)*/
                                 } catch (Throwable jjte001) {
                                   if (jjtc001) {
                                     jjtree.clearNodeScope(jjtn001);
@@ -791,38 +823,6 @@ void Mult()       : {}
                                   }
                                 }
 /*@egen*/         )*
-}
-
-void Div()       : {}
-{
-    Not() ( LOOKAHEAD(2) <DIV>/*@bgen(jjtree) #div( 2) */
-                               {
-                                 ASTdiv jjtn001 = new ASTdiv(JJTDIV);
-                                 boolean jjtc001 = true;
-                                 jjtree.openNodeScope(jjtn001);
-                               }
-                               try {
-/*@egen*/ Not()/*@bgen(jjtree)*/
-                               } catch (Throwable jjte001) {
-                                 if (jjtc001) {
-                                   jjtree.clearNodeScope(jjtn001);
-                                   jjtc001 = false;
-                                 } else {
-                                   jjtree.popNode();
-                                 }
-                                 if (jjte001 instanceof RuntimeException) {
-                                   throw (RuntimeException)jjte001;
-                                 }
-                                 if (jjte001 instanceof ParseException) {
-                                   throw (ParseException)jjte001;
-                                 }
-                                 throw (Error)jjte001;
-                               } finally {
-                                 if (jjtc001) {
-                                   jjtree.closeNodeScope(jjtn001,  2);
-                                 }
-                               }
-/*@egen*/        )*
 }
 
 void Not()       : {}

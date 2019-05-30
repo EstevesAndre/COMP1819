@@ -287,17 +287,17 @@ void Sum() #void : {}
 
 void Sub() #void : {}
 {
-    Mult() ( LOOKAHEAD(2) <SUB> Mult() #sub(2))*
-}
-
-void Mult() #void : {}
-{
-    Div() ( LOOKAHEAD(2) <MULT> Div() #mult(2))*
+    Div() ( LOOKAHEAD(2) <SUB> Div() #sub(2))*
 }
 
 void Div() #void : {}
 {
-    Not() ( LOOKAHEAD(2) <DIV> Not() #div(2))*
+    Mult() ( LOOKAHEAD(2) <DIV> Mult() #div(2))*
+}
+
+void Mult() #void : {}
+{
+    Not() ( LOOKAHEAD(2) <MULT> Not() #mult(2))*
 }
 
 void Not() #void : {}

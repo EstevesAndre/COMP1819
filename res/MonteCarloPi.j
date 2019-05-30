@@ -67,9 +67,9 @@ goto LABEL3
 LABEL4:
 ldc 400
 iload 2
-iload 2
-idiv
 imul
+iload 1
+idiv
 istore 4
 iload 4
 ireturn

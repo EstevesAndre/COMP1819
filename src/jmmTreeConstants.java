@@ -18,8 +18,8 @@ public interface jmmTreeConstants
   public int JJTLT = 14;
   public int JJTSUM = 15;
   public int JJTSUB = 16;
-  public int JJTMULT = 17;
-  public int JJTDIV = 18;
+  public int JJTDIV = 17;
+  public int JJTMULT = 18;
   public int JJTNOT = 19;
   public int JJTLITERAL = 20;
   public int JJTBOOL = 21;
@@ -46,8 +46,8 @@ public interface jmmTreeConstants
     "lt",
     "sum",
     "sub",
-    "mult",
     "div",
+    "mult",
     "not",
     "literal",
     "bool",
@@ -56,4 +56,4 @@ public interface jmmTreeConstants
     "id",
   };
 }
-/* JavaCC - OriginalChecksum=526f098e8c02fc3108755dcbd8e514f9 (do not edit this line) */
+/* JavaCC - OriginalChecksum=57b81e0253a53bb6ee0ea252652796ed (do not edit this line) */

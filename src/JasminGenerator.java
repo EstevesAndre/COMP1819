@@ -1149,7 +1149,7 @@ public class JasminGenerator implements ASTNodeVisitor {
             out += getJasminRecursive(first_child);
 
         if (second_child instanceof ASTid) {
-            out += visit((ASTid) (node.children[0]));
+            out += visit((ASTid) (node.children[1]));
 
         } else
             out += getJasminRecursive(second_child);

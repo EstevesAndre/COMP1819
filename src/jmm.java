@@ -918,7 +918,7 @@ if (jjtc001) {
   }
 
   static final public void Sub() throws ParseException {
-    Mult();
+    Div();
     label_13:
     while (true) {
       if (jj_2_6(2)) {
@@ -928,6 +928,43 @@ if (jjtc001) {
       }
       jj_consume_token(SUB);
 ASTsub jjtn001 = new ASTsub(JJTSUB);
+                                 boolean jjtc001 = true;
+                                 jjtree.openNodeScope(jjtn001);
+      try {
+        Div();
+      } catch (Throwable jjte001) {
+if (jjtc001) {
+                                   jjtree.clearNodeScope(jjtn001);
+                                   jjtc001 = false;
+                                 } else {
+                                   jjtree.popNode();
+                                 }
+                                 if (jjte001 instanceof RuntimeException) {
+                                   {if (true) throw (RuntimeException)jjte001;}
+                                 }
+                                 if (jjte001 instanceof ParseException) {
+                                   {if (true) throw (ParseException)jjte001;}
+                                 }
+                                 {if (true) throw (Error)jjte001;}
+      } finally {
+if (jjtc001) {
+                                   jjtree.closeNodeScope(jjtn001,  2);
+                                 }
+      }
+    }
+  }
+
+  static final public void Div() throws ParseException {
+    Mult();
+    label_14:
+    while (true) {
+      if (jj_2_7(2)) {
+        ;
+      } else {
+        break label_14;
+      }
+      jj_consume_token(DIV);
+ASTdiv jjtn001 = new ASTdiv(JJTDIV);
                                   boolean jjtc001 = true;
                                   jjtree.openNodeScope(jjtn001);
       try {
@@ -955,20 +992,20 @@ if (jjtc001) {
   }
 
   static final public void Mult() throws ParseException {
-    Div();
-    label_14:
+    Not();
+    label_15:
     while (true) {
-      if (jj_2_7(2)) {
+      if (jj_2_8(2)) {
         ;
       } else {
-        break label_14;
+        break label_15;
       }
       jj_consume_token(MULT);
 ASTmult jjtn001 = new ASTmult(JJTMULT);
                                   boolean jjtc001 = true;
                                   jjtree.openNodeScope(jjtn001);
       try {
-        Div();
+        Not();
       } catch (Throwable jjte001) {
 if (jjtc001) {
                                     jjtree.clearNodeScope(jjtn001);
@@ -987,43 +1024,6 @@ if (jjtc001) {
 if (jjtc001) {
                                     jjtree.closeNodeScope(jjtn001,  2);
                                   }
-      }
-    }
-  }
-
-  static final public void Div() throws ParseException {
-    Not();
-    label_15:
-    while (true) {
-      if (jj_2_8(2)) {
-        ;
-      } else {
-        break label_15;
-      }
-      jj_consume_token(DIV);
-ASTdiv jjtn001 = new ASTdiv(JJTDIV);
-                                 boolean jjtc001 = true;
-                                 jjtree.openNodeScope(jjtn001);
-      try {
-        Not();
-      } catch (Throwable jjte001) {
-if (jjtc001) {
-                                   jjtree.clearNodeScope(jjtn001);
-                                   jjtc001 = false;
-                                 } else {
-                                   jjtree.popNode();
-                                 }
-                                 if (jjte001 instanceof RuntimeException) {
-                                   {if (true) throw (RuntimeException)jjte001;}
-                                 }
-                                 if (jjte001 instanceof ParseException) {
-                                   {if (true) throw (ParseException)jjte001;}
-                                 }
-                                 {if (true) throw (Error)jjte001;}
-      } finally {
-if (jjtc001) {
-                                   jjtree.closeNodeScope(jjtn001,  2);
-                                 }
       }
     }
   }
@@ -1787,7 +1787,7 @@ if (jjtc001) {
 
   static private boolean jj_3_8()
  {
-    if (jj_scan_token(DIV)) return true;
+    if (jj_scan_token(MULT)) return true;
     if (jj_3R_24()) return true;
     return false;
   }
@@ -1823,7 +1823,7 @@ if (jjtc001) {
 
   static private boolean jj_3_7()
  {
-    if (jj_scan_token(MULT)) return true;
+    if (jj_scan_token(DIV)) return true;
     if (jj_3R_23()) return true;
     return false;
   }
