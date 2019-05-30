@@ -36,6 +36,8 @@ public class JasminGenerator implements ASTNodeVisitor {
             if (global != null)
                 out += "LABEL" + label2 + ": putfield " + node.getClassName() + "/" + global.id
                         + SimpleNode.getJasminType(global.type) + "\n";
+            else
+                out += "LABEL" + label2 + ":\n";
         } else {
             out += "LABEL" + label2 + ":\nistore " + local.order + "\n";
         }
@@ -108,6 +110,8 @@ public class JasminGenerator implements ASTNodeVisitor {
             if (global != null)
                 out += "LABEL" + label2 + ": putfield " + node.getClassName() + "/" + global.id
                         + SimpleNode.getJasminType(global.type) + "\n";
+            else
+                out += "LABEL" + label2 + ":\n";
         } else {
             out += "LABEL" + label2 + ":\nistore " + local.order + "\n";
         }
@@ -1029,6 +1033,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                                 out += "aload_0\n";
                                 out += "getfield " + node.getClassName() + "/" + global_0.id + " "
                                         + SimpleNode.getJasminType(global_0.type) + "\n";
+                                        
                             } else {
                                 out += visit((ASTid) arg);
                             }

@@ -19,8 +19,7 @@ invokevirtual Life/init()Z
 LABEL1:
 ifeq LABEL2
 aload 1
-invokevirtual Life/printField()Z
-pop
+invokevirtual Life/printField()V
 aload 1
 invokevirtual Life/update()Z
 pop
@@ -521,13 +520,13 @@ aload_0
 iload 3
 aload_0
 getfield Life/UNDERPOP_LIM I
-invokevirtual Life/ge(II)Z
+invokevirtual Life/ge(II)V
 ifeq LABEL7
 aload_0
 iload 3
 aload_0
 getfield Life/OVERPOP_LIM I
-invokevirtual Life/le(II)Z
+invokevirtual Life/le(II)V
 ifeq LABEL7
 iconst_1
 goto LABEL8
@@ -557,7 +556,7 @@ aload_0
 iload 3
 aload_0
 getfield Life/REPRODUCE_NUM I
-invokevirtual Life/eq(II)Z
+invokevirtual Life/eq(II)V
 ifeq LABEL11
 aload 5
 iload 1
@@ -583,50 +582,6 @@ LABEL4:
 aload_0
 aload 5
 putfield Life/field [I
-iconst_1
-ireturn
-.end method
-
-.method public printField()Z
-.limit stack 100
-.limit locals 3
-ldc 0
-istore 1
-ldc 0
-istore 2
-LABEL13:
-iload 1
-aload_0
-getfield Life/field [I
-arraylength
-if_icmpge LABEL14
-aload_0
-iload 2
-aload_0
-getfield Life/xMax I
-invokevirtual Life/gt(II)Z
-ifeq LABEL15
-invokestatic io/println()V
-ldc 0
-istore 2
-goto LABEL16
-LABEL15:
-LABEL16:
-aload_0
-getfield Life/field [I
-invokestatic io/print(I)V
-iload 1
-ldc 1
-iadd
-istore 1
-iload 2
-ldc 1
-iadd
-istore 2
-goto LABEL13
-LABEL14:
-invokestatic io/println()V
-invokestatic io/println()V
 iconst_1
 ireturn
 .end method
@@ -678,155 +633,6 @@ aload 5
 areturn
 .end method
 
-.method public getNeighborCoords(I)[I
-.limit stack 100
-.limit locals 10
-aload_0
-iload 1
-invokevirtual Life/cartIdx(I)[I
-istore 8
-aload 8
-ldc 0
-iaload
-istore 2
-aload 8
-ldc 1
-iaload
-istore 3
-iload 2
-aload_0
-getfield Life/xMax I
-if_icmpge LABEL17
-iload 2
-ldc 1
-iadd
-istore 6
-aload_0
-iload 2
-ldc 0
-invokevirtual Life/gt(II)Z
-ifeq LABEL19
-iload 2
-ldc 1
-isub
-istore 4
-goto LABEL20
-LABEL19:
-aload_0
-getfield Life/xMax I
-istore 4
-LABEL20:
-goto LABEL18
-LABEL17:
-ldc 0
-istore 6
-iload 2
-ldc 1
-isub
-istore 4
-LABEL18:
-iload 3
-aload_0
-getfield Life/yMax I
-if_icmpge LABEL21
-iload 3
-ldc 1
-iadd
-istore 7
-aload_0
-iload 3
-ldc 0
-invokevirtual Life/gt(II)Z
-ifeq LABEL23
-iload 3
-ldc 1
-isub
-istore 5
-goto LABEL24
-LABEL23:
-aload_0
-getfield Life/yMax I
-istore 5
-LABEL24:
-goto LABEL22
-LABEL21:
-ldc 0
-istore 7
-iload 3
-ldc 1
-isub
-istore 5
-LABEL22:
-ldc 8
-newarray int
-astore 9
-aload 9
-ldc 0
-iastore
-aload 9
-ldc 1
-iastore
-aload 9
-ldc 2
-iastore
-aload 9
-ldc 3
-iastore
-aload 9
-ldc 4
-iastore
-aload 9
-ldc 5
-iastore
-aload 9
-ldc 6
-iastore
-aload 9
-ldc 7
-iastore
-aload 9
-areturn
-.end method
-
-.method public getLiveNeighborN(I)I
-.limit stack 100
-.limit locals 5
-ldc 0
-istore 4
-aload_0
-iload 1
-invokevirtual Life/getNeighborCoords(I)[I
-istore 2
-ldc 0
-istore 3
-LABEL25:
-iload 3
-aload 2
-arraylength
-if_icmpge LABEL26
-aload_0
-aload_0
-getfield Life/field [I
-ldc 0
-invokevirtual Life/ne(II)Z
-ifeq LABEL27
-iload 4
-ldc 1
-iadd
-istore 4
-goto LABEL28
-LABEL27:
-LABEL28:
-iload 3
-ldc 1
-iadd
-istore 3
-goto LABEL25
-LABEL26:
-iload 4
-ireturn
-.end method
-
 .method public busyWait(I)Z
 .limit stack 100
 .limit locals 4
@@ -837,51 +643,16 @@ imul
 istore 3
 ldc 0
 istore 2
-LABEL29:
+LABEL13:
 iload 2
 iload 3
-if_icmpge LABEL30
+if_icmpge LABEL14
 iload 2
 ldc 1
 iadd
 istore 2
-goto LABEL29
-LABEL30:
-iconst_1
-ireturn
-.end method
-
-.method public eq(II)Z
-.limit stack 100
-.limit locals 3
-aload_0
-iload 1
-iload 2
-invokevirtual Life/lt(II)Z
-ifne LABEL31
-aload_0
-iload 2
-iload 1
-invokevirtual Life/lt(II)Z
-ifne LABEL31
-iconst_1
-goto LABEL32
-LABEL31:
-iconst_0
-ireturn
-.end method
-
-.method public ne(II)Z
-.limit stack 100
-.limit locals 3
-aload_0
-iload 1
-iload 2
-invokevirtual Life/eq(II)Z
-ifeq LABEL33
-iconst_0
-goto LABEL34
-LABEL33:
+goto LABEL13
+LABEL14:
 iconst_1
 ireturn
 .end method
@@ -891,64 +662,12 @@ ireturn
 .limit locals 3
 iload 1
 iload 2
-if_icmpge LABEL35
+if_icmpge LABEL15
 iconst_1
-goto LABEL36
-LABEL35:
+goto LABEL16
+LABEL15:
 iconst_0
-ireturn
-.end method
-
-.method public le(II)Z
-.limit stack 100
-.limit locals 3
-aload_0
-iload 1
-iload 2
-invokevirtual Life/lt(II)Z
-aload_0
-iload 1
-iload 2
-invokevirtual Life/eq(II)Z
-ifeq LABEL37
-iconst_0
-goto LABEL38
-LABEL37:
-iconst_1
-ireturn
-.end method
-
-.method public gt(II)Z
-.limit stack 100
-.limit locals 3
-aload_0
-iload 1
-iload 2
-invokevirtual Life/le(II)Z
-ifeq LABEL39
-iconst_0
-goto LABEL40
-LABEL39:
-iconst_1
-ireturn
-.end method
-
-.method public ge(II)Z
-.limit stack 100
-.limit locals 3
-aload_0
-iload 1
-iload 2
-invokevirtual Life/gt(II)Z
-aload_0
-iload 1
-iload 2
-invokevirtual Life/eq(II)Z
-ifeq LABEL41
-iconst_0
-goto LABEL42
-LABEL41:
-iconst_1
+LABEL16:
 ireturn
 .end method
 
