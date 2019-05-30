@@ -2,7 +2,7 @@
 .super java/lang/Object
 .method static public main([Ljava/lang/String;)V
 .limit stack 100
-.limit locals 4
+.limit locals 5
 ldc 10
 newarray int
 astore 1
@@ -33,9 +33,11 @@ astore 3
 aload 3
 aload 1
 invokevirtual Quicksort/quicksort([I)Z
+istore 4
 aload 3
 aload 1
 invokevirtual Quicksort/printL([I)Z
+istore 4
 return
 .end method
 

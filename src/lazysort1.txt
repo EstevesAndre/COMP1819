@@ -1,0 +1,148 @@
+Program
+ class Lazysort extends Quicksort
+  main args=a
+   var L
+    type int[]
+   var i
+    type int
+   var q
+    type Quicksort
+   statement id L =
+    new array null
+     literal 10
+   statement id i =
+    literal 0
+   statement while
+    While
+     lt
+      id i
+      id L
+       field length null
+     statement null
+      statement id L[] =
+       id i
+       sub
+        id L
+         field length null
+        id i
+      statement id i =
+       sum
+        id i
+        literal 1
+   statement id q =
+    new id Lazysort
+   statement id q
+    field id quicksort
+     id L
+   statement id q
+    field id printL
+     id L
+  method quicksort
+   type bool
+   Args
+    arg L
+     type int[]
+   var lazy
+    type bool
+   statement if
+    If
+     lt
+      id MathUtils
+       field id random
+        literal 0
+        literal 5
+      literal 4
+     statement null
+      statement no_id
+       _this
+        field id beLazy
+         id L
+      statement id lazy =
+       bool true
+     statement null
+      statement id lazy =
+       bool false
+   statement if
+    If
+     id lazy
+     statement null
+      statement id lazy =
+       not
+        id lazy
+     statement null
+      statement id lazy =
+       _this
+        field id quicksort
+         id L
+         literal 0
+         sub
+          id L
+           field length null
+          literal 1
+   id lazy
+  method beLazy
+   type bool
+   Args
+    arg L
+     type int[]
+   var _allowedNameL
+    type int
+   var $allowedNameI
+    type int
+   statement id _allowedNameL =
+    id L
+     field length null
+   statement id $allowedNameI =
+    literal 0
+   statement while
+    While
+     lt
+      id $allowedNameI
+      div
+       id _allowedNameL
+       literal 2
+     statement null
+      statement id L[] =
+       id $allowedNameI
+       id MathUtils
+        field id random
+         literal 0
+         literal 10
+      statement id $allowedNameI =
+       sum
+        id $allowedNameI
+        literal 1
+   statement while
+    While
+     lt
+      id $allowedNameI
+      id _allowedNameL
+     statement null
+      statement id L[] =
+       id $allowedNameI
+       sum
+        id MathUtils
+         field id random
+          literal 0
+          literal 10
+        literal 1
+      statement id $allowedNameI =
+       sum
+        id $allowedNameI
+        literal 1
+   bool true
+Symbol table for Lazysort
+a: String[] (1)
+quicksort1: bool (2)
+beLazy1: bool (3)
+Symbol table for main
+q: Quicksort (3)
+i: int (2)
+L: int[] (1)
+Symbol table for quicksort
+lazy: bool (2)
+L: int[] (1)
+Symbol table for beLazy
+$allowedNameI: int (3)
+_allowedNameL: int (2)
+L: int[] (1)

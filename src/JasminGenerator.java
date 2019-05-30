@@ -30,14 +30,14 @@ public class JasminGenerator implements ASTNodeVisitor {
         out += "if_icmpge LABEL" + label1 + "\n";
         out += "iconst_1\n";
         out += "goto LABEL" + label2 + "\n";
-        out += "LABEL" + label1 + ": iconst_0\n";
+        out += "LABEL" + label1 + ":\niconst_0\n";
 
         if (local == null) {
             if (global != null)
                 out += "LABEL" + label2 + ": putfield " + node.getClassName() + "/" + global.id
                         + SimpleNode.getJasminType(global.type) + "\n";
         } else {
-            out += "LABEL" + label2 + ": istore " + local.order + "\n";
+            out += "LABEL" + label2 + ":\nistore " + local.order + "\n";
         }
 
         return out;
@@ -102,14 +102,14 @@ public class JasminGenerator implements ASTNodeVisitor {
         out += "ifeq LABEL" + label1 + "\n";
         out += "iconst_0\n";
         out += "goto LABEL" + label2 + "\n";
-        out += "LABEL" + label1 + ": iconst_1\n";
+        out += "LABEL" + label1 + ":\niconst_1\n";
 
         if (local == null) {
             if (global != null)
                 out += "LABEL" + label2 + ": putfield " + node.getClassName() + "/" + global.id
                         + SimpleNode.getJasminType(global.type) + "\n";
         } else {
-            out += "LABEL" + label2 + ": istore " + local.order + "\n";
+            out += "LABEL" + label2 + ":\nistore " + local.order + "\n";
         }
 
         return out;
@@ -249,14 +249,13 @@ public class JasminGenerator implements ASTNodeVisitor {
             // codigo dos else statements
             out += ((SimpleNode) else_statements).accept(this);
         } else if (first_child instanceof ASTnot) {
-            
-            if(((ASTnot)first_child).children[0] instanceof ASTlt){
+
+            if (((ASTnot) first_child).children[0] instanceof ASTlt) {
                 out += "if_icmplt LABEL" + label1 + "\n";
-            }
-            else{
+            } else {
                 out += "ifne LABEL" + label1 + "\n";
             }
-            
+
             // codigo dos true_statements
             out += ((SimpleNode) true_statements).accept(this);
             out += "goto LABEL" + label2 + "\n";
@@ -533,7 +532,118 @@ public class JasminGenerator implements ASTNodeVisitor {
         if (node.type.equals("length"))
             return "arraylength\n";
 
-        return "";
+        String out = "";
+
+        for (Node child : node.children) {
+            out += getJasminRecursive(child);
+        }
+
+        SimpleNode n = (SimpleNode) node.parent;
+        String id = null;
+
+        if (n instanceof ASTStatement) {
+            id = ((ASTStatement) n).id;
+        } else if (n instanceof ASTid) {
+            id = ((ASTid) n).info;
+        }
+
+        STEntry entry = null;
+        entry = node.checkImediateSymbolTable(id);
+
+        if (node.checkSymbolTable(id) != null) {
+            out += "invokevirtual ";
+
+        } else {
+            out += "invokestatic ";
+        }
+
+        if (entry != null)
+            out += entry.type;
+        else
+            out += id;
+
+        out += "/" + node.info + "(";
+
+        List<String> args = new ArrayList<>();
+        String type = null;
+
+        int numArgs = 0;
+
+        if (node.children != null) {
+            for (Node arg : node.children) {
+                args.add(((SimpleNode) arg).getType());
+                numArgs++;
+            }
+        }
+
+        entry = node.checkSymbolTable(node.info + numArgs);
+
+        if (entry != null) {
+
+            for (String arg : ((STFunc) entry).argTypes) {
+                out += SimpleNode.getJasminType(arg);
+            }
+
+            out += ")" + SimpleNode.getJasminType(entry.type) + "\n";
+
+            if (((SimpleNode) node.parent).parent instanceof ASTStatement
+                    && !((ASTStatement) ((SimpleNode) node.parent).parent).assign)
+                out += "pop\n";
+
+        } else {
+            if (node.children != null) {
+                for (Node arg : node.children) {
+
+                    if (arg instanceof ASTid) {
+                        if (((SimpleNode) arg).children != null && ((SimpleNode) arg).children[0] instanceof ASTfield) {
+                            STEntry func = node.checkSymbolTable(((ASTfield) ((SimpleNode) arg).children[0]).info
+                                    + (((ASTfield) ((SimpleNode) arg).children[0]).children != null
+                                            ? ((ASTfield) ((SimpleNode) arg).children[0]).children.length
+                                            : 0));
+                            if (func != null) {
+                                out += SimpleNode.getJasminType(func.type);
+                            }
+                        } else {
+                            String t = ((SimpleNode) arg).getType();
+                            if (t.equals("Error"))
+                                out += "L" + ((ASTid) arg).info + ";";
+                            else
+                                out += SimpleNode.getJasminType(t);
+                        }
+                    } else if (arg instanceof ASTliteral) {
+                        out += SimpleNode.getJasminType(((SimpleNode) arg).getType());
+                    } else if (arg instanceof ASTsum)
+                        out += SimpleNode.getJasminType(((ASTsum) arg).getType());
+                    else if (arg instanceof ASTsub)
+                        out += SimpleNode.getJasminType(((ASTsub) arg).getType());
+                    else if (arg instanceof ASTmult)
+                        out += SimpleNode.getJasminType(((ASTmult) arg).getType());
+                    else if (arg instanceof ASTdiv)
+                        out += SimpleNode.getJasminType(((ASTdiv) arg).getType());
+                }
+            }
+
+            if (((SimpleNode) node.parent).parent instanceof ASTStatement
+                    && ((ASTStatement) ((SimpleNode) node.parent).parent).assign) {
+                if (((ASTStatement) ((SimpleNode) node.parent).parent).array) {
+                    out += ")I\n";
+                } else {
+                    out += ")"
+                            + SimpleNode.getJasminType(
+                                    node.checkSymbolTable(((ASTStatement) ((SimpleNode) node.parent).parent).id).type)
+                            + "\n";
+                }
+            } else if (((SimpleNode) node.parent).parent instanceof ASTsum
+                    || ((SimpleNode) node.parent).parent instanceof ASTdiv
+                    || ((SimpleNode) node.parent).parent instanceof ASTmult
+                    || ((SimpleNode) node.parent).parent instanceof ASTsub
+                    || ((SimpleNode) node.parent).parent instanceof ASTlt) {
+                out += ")I\n";
+            } else
+                out += ")V\n";
+        }
+
+        return out;
     }
 
     private String getJasminRecursive(ASTid node) {
@@ -655,7 +765,7 @@ public class JasminGenerator implements ASTNodeVisitor {
     public String visit(ASTClassDeclaration node) {
         String out = ".class public " + node.id + "\n";
         out += ".super " + (node.ext != null ? node.ext : "java/lang/Object") + "\n";
-
+        String ext = (node.ext != null ? node.ext : "java/lang/Object");
         if (node.children != null) {
             for (int i = 0; i < node.children.length; ++i) {
                 SimpleNode n = (SimpleNode) node.children[i];
@@ -669,7 +779,12 @@ public class JasminGenerator implements ASTNodeVisitor {
             out += "; standard initializer\n";
             out += ".method public <init>()V\n";
             out += "aload_0\n";
-            out += "invokenonvirtual java/lang/Object/<init>()V\n";
+
+            if (node.ext == null)
+                out += "invokenonvirtual java/lang/Object/<init>()V\n";
+            else
+                out += "invokespecial " + ext + "/<init>()V\n";
+
             out += "return\n";
             out += ".end method\n\n";
         }
@@ -802,14 +917,14 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         out += "iconst_1\n";
         out += "goto LABEL" + label2 + "\n";
-        out += "LABEL" + label1 + ": iconst_0\n";
+        out += "LABEL" + label1 + ":\niconst_0\n";
 
         if (local == null) {
             if (global != null)
                 out += "LABEL" + label2 + ": putfield " + node.getClassName() + "/" + global.id + " "
                         + SimpleNode.getJasminType(global.type) + "\n";
         } else {
-            out += "LABEL" + label2 + ": istore " + local.order + "\n";
+            out += "LABEL" + label2 + ":\nistore " + local.order + "\n";
         }
 
         return out;
@@ -848,7 +963,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                                 + SimpleNode.getJasminType(global.type) + "\n";
                     }
                 } else {
-                    out += "istore " + local.order + "\n";
+                    // out += "istore " + local.order + "\n";
                 }
 
             }
@@ -913,7 +1028,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                             if (local_0 == null && global_0 != null) {
                                 out += "aload_0\n";
                                 out += "getfield " + node.getClassName() + "/" + global_0.id + " "
-                                + SimpleNode.getJasminType(global_0.type) + "\n";
+                                        + SimpleNode.getJasminType(global_0.type) + "\n";
                             } else {
                                 out += visit((ASTid) arg);
                             }
@@ -960,7 +1075,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                                 if (local_0 == null && global_0 != null) {
                                     out += "aload_0\n";
                                     out += "getfield " + node.getClassName() + "/" + global_0.id + " "
-                                    + SimpleNode.getJasminType(global_0.type) + "\n";
+                                            + SimpleNode.getJasminType(global_0.type) + "\n";
                                 } else {
                                     out += getJasminRecursive((ASTid) arg);
                                 }
@@ -1196,35 +1311,8 @@ public class JasminGenerator implements ASTNodeVisitor {
         Node first_child = node.children[0];
         Node second_child = node.children[1];
 
-        if (first_child instanceof ASTid) {
-            out += getJasminRecursive(first_child);
-        } else if (first_child instanceof ASTliteral) {
-            out += "ldc " + ((ASTliteral) first_child).info + "\n";
-        } else if (first_child instanceof AST_this)
-            out += visit((ASTfield) ((AST_this) first_child).children[0]);
-        else if (first_child instanceof ASTsum)
-            out += getJasminRecursive((ASTsum) first_child);
-        else if (first_child instanceof ASTsub)
-            out += getJasminRecursive((ASTsub) first_child);
-        else if (first_child instanceof ASTmult)
-            out += getJasminRecursive((ASTmult) first_child);
-        else if (first_child instanceof ASTdiv)
-            out += getJasminRecursive((ASTdiv) first_child);
-
-        if (second_child instanceof ASTid) {
-            out += getJasminRecursive(second_child);
-        } else if (second_child instanceof ASTliteral) {
-            out += "ldc " + ((ASTliteral) second_child).info + "\n";
-        } else if (second_child instanceof AST_this)
-            out += visit((ASTfield) ((AST_this) second_child).children[0]);
-        else if (second_child instanceof ASTsum)
-            out += getJasminRecursive((ASTsum) second_child);
-        else if (second_child instanceof ASTsub)
-            out += getJasminRecursive((ASTsub) second_child);
-        else if (second_child instanceof ASTmult)
-            out += getJasminRecursive((ASTmult) second_child);
-        else if (second_child instanceof ASTdiv)
-            out += getJasminRecursive((ASTdiv) second_child);
+        out += getJasminRecursive(first_child);
+        out += getJasminRecursive(second_child);
 
         return out;
     }
@@ -1247,7 +1335,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                 if (global_1 != null) {
                     out += "aload_0\n";
                     out += "getfield " + node.getClassName() + "/" + global_1.id + " "
-                    + SimpleNode.getJasminType(global_1.type) + "\n";
+                            + SimpleNode.getJasminType(global_1.type) + "\n";
                 }
             } else {
                 out += "iload " + local_1.order + "\n";
@@ -1277,7 +1365,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                 if (global_1 != null) {
                     out += "aload_0\n";
                     out += "getfield " + node.getClassName() + "/" + global_1.id + " "
-                    + SimpleNode.getJasminType(global_1.type) + "\n";
+                            + SimpleNode.getJasminType(global_1.type) + "\n";
                 }
             } else {
                 out += "iload " + local_1.order + "\n";

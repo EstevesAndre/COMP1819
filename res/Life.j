@@ -531,8 +531,10 @@ invokevirtual Life/le(II)Z
 ifeq LABEL7
 iconst_1
 goto LABEL8
-LABEL7: iconst_0
-LABEL8: istore 4
+LABEL7:
+iconst_0
+LABEL8:
+istore 4
 iload 4
 ifne LABEL9
 aload 5
@@ -864,7 +866,8 @@ invokevirtual Life/lt(II)Z
 ifne LABEL31
 iconst_1
 goto LABEL32
-LABEL31: iconst_0
+LABEL31:
+iconst_0
 ireturn
 .end method
 
@@ -878,7 +881,8 @@ invokevirtual Life/eq(II)Z
 ifeq LABEL33
 iconst_0
 goto LABEL34
-LABEL33: iconst_1
+LABEL33:
+iconst_1
 ireturn
 .end method
 
@@ -890,7 +894,8 @@ iload 2
 if_icmpge LABEL35
 iconst_1
 goto LABEL36
-LABEL35: iconst_0
+LABEL35:
+iconst_0
 ireturn
 .end method
 
@@ -908,7 +913,8 @@ invokevirtual Life/eq(II)Z
 ifeq LABEL37
 iconst_0
 goto LABEL38
-LABEL37: iconst_1
+LABEL37:
+iconst_1
 ireturn
 .end method
 
@@ -922,7 +928,8 @@ invokevirtual Life/le(II)Z
 ifeq LABEL39
 iconst_0
 goto LABEL40
-LABEL39: iconst_1
+LABEL39:
+iconst_1
 ireturn
 .end method
 
@@ -940,7 +947,8 @@ invokevirtual Life/eq(II)Z
 ifeq LABEL41
 iconst_0
 goto LABEL42
-LABEL41: iconst_1
+LABEL41:
+iconst_1
 ireturn
 .end method
 

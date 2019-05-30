@@ -3,6 +3,7 @@ class Quicksort {
         int[] L;
         int i;
         Quicksort q;
+        boolean dummy;
 
         L = new int[10];
 
@@ -15,8 +16,8 @@ class Quicksort {
 
         q = new Quicksort();
 
-        q.quicksort(L);
-        q.printL(L);
+        dummy = q.quicksort(L);
+        dummy = q.printL(L);
     }
 
     public boolean printL(int[] L) {
