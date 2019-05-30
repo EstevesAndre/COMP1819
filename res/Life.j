@@ -1,18 +1,12 @@
 .class public Life
 .super java/lang/Object
-.field public UNDERPOP_LIM I
-.field public OVERPOP_LIM I
-.field public REPRODUCE_NUM I
-.field public LOOPS_PER_MS I
-.field public xMax I
-.field public yMax I
-.field public field [I
-; standard initializer
-.method public <init>()V
-aload_0
-invokenonvirtual java/lang/Object/<init>()V
-return
-.end method
+.field public 'UNDERPOP_LIM' I
+.field public 'OVERPOP_LIM' I
+.field public 'REPRODUCE_NUM' I
+.field public 'LOOPS_PER_MS' I
+.field public 'xMax' I
+.field public 'yMax' I
+.field public 'field' [I
 .method static public main([Ljava/lang/String;)V
 .limit stack 100
 .limit locals 3
@@ -26,9 +20,12 @@ LABEL1:
 ifeq LABEL2
 aload 1
 invokevirtual Life/printField()Z
+pop
 aload 1
 invokevirtual Life/update()Z
-invokestatic io/read()V
+pop
+invokestatic io/read()I
+istore 2
 goto LABEL1
 LABEL2:
 return
@@ -52,8 +49,9 @@ aload_0
 ldc 225000
 putfield Life/LOOPS_PER_MS I
 aload_0
-iload 1
+aload 1
 invokevirtual Life/field([I)[I
+putfield Life/field [I
 aload 1
 ldc 0
 iaload
@@ -65,7 +63,8 @@ isub
 putfield Life/xMax I
 aload_0
 aload_0
-getfield field/field[I
+getfield Life/field [I
+arraylength
 iload 2
 idiv
 ldc 1
@@ -490,17 +489,23 @@ areturn
 .method public update()Z
 .limit stack 100
 .limit locals 6
+aload_0
 getfield Life/field [I
 arraylength
 newarray int
 astore 5
+aload_0
+getfield Life/field [I
+arraylength
 ldc 0
 istore 1
 LABEL3:
 iload 1
+aload_0
 getfield Life/field [I
 arraylength
 if_icmpge LABEL4
+aload_0
 getfield Life/field [I
 iload 1
 iaload
@@ -508,26 +513,27 @@ istore 2
 aload_0
 iload 1
 invokevirtual Life/getLiveNeighborN(I)I
+istore 3
 iload 2
 ldc 1
 ifne LABEL5
 aload_0
 iload 3
 aload_0
-getfield UNDERPOP_LIM/UNDERPOP_LIMI
+getfield Life/UNDERPOP_LIM I
 invokevirtual Life/ge(II)Z
 ifeq LABEL7
 aload_0
 iload 3
 aload_0
-getfield OVERPOP_LIM/OVERPOP_LIMI
+getfield Life/OVERPOP_LIM I
 invokevirtual Life/le(II)Z
 ifeq LABEL7
 iconst_1
 goto LABEL8
 LABEL7: iconst_0
 LABEL8: istore 4
-iload 4
+aload 4
 ifne LABEL9
 aload 5
 iload 1
@@ -537,6 +543,7 @@ goto LABEL10
 LABEL9:
 aload 5
 iload 1
+aload_0
 getfield Life/field [I
 iload 1
 iaload
@@ -547,8 +554,22 @@ LABEL5:
 aload_0
 iload 3
 aload_0
-getfield REPRODUCE_NUM/REPRODUCE_NUMI
+getfield Life/REPRODUCE_NUM I
 invokevirtual Life/eq(II)Z
+ifeq LABEL11
+aload 5
+iload 1
+ldc 1
+iastore
+goto LABEL12
+LABEL11:
+aload 5
+iload 1
+aload_0
+getfield Life/field [I
+iload 1
+iaload
+iastore
 LABEL12:
 LABEL6:
 iload 1
@@ -571,18 +592,25 @@ ldc 0
 istore 2
 LABEL13:
 iload 1
+aload_0
 getfield Life/field [I
 arraylength
 if_icmpge LABEL14
 aload_0
 iload 2
 aload_0
-getfield xMax/xMaxI
+getfield Life/xMax I
 invokevirtual Life/gt(II)Z
+ifeq LABEL15
+invokestatic io/println()V
+ldc 0
+istore 2
+goto LABEL16
+LABEL15:
 LABEL16:
 aload_0
-getfield field/field[I
-invokestatic io/print()V
+getfield Life/field [I
+invokestatic io/print(I)V
 iload 1
 ldc 1
 iadd
@@ -602,6 +630,7 @@ ireturn
 .limit stack 100
 .limit locals 3
 iload 1
+aload_0
 getfield Life/xMax I
 ldc 1
 iadd
@@ -613,6 +642,7 @@ ireturn
 .method public cartIdx(I)[I
 .limit stack 100
 .limit locals 6
+aload_0
 getfield Life/xMax I
 ldc 1
 iadd
@@ -647,6 +677,7 @@ areturn
 aload_0
 iload 1
 invokevirtual Life/cartIdx(I)[I
+istore 8
 aload 8
 ldc 0
 iaload
@@ -656,6 +687,7 @@ ldc 1
 iaload
 istore 3
 iload 2
+aload_0
 getfield Life/xMax I
 if_icmpge LABEL17
 iload 2
@@ -666,6 +698,16 @@ aload_0
 iload 2
 ldc 0
 invokevirtual Life/gt(II)Z
+ifeq LABEL19
+iload 2
+ldc 1
+isub
+istore 4
+goto LABEL20
+LABEL19:
+aload_0
+getfield Life/xMax I
+istore 4
 LABEL20:
 goto LABEL18
 LABEL17:
@@ -677,6 +719,7 @@ isub
 istore 4
 LABEL18:
 iload 3
+aload_0
 getfield Life/yMax I
 if_icmpge LABEL21
 iload 3
@@ -687,6 +730,16 @@ aload_0
 iload 3
 ldc 0
 invokevirtual Life/gt(II)Z
+ifeq LABEL23
+iload 3
+ldc 1
+isub
+istore 5
+goto LABEL24
+LABEL23:
+aload_0
+getfield Life/yMax I
+istore 5
 LABEL24:
 goto LABEL22
 LABEL21:
@@ -735,6 +788,7 @@ istore 4
 aload_0
 iload 1
 invokevirtual Life/getNeighborCoords(I)[I
+istore 2
 ldc 0
 istore 3
 LABEL25:
@@ -744,9 +798,16 @@ arraylength
 if_icmpge LABEL26
 aload_0
 aload_0
-getfield field/field[I
+getfield Life/field [I
 ldc 0
-invokevirtual Life/ne()V
+invokevirtual Life/ne(II)Z
+ifeq LABEL27
+iload 4
+ldc 1
+iadd
+istore 4
+goto LABEL28
+LABEL27:
 LABEL28:
 iload 3
 ldc 1
@@ -762,7 +823,7 @@ ireturn
 .limit locals 4
 iload 1
 aload_0
-getfield LOOPS_PER_MS/LOOPS_PER_MSI
+getfield Life/LOOPS_PER_MS I
 imul
 istore 3
 ldc 0
@@ -868,4 +929,10 @@ iconst_0
 goto LABEL42
 LABEL41: iconst_1
 ireturn
+.end method
+; standard initializer
+.method public <init>()V
+aload_0
+invokenonvirtual java/lang/Object/<init>()V
+return
 .end method

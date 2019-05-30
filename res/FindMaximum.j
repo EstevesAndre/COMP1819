@@ -1,6 +1,6 @@
 .class public FindMaximum
 .super java/lang/Object
-.field public test_arr [I
+.field public 'test_arr' [I
 .method public find_maximum([I)I
 .limit stack 100
 .limit locals 5
