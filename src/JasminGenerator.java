@@ -839,14 +839,6 @@ public class JasminGenerator implements ASTNodeVisitor {
             out += "aload_0\n";
         }
 
-        if (node.children != null) {
-            for (Node child : node.children) {
-                if (child instanceof ASTid) {
-                    out += visit((ASTid) child);
-                }
-            }
-        }
-
         if (id != null) {
             STEntry entry = null;
             entry = node.checkImediateSymbolTable(id);
@@ -859,12 +851,12 @@ public class JasminGenerator implements ASTNodeVisitor {
                             STEntry local_0 = node.checkImediateSymbolTable(arg0);
                             STEntry global_0 = node.checkSymbolTable(arg0);
 
-                            if (local_0 == null) {
-                                if (global_0 != null) {
-                                    out += "aload_0\n";
-                                    out += "getfield " + arg0 + "/" + global_0.id
-                                            + SimpleNode.getJasminType(global_0.type) + "\n";
-                                }
+                            if (local_0 == null && global_0 != null) {
+                                out += "aload_0\n";
+                                out += "getfield " + arg0 + "/" + global_0.id + SimpleNode.getJasminType(global_0.type)
+                                        + "\n";
+                            } else {
+                                out += visit((ASTid) arg);
                             }
                         } else if (arg instanceof ASTbool)
                             out += "iconst_" + (((ASTbool) arg).info ? 1 : 0) + "\n";
@@ -892,12 +884,12 @@ public class JasminGenerator implements ASTNodeVisitor {
                             STEntry local_0 = node.checkImediateSymbolTable(arg0);
                             STEntry global_0 = node.checkSymbolTable(arg0);
 
-                            if (local_0 == null) {
-                                if (global_0 != null) {
-                                    out += "aload_0\n";
-                                    out += "getfield " + arg0 + "/" + global_0.id
-                                            + SimpleNode.getJasminType(global_0.type) + "\n";
-                                }
+                            if (local_0 == null && global_0 != null) {
+                                out += "aload_0\n";
+                                out += "getfield " + arg0 + "/" + global_0.id + SimpleNode.getJasminType(global_0.type)
+                                        + "\n";
+                            } else {
+                                out += visit((ASTid) arg);
                             }
                         } else if (arg instanceof ASTbool) {
                             out += "iconst_" + (((ASTbool) arg).info ? 1 : 0) + "\n";
@@ -939,12 +931,12 @@ public class JasminGenerator implements ASTNodeVisitor {
                                 STEntry local_0 = node.checkImediateSymbolTable(arg0);
                                 STEntry global_0 = node.checkSymbolTable(arg0);
 
-                                if (local_0 == null) {
-                                    if (global_0 != null) {
-                                        out += "aload_0\n";
-                                        out += "getfield " + arg0 + "/" + global_0.id
-                                                + SimpleNode.getJasminType(global_0.type) + "\n";
-                                    }
+                                if (local_0 == null && global_0 != null) {
+                                    out += "aload_0\n";
+                                    out += "getfield " + arg0 + "/" + global_0.id
+                                            + SimpleNode.getJasminType(global_0.type) + "\n";
+                                } else {
+                                    out += getJasminRecursive((ASTid) arg);
                                 }
                             } else if (arg instanceof ASTbool) {
                                 out += "iconst_" + (((ASTbool) arg).info ? 1 : 0) + "\n";
