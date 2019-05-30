@@ -15,7 +15,8 @@ arraylength
 if_icmpge LABEL2
 aload 1
 iload 2
-iload 1
+aload 1
+arraylength
 iload 2
 isub
 iastore
@@ -50,7 +51,6 @@ if_icmpge LABEL4
 aload 1
 iload 2
 iaload
-iload 1
 invokestatic io/println(I)V
 iload 2
 ldc 1
@@ -66,9 +66,9 @@ ireturn
 .limit locals 2
 aload_0
 aload 1
-iload 1
 ldc 0
-iload 1
+aload 1
+arraylength
 ldc 1
 isub
 invokevirtual Quicksort/quicksort([III)Z
@@ -84,14 +84,10 @@ aload_0
 aload 1
 iload 2
 iload 3
-iload 1
-iload 2
-iload 3
 invokevirtual Quicksort/partition([III)I
+istore 4
 aload_0
 aload 1
-iload 2
-iload 1
 iload 2
 iload 4
 ldc 1
@@ -100,11 +96,9 @@ invokevirtual Quicksort/quicksort([III)Z
 aload_0
 aload 1
 iload 3
-iload 1
 iload 4
 ldc 1
 iadd
-iload 3
 invokevirtual Quicksort/quicksort([III)Z
 goto LABEL6
 LABEL5:
