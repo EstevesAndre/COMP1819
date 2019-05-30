@@ -914,9 +914,7 @@ public class JasminGenerator implements ASTNodeVisitor {
                                     out += "getfield " + arg0 + "/" + global_0.id
                                             + SimpleNode.getJasminType(global_0.type) + "\n";
                                 }
-                            } else if (((ASTid) arg).children == null || ! ((((ASTid) arg).children[0] instanceof ASTfield))) {
-                                out += "iload " + local_0.order + "\n";
-                            }
+                            } 
                         } else if (arg instanceof ASTbool)
                             out += "iconst_" + (((ASTbool) arg).info ? 1 : 0) + "\n";
                         else if (arg instanceof ASTlt)

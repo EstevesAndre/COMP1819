@@ -31,11 +31,9 @@ invokespecial Quicksort/<init>()V
 astore 3
 aload 3
 aload 1
-iload 1
 invokevirtual Quicksort/quicksort([I)Z
 aload 3
 aload 1
-iload 1
 invokevirtual Quicksort/printL([I)Z
 return
 .end method
