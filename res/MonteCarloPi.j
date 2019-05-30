@@ -7,12 +7,14 @@ ldc 0
 ldc 100
 isub
 ldc 100
-invokestatic MathUtils/random(II)V
+invokestatic MathUtils/random(II)I
+istore 1
 ldc 0
 ldc 100
 isub
 ldc 100
-invokestatic MathUtils/random(II)V
+invokestatic MathUtils/random(II)I
+istore 2
 iload 1
 iload 1
 imul
@@ -68,7 +70,8 @@ ireturn
 .method static public main([Ljava/lang/String;)V
 .limit stack 100
 .limit locals 3
-invokestatic ioPlus/requestNumber()V
+invokestatic ioPlus/requestNumber()I
+istore 2
 new MonteCarloPi
 dup
 invokespecial MonteCarloPi/<init>()V
