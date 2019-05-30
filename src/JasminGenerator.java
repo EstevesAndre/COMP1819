@@ -1062,7 +1062,11 @@ public class JasminGenerator implements ASTNodeVisitor {
                 out += SimpleNode.getJasminType(arg);
             }
 
-            out += ")" + SimpleNode.getJasminType(entry.type);
+            out += ")" + SimpleNode.getJasminType(entry.type) + "\n";
+
+            if(((SimpleNode) node.parent).parent instanceof ASTStatement && !((ASTStatement) ((SimpleNode) node.parent).parent).assign)
+                out += "pop\n";
+
         } else {
             if (node.children != null) {
                 for (Node arg : node.children) {
@@ -1096,10 +1100,10 @@ public class JasminGenerator implements ASTNodeVisitor {
                         out += SimpleNode.getJasminType(((ASTdiv) arg).getType());
                 }
             }
-            out += ")V";
+            out += ")V\n";
         }
 
-        out += "\n";
+
         return out;
     }
 

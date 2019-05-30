@@ -93,6 +93,7 @@ iload 4
 ldc 1
 isub
 invokevirtual Quicksort/quicksort([III)Z
+pop
 aload_0
 aload 1
 iload 3
@@ -100,6 +101,7 @@ iload 4
 ldc 1
 iadd
 invokevirtual Quicksort/quicksort([III)Z
+pop
 goto LABEL6
 LABEL5:
 LABEL6:
