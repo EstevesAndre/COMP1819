@@ -19,7 +19,8 @@ invokevirtual Life/init()Z
 LABEL1:
 ifeq LABEL2
 aload 1
-invokevirtual Life/printField()V
+invokevirtual Life/printField()Z
+pop
 aload 1
 invokevirtual Life/update()Z
 pop
@@ -586,6 +587,50 @@ iconst_1
 ireturn
 .end method
 
+.method public printField()Z
+.limit stack 100
+.limit locals 3
+ldc 0
+istore 1
+ldc 0
+istore 2
+LABEL13:
+iload 1
+aload_0
+getfield Life/field [I
+arraylength
+if_icmpge LABEL14
+aload_0
+iload 2
+aload_0
+getfield Life/xMax I
+invokevirtual Life/gt(II)Z
+ifeq LABEL15
+invokestatic io/println()V
+ldc 0
+istore 2
+goto LABEL16
+LABEL15:
+LABEL16:
+aload_0
+getfield Life/field [I
+invokestatic io/print(I)V
+iload 1
+ldc 1
+iadd
+istore 1
+iload 2
+ldc 1
+iadd
+istore 2
+goto LABEL13
+LABEL14:
+invokestatic io/println()V
+invokestatic io/println()V
+iconst_1
+ireturn
+.end method
+
 .method public trIdx(II)I
 .limit stack 100
 .limit locals 3
@@ -633,6 +678,179 @@ aload 5
 areturn
 .end method
 
+.method public getNeighborCoords(I)[I
+.limit stack 100
+.limit locals 10
+aload_0
+iload 1
+invokevirtual Life/cartIdx(I)[I
+astore 8
+aload 8
+ldc 0
+iaload
+istore 2
+aload 8
+ldc 1
+iaload
+istore 3
+iload 2
+aload_0
+getfield Life/xMax I
+if_icmpge LABEL17
+iload 2
+ldc 1
+iadd
+istore 6
+aload_0
+iload 2
+ldc 0
+invokevirtual Life/gt(II)Z
+ifeq LABEL19
+iload 2
+ldc 1
+isub
+istore 4
+goto LABEL20
+LABEL19:
+aload_0
+getfield Life/xMax I
+istore 4
+LABEL20:
+goto LABEL18
+LABEL17:
+ldc 0
+istore 6
+iload 2
+ldc 1
+isub
+istore 4
+LABEL18:
+iload 3
+aload_0
+getfield Life/yMax I
+if_icmpge LABEL21
+iload 3
+ldc 1
+iadd
+istore 7
+aload_0
+iload 3
+ldc 0
+invokevirtual Life/gt(II)Z
+ifeq LABEL23
+iload 3
+ldc 1
+isub
+istore 5
+goto LABEL24
+LABEL23:
+aload_0
+getfield Life/yMax I
+istore 5
+LABEL24:
+goto LABEL22
+LABEL21:
+ldc 0
+istore 7
+iload 3
+ldc 1
+isub
+istore 5
+LABEL22:
+ldc 8
+newarray int
+astore 9
+aload 9
+ldc 0
+iload 2
+iload 5
+invokestatic trIdx/trIdx(II)I
+iastore
+aload 9
+ldc 1
+iload 4
+iload 5
+invokestatic trIdx/trIdx(II)I
+iastore
+aload 9
+ldc 2
+iload 4
+iload 3
+invokestatic trIdx/trIdx(II)I
+iastore
+aload 9
+ldc 3
+iload 4
+iload 7
+invokestatic trIdx/trIdx(II)I
+iastore
+aload 9
+ldc 4
+iload 2
+iload 7
+invokestatic trIdx/trIdx(II)I
+iastore
+aload 9
+ldc 5
+iload 6
+iload 7
+invokestatic trIdx/trIdx(II)I
+iastore
+aload 9
+ldc 6
+iload 6
+iload 3
+invokestatic trIdx/trIdx(II)I
+iastore
+aload 9
+ldc 7
+iload 6
+iload 5
+invokestatic trIdx/trIdx(II)I
+iastore
+aload 9
+areturn
+.end method
+
+.method public getLiveNeighborN(I)I
+.limit stack 100
+.limit locals 5
+ldc 0
+istore 4
+aload_0
+iload 1
+invokevirtual Life/getNeighborCoords(I)[I
+astore 2
+ldc 0
+istore 3
+LABEL25:
+iload 3
+aload 2
+arraylength
+if_icmpge LABEL26
+aload_0
+aload_0
+getfield Life/field [I
+ldc 0
+invokevirtual Life/ne(II)Z
+ifeq LABEL27
+iload 4
+ldc 1
+iadd
+istore 4
+goto LABEL28
+LABEL27:
+LABEL28:
+iload 3
+ldc 1
+iadd
+istore 3
+goto LABEL25
+LABEL26:
+iload 4
+ireturn
+.end method
+
 .method public busyWait(I)Z
 .limit stack 100
 .limit locals 4
@@ -643,17 +861,33 @@ imul
 istore 3
 ldc 0
 istore 2
-LABEL13:
+LABEL29:
 iload 2
 iload 3
-if_icmpge LABEL14
+if_icmpge LABEL30
 iload 2
 ldc 1
 iadd
 istore 2
-goto LABEL13
-LABEL14:
+goto LABEL29
+LABEL30:
 iconst_1
+ireturn
+.end method
+
+.method public ne(II)Z
+.limit stack 100
+.limit locals 3
+aload_0
+iload 1
+iload 2
+invokevirtual Life/eq(II)V
+ifeq LABEL31
+iconst_0
+goto LABEL32
+LABEL31:
+iconst_1
+LABEL32:
 ireturn
 .end method
 
@@ -662,12 +896,28 @@ ireturn
 .limit locals 3
 iload 1
 iload 2
-if_icmpge LABEL15
+if_icmpge LABEL33
 iconst_1
-goto LABEL16
-LABEL15:
+goto LABEL34
+LABEL33:
 iconst_0
-LABEL16:
+LABEL34:
+ireturn
+.end method
+
+.method public gt(II)Z
+.limit stack 100
+.limit locals 3
+aload_0
+iload 1
+iload 2
+invokevirtual Life/le(II)V
+ifeq LABEL35
+iconst_0
+goto LABEL36
+LABEL35:
+iconst_1
+LABEL36:
 ireturn
 .end method
 
