@@ -1,0 +1,83 @@
+Compiled from "MonteCarloPi.java"
+class MonteCarloPi {
+  MonteCarloPi();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public boolean performSingleEstimate();
+    Code:
+       0: bipush        -100
+       2: bipush        100
+       4: invokestatic  #2                  // Method MathUtils.random:(II)I
+       7: istore_1
+       8: bipush        -100
+      10: bipush        100
+      12: invokestatic  #2                  // Method MathUtils.random:(II)I
+      15: istore_2
+      16: iload_1
+      17: iload_1
+      18: imul
+      19: iload_2
+      20: iload_2
+      21: imul
+      22: iadd
+      23: bipush        100
+      25: idiv
+      26: istore        4
+      28: iload         4
+      30: bipush        100
+      32: if_icmpge     40
+      35: iconst_1
+      36: istore_3
+      37: goto          42
+      40: iconst_0
+      41: istore_3
+      42: iload_3
+      43: ireturn
+
+  public int estimatePi100(int);
+    Code:
+       0: iconst_0
+       1: istore_3
+       2: iconst_0
+       3: istore_2
+       4: iload_3
+       5: iload_1
+       6: if_icmpge     27
+       9: aload_0
+      10: invokevirtual #3                  // Method performSingleEstimate:()Z
+      13: ifeq          20
+      16: iload_2
+      17: iconst_1
+      18: iadd
+      19: istore_2
+      20: iload_3
+      21: iconst_1
+      22: iadd
+      23: istore_3
+      24: goto          4
+      27: sipush        400
+      30: iload_2
+      31: imul
+      32: iload_1
+      33: idiv
+      34: istore        4
+      36: iload         4
+      38: ireturn
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: invokestatic  #4                  // Method ioPlus.requestNumber:()I
+       3: istore_2
+       4: new           #5                  // class MonteCarloPi
+       7: dup
+       8: invokespecial #6                  // Method "<init>":()V
+      11: iload_2
+      12: invokevirtual #7                  // Method estimatePi100:(I)I
+      15: istore_1
+      16: iload_1
+      17: invokestatic  #8                  // Method ioPlus.printResult:(I)V
+      20: return
+}

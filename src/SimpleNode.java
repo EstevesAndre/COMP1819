@@ -106,19 +106,19 @@ public class SimpleNode implements Node, ASTNode {
     if (this instanceof ASTClassDeclaration) {
       System.out.println("Symbol table for " + ((ASTClassDeclaration) this).id);
       for (Map.Entry<String, STEntry> entry : ((ASTClassDeclaration) this).symtbl.entrySet()) {
-        System.out.println(entry.getKey() + ": " + entry.getValue().type);
+        System.out.println(entry.getKey() + ": " + entry.getValue().type + " (" + entry.getValue().order + ")");
       }
     }
     if (this instanceof ASTMainDeclaration) {
       System.out.println("Symbol table for main");
       for (Map.Entry<String, STEntry> entry : ((ASTMainDeclaration) this).symtbl.entrySet()) {
-        System.out.println(entry.getKey() + ": " + entry.getValue().type);
+        System.out.println(entry.getKey() + ": " + entry.getValue().type + " (" + entry.getValue().order + ")");
       }
     }
     if (this instanceof ASTMethodDeclaration) {
       System.out.println("Symbol table for " + ((ASTMethodDeclaration) this).id);
       for (Map.Entry<String, STEntry> entry : ((ASTMethodDeclaration) this).symtbl.entrySet()) {
-        System.out.println(entry.getKey() + ": " + entry.getValue().type);
+        System.out.println(entry.getKey() + ": " + entry.getValue().type + " (" + entry.getValue().order + ")");
       }
     }
 
@@ -322,7 +322,7 @@ public class SimpleNode implements Node, ASTNode {
     }
   }
 
-  static void writeJasminFile(String fileName, SimpleNode root){
+  static void writeJasminFile(String fileName, SimpleNode root) {
     String jasminFileName = fileName.replaceFirst("[.][^.]+$", "") + ".j";
 
     try {

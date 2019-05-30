@@ -35,7 +35,7 @@ LABEL1:
 iconst_0
 istore 3
 LABEL2:
-aload 3
+iload 3
 ireturn
 .end method
 .method public estimatePi100(I)I
@@ -51,6 +51,13 @@ iload 1
 if_icmpge LABEL4
 aload_0
 invokevirtual MonteCarloPi/performSingleEstimate()Z
+ifeq LABEL5
+iload 2
+ldc 1
+iadd
+istore 2
+goto LABEL6
+LABEL5:
 LABEL6:
 iload 3
 ldc 1
@@ -75,7 +82,9 @@ istore 2
 new MonteCarloPi
 dup
 invokespecial MonteCarloPi/<init>()V
-astore 1
+iload 2
+invokevirtual MonteCarloPi/estimatePi100(I)I
+istore 1
 iload 1
 invokestatic ioPlus/printResult(I)V
 return
