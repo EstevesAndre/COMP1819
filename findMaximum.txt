@@ -1,0 +1,100 @@
+Program
+ class FindMaximum 
+  var test_arr
+   type int[]
+  method find_maximum
+   type int
+   Args
+    arg arr
+     type int[]
+   var i
+    type int
+   var maximum
+    type int
+   var value
+    type int
+   statement id i =
+    literal 1
+   statement id maximum =
+    id arr
+     literal 0
+   statement while
+    While
+     lt
+      id i
+      id arr
+       field length null
+     statement null
+      statement id value =
+       id arr
+        id i
+      statement if
+       If
+        lt
+         id maximum
+         id value
+        statement null
+         statement id maximum =
+          id value
+        statement null
+      statement id i =
+       sum
+        id i
+        literal 1
+   id maximum
+  method build_test_arr
+   type int
+   Args
+   statement id test_arr =
+    new array null
+     literal 5
+   statement id test_arr[] =
+    literal 0
+    literal 14
+   statement id test_arr[] =
+    literal 1
+    literal 28
+   statement id test_arr[] =
+    literal 2
+    literal 0
+   statement id test_arr[] =
+    literal 3
+    sub
+     literal 0
+     literal 5
+   statement id test_arr[] =
+    literal 4
+    literal 12
+   literal 0
+  method get_array
+   type int[]
+   Args
+   id test_arr
+  main args=args
+   var fm
+    type FindMaximum
+   statement id fm =
+    new id FindMaximum
+   statement id fm
+    field id build_test_arr
+   statement id ioPlus
+    field id printResult
+     id fm
+      field id find_maximum
+       id fm
+        field id get_array
+Symbol table for FindMaximum
+args: String[] (5)
+get_array0: int[] (4)
+build_test_arr0: int (3)
+test_arr: int[] (1)
+find_maximum1: int (2)
+Symbol table for find_maximum
+arr: int[] (1)
+i: int (2)
+maximum: int (3)
+value: int (4)
+Symbol table for build_test_arr
+Symbol table for get_array
+Symbol table for main
+fm: FindMaximum (1)

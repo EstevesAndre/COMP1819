@@ -1,0 +1,8 @@
+Program
+ class HelloWorld 
+  main args=args
+   statement id ioPlus
+    field id printHelloWorld
+Symbol table for HelloWorld
+args: String[] (1)
+Symbol table for main

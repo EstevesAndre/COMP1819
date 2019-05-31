@@ -3,39 +3,39 @@
 .method static public main([Ljava/lang/String;)V
 .limit stack 100
 .limit locals 5
-ldc 10
+bipush 10
 newarray int
-astore 1
-ldc 0
-istore 2
+astore_1
+iconst_0
+istore_2
 LABEL1:
-iload 2
-aload 1
+iload_2
+aload_1
 arraylength
 if_icmpge LABEL2
-aload 1
-iload 2
-aload 1
+aload_1
+iload_2
+aload_1
 arraylength
-iload 2
+iload_2
 isub
 iastore
-iload 2
-ldc 1
+iload_2
+iconst_1
 iadd
-istore 2
+istore_2
 goto LABEL1
 LABEL2:
 new Lazysort
 dup
 invokespecial Lazysort/<init>()V
-astore 3
-aload 3
-aload 1
+astore_3
+aload_3
+aload_1
 invokevirtual Quicksort/quicksort([I)Z
 istore 4
-aload 3
-aload 1
+aload_3
+aload_1
 invokevirtual Quicksort/printL([I)Z
 istore 4
 return
@@ -44,25 +44,25 @@ return
 .method public quicksort([I)Z
 .limit stack 100
 .limit locals 3
-ldc 0
-ldc 5
+iconst_0
+iconst_5
 invokestatic MathUtils/random(II)I
-ldc 4
+iconst_4
 if_icmpge LABEL3
 aload_0
-aload 1
+aload_1
 invokevirtual Lazysort/beLazy([I)Z
 pop
 iconst_1
-istore 2
+istore_2
 goto LABEL4
 LABEL3:
 iconst_0
-istore 2
+istore_2
 LABEL4:
-iload 2
+iload_2
 ifeq LABEL5
-iload 2
+iload_2
 ifeq LABEL7
 iconst_0
 goto LABEL8
@@ -73,61 +73,61 @@ istore 2
 goto LABEL6
 LABEL5:
 aload_0
-aload 1
-ldc 0
-aload 1
+aload_1
+iconst_0
+aload_1
 arraylength
-ldc 1
+iconst_1
 isub
 invokevirtual Lazysort/quicksort([III)Z
-istore 2
+istore_2
 LABEL6:
-iload 2
+iload_2
 ireturn
 .end method
 
 .method public beLazy([I)Z
 .limit stack 100
 .limit locals 4
-aload 1
+aload_1
 arraylength
-istore 2
-ldc 0
-istore 3
+istore_2
+iconst_0
+istore_3
 LABEL9:
-iload 3
-iload 2
-ldc 2
+iload_3
+iload_2
+iconst_2
 idiv
 if_icmpge LABEL10
-aload 1
-iload 3
-ldc 0
-ldc 10
+aload_1
+iload_3
+iconst_0
+bipush 10
 invokestatic MathUtils/random(II)I
 iastore
-iload 3
-ldc 1
+iload_3
+iconst_1
 iadd
-istore 3
+istore_3
 goto LABEL9
 LABEL10:
 LABEL11:
-iload 3
-iload 2
+iload_3
+iload_2
 if_icmpge LABEL12
-aload 1
-iload 3
-ldc 0
-ldc 10
+aload_1
+iload_3
+iconst_0
+bipush 10
 invokestatic MathUtils/random(II)I
-ldc 1
+iconst_1
 iadd
 iastore
-iload 3
-ldc 1
+iload_3
+iconst_1
 iadd
-istore 3
+istore_3
 goto LABEL11
 LABEL12:
 iconst_1

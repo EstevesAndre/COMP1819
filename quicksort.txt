@@ -1,0 +1,218 @@
+Program
+ class Quicksort 
+  main args=a
+   var L
+    type int[]
+   var i
+    type int
+   var q
+    type Quicksort
+   var dummy
+    type bool
+   statement id L =
+    new array null
+     literal 10
+   statement id i =
+    literal 0
+   statement while
+    While
+     lt
+      id i
+      id L
+       field length null
+     statement null
+      statement id L[] =
+       id i
+       sub
+        id L
+         field length null
+        id i
+      statement id i =
+       sum
+        id i
+        literal 1
+   statement id q =
+    new id Quicksort
+   statement id dummy =
+    id q
+     field id quicksort
+      id L
+   statement id dummy =
+    id q
+     field id printL
+      id L
+  method printL
+   type bool
+   Args
+    arg L
+     type int[]
+   var i
+    type int
+   statement id i =
+    literal 0
+   statement while
+    While
+     lt
+      id i
+      id L
+       field length null
+     statement null
+      statement id io
+       field id println
+        id L
+         id i
+      statement id i =
+       sum
+        id i
+        literal 1
+   bool true
+  method quicksort
+   type bool
+   Args
+    arg L
+     type int[]
+   _this
+    field id quicksort
+     id L
+     literal 0
+     sub
+      id L
+       field length null
+      literal 1
+  method quicksort
+   type bool
+   Args
+    arg L
+     type int[]
+    arg lo
+     type int
+    arg hi
+     type int
+   var p
+    type int
+   statement if
+    If
+     lt
+      id lo
+      id hi
+     statement null
+      statement id p =
+       _this
+        field id partition
+         id L
+         id lo
+         id hi
+      statement no_id
+       _this
+        field id quicksort
+         id L
+         id lo
+         sub
+          id p
+          literal 1
+      statement no_id
+       _this
+        field id quicksort
+         id L
+         sum
+          id p
+          literal 1
+         id hi
+     statement null
+   bool true
+  method partition
+   type int
+   Args
+    arg L
+     type int[]
+    arg lo
+     type int
+    arg hi
+     type int
+   var p
+    type int
+   var i
+    type int
+   var j
+    type int
+   var tmp
+    type int
+   statement id p =
+    id L
+     id hi
+   statement id i =
+    id lo
+   statement id j =
+    id lo
+   statement while
+    While
+     lt
+      id j
+      id hi
+     statement null
+      statement if
+       If
+        lt
+         id L
+          id j
+         id p
+        statement null
+         statement id tmp =
+          id L
+           id i
+         statement id L[] =
+          id i
+          id L
+           id j
+         statement id L[] =
+          id j
+          id tmp
+         statement id i =
+          sum
+           id i
+           literal 1
+        statement null
+      statement id j =
+       sum
+        id j
+        literal 1
+   statement id tmp =
+    id L
+     id i
+   statement id L[] =
+    id i
+    id L
+     id hi
+   statement id L[] =
+    id hi
+    id tmp
+   id i
+Symbol table for Quicksort
+partition3: int (5)
+a: String[] (1)
+quicksort1: bool (3)
+quicksort3: bool (4)
+printL1: bool (2)
+Symbol table for main
+dummy: bool (4)
+q: Quicksort (3)
+i: int (2)
+L: int[] (1)
+Symbol table for printL
+i: int (2)
+L: int[] (1)
+Symbol table for quicksort
+L: int[] (1)
+Symbol table for quicksort
+p: int (4)
+hi: int (3)
+lo: int (2)
+L: int[] (1)
+Symbol table for partition
+p: int (4)
+hi: int (3)
+lo: int (2)
+tmp: int (7)
+i: int (5)
+j: int (6)
+L: int[] (1)

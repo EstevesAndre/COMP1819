@@ -4,36 +4,36 @@
 .method public find_maximum([I)I
 .limit stack 100
 .limit locals 5
-ldc 1
-istore 2
-aload 1
-ldc 0
+iconst_1
+istore_2
+aload_1
+iconst_0
 iaload
-istore 3
+istore_3
 LABEL1:
-iload 2
-aload 1
+iload_2
+aload_1
 arraylength
 if_icmpge LABEL2
-aload 1
-iload 2
+aload_1
+iload_2
 iaload
 istore 4
-iload 3
+iload_3
 iload 4
 if_icmpge LABEL3
 iload 4
-istore 3
+istore_3
 goto LABEL4
 LABEL3:
 LABEL4:
-iload 2
-ldc 1
+iload_2
+iconst_1
 iadd
-istore 2
+istore_2
 goto LABEL1
 LABEL2:
-iload 3
+iload_3
 ireturn
 .end method
 
@@ -41,37 +41,37 @@ ireturn
 .limit stack 100
 .limit locals 1
 aload_0
-ldc 5
+iconst_5
 newarray int
 putfield FindMaximum/test_arr [I
 aload_0
 getfield FindMaximum/test_arr [I
-ldc 0
-ldc 14
+iconst_0
+bipush 14
 iastore
 aload_0
 getfield FindMaximum/test_arr [I
-ldc 1
-ldc 28
+iconst_1
+bipush 28
 iastore
 aload_0
 getfield FindMaximum/test_arr [I
-ldc 2
-ldc 0
+iconst_2
+iconst_0
 iastore
 aload_0
 getfield FindMaximum/test_arr [I
-ldc 3
-ldc 0
-ldc 5
+iconst_3
+iconst_0
+iconst_5
 isub
 iastore
 aload_0
 getfield FindMaximum/test_arr [I
-ldc 4
-ldc 12
+iconst_4
+bipush 12
 iastore
-ldc 0
+iconst_0
 ireturn
 .end method
 
@@ -89,12 +89,12 @@ areturn
 new FindMaximum
 dup
 invokespecial FindMaximum/<init>()V
-astore 1
-aload 1
+astore_1
+aload_1
 invokevirtual FindMaximum/build_test_arr()I
 pop
-aload 1
-aload 1
+aload_1
+aload_1
 invokevirtual FindMaximum/get_array()[I
 invokevirtual FindMaximum/find_maximum([I)I
 invokestatic ioPlus/printResult(I)V

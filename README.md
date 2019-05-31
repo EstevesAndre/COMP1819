@@ -19,11 +19,11 @@ For the second checkpoint, the following points were analysed:
 ## Compile
 
 ```bash
-javac *.java
+../scripts/compile.sh
 ```
 
 ## Run
 
 ```bash
-java jmm <input_file.jmm>
+java -cp src/ parser.jmm <input_file.jmm>
 ```

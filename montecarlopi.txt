@@ -1,0 +1,123 @@
+Program
+ class MonteCarloPi 
+  method performSingleEstimate
+   type bool
+   Args
+   var rand1
+    type int
+   var rand2
+    type int
+   var in_circle
+    type bool
+   var squareDist
+    type int
+   statement id rand1 =
+    id MathUtils
+     field id random
+      sub
+       literal 0
+       literal 100
+      literal 100
+   statement id rand2 =
+    id MathUtils
+     field id random
+      sub
+       literal 0
+       literal 100
+      literal 100
+   statement id squareDist =
+    div
+     sum
+      mult
+       id rand1
+       id rand1
+      mult
+       id rand2
+       id rand2
+     literal 100
+   statement if
+    If
+     lt
+      id squareDist
+      literal 100
+     statement null
+      statement id in_circle =
+       bool true
+     statement null
+      statement id in_circle =
+       bool false
+   id in_circle
+  method estimatePi100
+   type int
+   Args
+    arg n
+     type int
+   var samples_in_circle
+    type int
+   var samples_so_far
+    type int
+   var pi_estimate
+    type int
+   statement id samples_so_far =
+    literal 0
+   statement id samples_in_circle =
+    literal 0
+   statement while
+    While
+     lt
+      id samples_so_far
+      id n
+     statement null
+      statement if
+       If
+        _this
+         field id performSingleEstimate
+        statement null
+         statement id samples_in_circle =
+          sum
+           id samples_in_circle
+           literal 1
+        statement null
+      statement id samples_so_far =
+       sum
+        id samples_so_far
+        literal 1
+   statement id pi_estimate =
+    div
+     mult
+      literal 400
+      id samples_in_circle
+     id n
+   id pi_estimate
+  main args=args
+   var pi_estimate_times_100
+    type int
+   var num_samples
+    type int
+   statement id num_samples =
+    id ioPlus
+     field id requestNumber
+   statement id pi_estimate_times_100 =
+    new id MonteCarloPi
+     field id estimatePi100
+      id num_samples
+   statement id ioPlus
+    field id printResult
+     id pi_estimate_times_100
+Symbol table for MonteCarloPi
+args: String[] (3)
+performSingleEstimate0: bool (1)
+estimatePi1001: int (2)
+Symbol table for performSingleEstimate
+squareDist: int (4)
+in_circle: bool (3)
+rand1: int (1)
+rand2: int (2)
+Symbol table for estimatePi100
+samples_in_circle: int (2)
+samples_so_far: int (3)
+pi_estimate: int (4)
+n: int (1)
+Symbol table for main
+pi_estimate_times_100: int (1)
+num_samples: int (2)

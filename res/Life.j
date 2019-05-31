@@ -13,21 +13,21 @@
 new Life
 dup
 invokespecial Life/<init>()V
-astore 1
-aload 1
+astore_1
+aload_1
 invokevirtual Life/init()Z
 pop
 LABEL1:
 iconst_1
 ifeq LABEL2
-aload 1
+aload_1
 invokevirtual Life/printField()Z
 pop
-aload 1
+aload_1
 invokevirtual Life/update()Z
 pop
 invokestatic io/read()I
-istore 2
+istore_2
 goto LABEL1
 LABEL2:
 return
@@ -36,42 +36,42 @@ return
 .method public init()Z
 .limit stack 100
 .limit locals 3
-ldc 1
+iconst_1
 newarray int
-astore 1
+astore_1
 aload_0
-ldc 2
+iconst_2
 putfield Life/UNDERPOP_LIM I
 aload_0
-ldc 3
+iconst_3
 putfield Life/OVERPOP_LIM I
 aload_0
-ldc 3
+iconst_3
 putfield Life/REPRODUCE_NUM I
 aload_0
 ldc 225000
 putfield Life/LOOPS_PER_MS I
 aload_0
 aload_0
-aload 1
+aload_1
 invokevirtual Life/field([I)[I
 putfield Life/field [I
-aload 1
-ldc 0
+aload_1
+iconst_0
 iaload
-istore 2
+istore_2
 aload_0
-iload 2
-ldc 1
+iload_2
+iconst_1
 isub
 putfield Life/xMax I
 aload_0
 aload_0
 getfield Life/field [I
 arraylength
-iload 2
+iload_2
 idiv
-ldc 1
+iconst_1
 isub
 putfield Life/yMax I
 iconst_1
@@ -81,414 +81,414 @@ ireturn
 .method public field([I)[I
 .limit stack 100
 .limit locals 3
-ldc 100
+bipush 100
 newarray int
-astore 2
-aload 1
-ldc 0
-ldc 10
-iastore
-aload 2
-ldc 0
-ldc 0
-iastore
-aload 2
-ldc 1
-ldc 0
-iastore
-aload 2
-ldc 2
-ldc 1
-iastore
-aload 2
-ldc 3
-ldc 0
-iastore
-aload 2
-ldc 4
-ldc 0
-iastore
-aload 2
-ldc 5
-ldc 0
-iastore
-aload 2
-ldc 6
-ldc 0
-iastore
-aload 2
-ldc 7
-ldc 0
-iastore
-aload 2
-ldc 8
-ldc 0
-iastore
-aload 2
-ldc 9
-ldc 0
-iastore
-aload 2
-ldc 10
-ldc 1
-iastore
-aload 2
-ldc 11
-ldc 0
-iastore
-aload 2
-ldc 12
-ldc 1
-iastore
-aload 2
-ldc 13
-ldc 0
-iastore
-aload 2
-ldc 14
-ldc 0
-iastore
-aload 2
-ldc 15
-ldc 0
-iastore
-aload 2
-ldc 16
-ldc 0
-iastore
-aload 2
-ldc 17
-ldc 0
-iastore
-aload 2
-ldc 18
-ldc 0
-iastore
-aload 2
-ldc 19
-ldc 0
-iastore
-aload 2
-ldc 20
-ldc 0
-iastore
-aload 2
-ldc 21
-ldc 1
-iastore
-aload 2
-ldc 22
-ldc 1
-iastore
-aload 2
-ldc 23
-ldc 0
-iastore
-aload 2
-ldc 24
-ldc 0
+astore_2
+aload_1
+iconst_0
+bipush 10
+iastore
+aload_2
+iconst_0
+iconst_0
+iastore
+aload_2
+iconst_1
+iconst_0
+iastore
+aload_2
+iconst_2
+iconst_1
+iastore
+aload_2
+iconst_3
+iconst_0
+iastore
+aload_2
+iconst_4
+iconst_0
+iastore
+aload_2
+iconst_5
+iconst_0
+iastore
+aload_2
+bipush 6
+iconst_0
+iastore
+aload_2
+bipush 7
+iconst_0
+iastore
+aload_2
+bipush 8
+iconst_0
+iastore
+aload_2
+bipush 9
+iconst_0
+iastore
+aload_2
+bipush 10
+iconst_1
+iastore
+aload_2
+bipush 11
+iconst_0
+iastore
+aload_2
+bipush 12
+iconst_1
+iastore
+aload_2
+bipush 13
+iconst_0
+iastore
+aload_2
+bipush 14
+iconst_0
+iastore
+aload_2
+bipush 15
+iconst_0
+iastore
+aload_2
+bipush 16
+iconst_0
+iastore
+aload_2
+bipush 17
+iconst_0
+iastore
+aload_2
+bipush 18
+iconst_0
+iastore
+aload_2
+bipush 19
+iconst_0
+iastore
+aload_2
+bipush 20
+iconst_0
+iastore
+aload_2
+bipush 21
+iconst_1
+iastore
+aload_2
+bipush 22
+iconst_1
+iastore
+aload_2
+bipush 23
+iconst_0
+iastore
+aload_2
+bipush 24
+iconst_0
 iastore
-aload 2
-ldc 25
-ldc 0
+aload_2
+bipush 25
+iconst_0
 iastore
-aload 2
-ldc 26
-ldc 0
+aload_2
+bipush 26
+iconst_0
 iastore
-aload 2
-ldc 27
-ldc 0
+aload_2
+bipush 27
+iconst_0
 iastore
-aload 2
-ldc 28
-ldc 0
+aload_2
+bipush 28
+iconst_0
 iastore
-aload 2
-ldc 29
-ldc 0
+aload_2
+bipush 29
+iconst_0
 iastore
-aload 2
-ldc 30
-ldc 0
+aload_2
+bipush 30
+iconst_0
 iastore
-aload 2
-ldc 31
-ldc 0
+aload_2
+bipush 31
+iconst_0
 iastore
-aload 2
-ldc 32
-ldc 0
+aload_2
+bipush 32
+iconst_0
 iastore
-aload 2
-ldc 33
-ldc 0
+aload_2
+bipush 33
+iconst_0
 iastore
-aload 2
-ldc 34
-ldc 0
+aload_2
+bipush 34
+iconst_0
 iastore
-aload 2
-ldc 35
-ldc 0
+aload_2
+bipush 35
+iconst_0
 iastore
-aload 2
-ldc 36
-ldc 0
+aload_2
+bipush 36
+iconst_0
 iastore
-aload 2
-ldc 37
-ldc 0
+aload_2
+bipush 37
+iconst_0
 iastore
-aload 2
-ldc 38
-ldc 0
+aload_2
+bipush 38
+iconst_0
 iastore
-aload 2
-ldc 39
-ldc 0
+aload_2
+bipush 39
+iconst_0
 iastore
-aload 2
-ldc 40
-ldc 0
+aload_2
+bipush 40
+iconst_0
 iastore
-aload 2
-ldc 41
-ldc 0
+aload_2
+bipush 41
+iconst_0
 iastore
-aload 2
-ldc 42
-ldc 0
+aload_2
+bipush 42
+iconst_0
 iastore
-aload 2
-ldc 43
-ldc 0
+aload_2
+bipush 43
+iconst_0
 iastore
-aload 2
-ldc 44
-ldc 0
+aload_2
+bipush 44
+iconst_0
 iastore
-aload 2
-ldc 45
-ldc 0
+aload_2
+bipush 45
+iconst_0
 iastore
-aload 2
-ldc 46
-ldc 0
+aload_2
+bipush 46
+iconst_0
 iastore
-aload 2
-ldc 47
-ldc 0
+aload_2
+bipush 47
+iconst_0
 iastore
-aload 2
-ldc 48
-ldc 0
+aload_2
+bipush 48
+iconst_0
 iastore
-aload 2
-ldc 49
-ldc 0
+aload_2
+bipush 49
+iconst_0
 iastore
-aload 2
-ldc 50
-ldc 0
+aload_2
+bipush 50
+iconst_0
 iastore
-aload 2
-ldc 51
-ldc 0
+aload_2
+bipush 51
+iconst_0
 iastore
-aload 2
-ldc 52
-ldc 0
+aload_2
+bipush 52
+iconst_0
 iastore
-aload 2
-ldc 53
-ldc 0
+aload_2
+bipush 53
+iconst_0
 iastore
-aload 2
-ldc 54
-ldc 0
+aload_2
+bipush 54
+iconst_0
 iastore
-aload 2
-ldc 55
-ldc 0
+aload_2
+bipush 55
+iconst_0
 iastore
-aload 2
-ldc 56
-ldc 0
+aload_2
+bipush 56
+iconst_0
 iastore
-aload 2
-ldc 57
-ldc 0
+aload_2
+bipush 57
+iconst_0
 iastore
-aload 2
-ldc 58
-ldc 0
+aload_2
+bipush 58
+iconst_0
 iastore
-aload 2
-ldc 59
-ldc 0
+aload_2
+bipush 59
+iconst_0
 iastore
-aload 2
-ldc 60
-ldc 0
+aload_2
+bipush 60
+iconst_0
 iastore
-aload 2
-ldc 61
-ldc 0
+aload_2
+bipush 61
+iconst_0
 iastore
-aload 2
-ldc 62
-ldc 0
+aload_2
+bipush 62
+iconst_0
 iastore
-aload 2
-ldc 63
-ldc 0
+aload_2
+bipush 63
+iconst_0
 iastore
-aload 2
-ldc 64
-ldc 0
+aload_2
+bipush 64
+iconst_0
 iastore
-aload 2
-ldc 65
-ldc 0
+aload_2
+bipush 65
+iconst_0
 iastore
-aload 2
-ldc 66
-ldc 0
+aload_2
+bipush 66
+iconst_0
 iastore
-aload 2
-ldc 67
-ldc 0
+aload_2
+bipush 67
+iconst_0
 iastore
-aload 2
-ldc 68
-ldc 0
+aload_2
+bipush 68
+iconst_0
 iastore
-aload 2
-ldc 69
-ldc 0
+aload_2
+bipush 69
+iconst_0
 iastore
-aload 2
-ldc 70
-ldc 0
+aload_2
+bipush 70
+iconst_0
 iastore
-aload 2
-ldc 71
-ldc 0
+aload_2
+bipush 71
+iconst_0
 iastore
-aload 2
-ldc 72
-ldc 0
+aload_2
+bipush 72
+iconst_0
 iastore
-aload 2
-ldc 73
-ldc 0
+aload_2
+bipush 73
+iconst_0
 iastore
-aload 2
-ldc 74
-ldc 0
+aload_2
+bipush 74
+iconst_0
 iastore
-aload 2
-ldc 75
-ldc 0
+aload_2
+bipush 75
+iconst_0
 iastore
-aload 2
-ldc 76
-ldc 0
+aload_2
+bipush 76
+iconst_0
 iastore
-aload 2
-ldc 77
-ldc 0
+aload_2
+bipush 77
+iconst_0
 iastore
-aload 2
-ldc 78
-ldc 0
+aload_2
+bipush 78
+iconst_0
 iastore
-aload 2
-ldc 79
-ldc 0
+aload_2
+bipush 79
+iconst_0
 iastore
-aload 2
-ldc 80
-ldc 0
+aload_2
+bipush 80
+iconst_0
 iastore
-aload 2
-ldc 81
-ldc 0
+aload_2
+bipush 81
+iconst_0
 iastore
-aload 2
-ldc 82
-ldc 0
+aload_2
+bipush 82
+iconst_0
 iastore
-aload 2
-ldc 83
-ldc 0
+aload_2
+bipush 83
+iconst_0
 iastore
-aload 2
-ldc 84
-ldc 0
+aload_2
+bipush 84
+iconst_0
 iastore
-aload 2
-ldc 85
-ldc 0
+aload_2
+bipush 85
+iconst_0
 iastore
-aload 2
-ldc 86
-ldc 0
+aload_2
+bipush 86
+iconst_0
 iastore
-aload 2
-ldc 87
-ldc 0
+aload_2
+bipush 87
+iconst_0
 iastore
-aload 2
-ldc 88
-ldc 0
+aload_2
+bipush 88
+iconst_0
 iastore
-aload 2
-ldc 89
-ldc 0
+aload_2
+bipush 89
+iconst_0
 iastore
-aload 2
-ldc 90
-ldc 0
+aload_2
+bipush 90
+iconst_0
 iastore
-aload 2
-ldc 91
-ldc 0
+aload_2
+bipush 91
+iconst_0
 iastore
-aload 2
-ldc 92
-ldc 0
+aload_2
+bipush 92
+iconst_0
 iastore
-aload 2
-ldc 93
-ldc 0
+aload_2
+bipush 93
+iconst_0
 iastore
-aload 2
-ldc 94
-ldc 0
+aload_2
+bipush 94
+iconst_0
 iastore
-aload 2
-ldc 95
-ldc 0
+aload_2
+bipush 95
+iconst_0
 iastore
-aload 2
-ldc 96
-ldc 0
+aload_2
+bipush 96
+iconst_0
 iastore
-aload 2
-ldc 97
-ldc 0
+aload_2
+bipush 97
+iconst_0
 iastore
-aload 2
-ldc 98
-ldc 0
+aload_2
+bipush 98
+iconst_0
 iastore
-aload 2
-ldc 99
-ldc 0
+aload_2
+bipush 99
+iconst_0
 iastore
-aload 2
+aload_2
 areturn
 .end method
 
@@ -500,34 +500,34 @@ getfield Life/field [I
 arraylength
 newarray int
 astore 5
-ldc 0
-istore 1
+iconst_0
+istore_1
 LABEL3:
-iload 1
+iload_1
 aload_0
 getfield Life/field [I
 arraylength
 if_icmpge LABEL4
 aload_0
 getfield Life/field [I
-iload 1
+iload_1
 iaload
-istore 2
+istore_2
 aload_0
-iload 1
+iload_1
 invokevirtual Life/getLiveNeighborN(I)I
-istore 3
-iload 2
-ldc 1
+istore_3
+iload_2
+iconst_1
 if_icmplt LABEL5
 aload_0
-iload 3
+iload_3
 aload_0
 getfield Life/UNDERPOP_LIM I
 invokevirtual Life/ge(II)Z
 ifeq LABEL7
 aload_0
-iload 3
+iload_3
 aload_0
 getfield Life/OVERPOP_LIM I
 invokevirtual Life/le(II)Z
@@ -541,46 +541,46 @@ istore 4
 iload 4
 ifne LABEL9
 aload 5
-iload 1
-ldc 0
+iload_1
+iconst_0
 iastore
 goto LABEL10
 LABEL9:
 aload 5
-iload 1
+iload_1
 aload_0
 getfield Life/field [I
-iload 1
+iload_1
 iaload
 iastore
 LABEL10:
 goto LABEL6
 LABEL5:
 aload_0
-iload 3
+iload_3
 aload_0
 getfield Life/REPRODUCE_NUM I
 invokevirtual Life/eq(II)Z
 ifeq LABEL11
 aload 5
-iload 1
-ldc 1
+iload_1
+iconst_1
 iastore
 goto LABEL12
 LABEL11:
 aload 5
-iload 1
+iload_1
 aload_0
 getfield Life/field [I
-iload 1
+iload_1
 iaload
 iastore
 LABEL12:
 LABEL6:
-iload 1
-ldc 1
+iload_1
+iconst_1
 iadd
-istore 1
+istore_1
 goto LABEL3
 LABEL4:
 aload_0
@@ -593,41 +593,41 @@ ireturn
 .method public printField()Z
 .limit stack 100
 .limit locals 3
-ldc 0
-istore 1
-ldc 0
-istore 2
+iconst_0
+istore_1
+iconst_0
+istore_2
 LABEL13:
-iload 1
+iload_1
 aload_0
 getfield Life/field [I
 arraylength
 if_icmpge LABEL14
 aload_0
-iload 2
+iload_2
 aload_0
 getfield Life/xMax I
 invokevirtual Life/gt(II)Z
 ifeq LABEL15
 invokestatic io/println()V
-ldc 0
-istore 2
+iconst_0
+istore_2
 goto LABEL16
 LABEL15:
 LABEL16:
 aload_0
 getfield Life/field [I
-iload 1
+iload_1
 iaload
 invokestatic io/print(I)V
-iload 1
-ldc 1
+iload_1
+iconst_1
 iadd
-istore 1
-iload 2
-ldc 1
+istore_1
+iload_2
+iconst_1
 iadd
-istore 2
+istore_2
 goto LABEL13
 LABEL14:
 invokestatic io/println()V
@@ -639,12 +639,12 @@ ireturn
 .method public trIdx(II)I
 .limit stack 100
 .limit locals 3
-iload 1
+iload_1
 aload_0
 getfield Life/xMax I
-ldc 1
+iconst_1
 iadd
-iload 2
+iload_2
 imul
 iadd
 ireturn
@@ -655,29 +655,29 @@ ireturn
 .limit locals 6
 aload_0
 getfield Life/xMax I
-ldc 1
+iconst_1
 iadd
 istore 4
-iload 1
+iload_1
 iload 4
 idiv
-istore 3
-iload 1
-iload 3
+istore_3
+iload_1
+iload_3
 iload 4
 imul
 isub
-istore 2
-ldc 2
+istore_2
+iconst_2
 newarray int
 astore 5
 aload 5
-ldc 0
-iload 2
+iconst_0
+iload_2
 iastore
 aload 5
-ldc 1
-iload 3
+iconst_1
+iload_3
 iastore
 aload 5
 areturn
@@ -687,32 +687,32 @@ areturn
 .limit stack 100
 .limit locals 10
 aload_0
-iload 1
+iload_1
 invokevirtual Life/cartIdx(I)[I
 astore 8
 aload 8
-ldc 0
+iconst_0
 iaload
-istore 2
+istore_2
 aload 8
-ldc 1
+iconst_1
 iaload
-istore 3
-iload 2
+istore_3
+iload_2
 aload_0
 getfield Life/xMax I
 if_icmpge LABEL17
-iload 2
-ldc 1
+iload_2
+iconst_1
 iadd
 istore 6
 aload_0
-iload 2
-ldc 0
+iload_2
+iconst_0
 invokevirtual Life/gt(II)Z
 ifeq LABEL19
-iload 2
-ldc 1
+iload_2
+iconst_1
 isub
 istore 4
 goto LABEL20
@@ -723,28 +723,28 @@ istore 4
 LABEL20:
 goto LABEL18
 LABEL17:
-ldc 0
+iconst_0
 istore 6
-iload 2
-ldc 1
+iload_2
+iconst_1
 isub
 istore 4
 LABEL18:
-iload 3
+iload_3
 aload_0
 getfield Life/yMax I
 if_icmpge LABEL21
-iload 3
-ldc 1
+iload_3
+iconst_1
 iadd
 istore 7
 aload_0
-iload 3
-ldc 0
+iload_3
+iconst_0
 invokevirtual Life/gt(II)Z
 ifeq LABEL23
-iload 3
-ldc 1
+iload_3
+iconst_1
 isub
 istore 5
 goto LABEL24
@@ -755,67 +755,67 @@ istore 5
 LABEL24:
 goto LABEL22
 LABEL21:
-ldc 0
+iconst_0
 istore 7
-iload 3
-ldc 1
+iload_3
+iconst_1
 isub
 istore 5
 LABEL22:
-ldc 8
+bipush 8
 newarray int
 astore 9
 aload 9
-ldc 0
+iconst_0
 aload_0
-iload 2
+iload_2
 iload 5
 invokevirtual Life/trIdx(II)I
 iastore
 aload 9
-ldc 1
+iconst_1
 aload_0
 iload 4
 iload 5
 invokevirtual Life/trIdx(II)I
 iastore
 aload 9
-ldc 2
+iconst_2
 aload_0
 iload 4
-iload 3
+iload_3
 invokevirtual Life/trIdx(II)I
 iastore
 aload 9
-ldc 3
+iconst_3
 aload_0
 iload 4
 iload 7
 invokevirtual Life/trIdx(II)I
 iastore
 aload 9
-ldc 4
+iconst_4
 aload_0
-iload 2
+iload_2
 iload 7
 invokevirtual Life/trIdx(II)I
 iastore
 aload 9
-ldc 5
+iconst_5
 aload_0
 iload 6
 iload 7
 invokevirtual Life/trIdx(II)I
 iastore
 aload 9
-ldc 6
+bipush 6
 aload_0
 iload 6
-iload 3
+iload_3
 invokevirtual Life/trIdx(II)I
 iastore
 aload 9
-ldc 7
+bipush 7
 aload_0
 iload 6
 iload 5
@@ -828,40 +828,40 @@ areturn
 .method public getLiveNeighborN(I)I
 .limit stack 100
 .limit locals 5
-ldc 0
+iconst_0
 istore 4
 aload_0
-iload 1
+iload_1
 invokevirtual Life/getNeighborCoords(I)[I
-astore 2
-ldc 0
-istore 3
+astore_2
+iconst_0
+istore_3
 LABEL25:
-iload 3
-aload 2
+iload_3
+aload_2
 arraylength
 if_icmpge LABEL26
 aload_0
 aload_0
 getfield Life/field [I
-aload 2
-iload 3
+aload_2
+iload_3
 iaload
 iaload
-ldc 0
+iconst_0
 invokevirtual Life/ne(II)Z
 ifeq LABEL27
 iload 4
-ldc 1
+iconst_1
 iadd
 istore 4
 goto LABEL28
 LABEL27:
 LABEL28:
-iload 3
-ldc 1
+iload_3
+iconst_1
 iadd
-istore 3
+istore_3
 goto LABEL25
 LABEL26:
 iload 4
@@ -871,21 +871,21 @@ ireturn
 .method public busyWait(I)Z
 .limit stack 100
 .limit locals 4
-iload 1
+iload_1
 aload_0
 getfield Life/LOOPS_PER_MS I
 imul
-istore 3
-ldc 0
-istore 2
+istore_3
+iconst_0
+istore_2
 LABEL29:
-iload 2
-iload 3
+iload_2
+iload_3
 if_icmpge LABEL30
-iload 2
-ldc 1
+iload_2
+iconst_1
 iadd
-istore 2
+istore_2
 goto LABEL29
 LABEL30:
 iconst_1
@@ -896,13 +896,13 @@ ireturn
 .limit stack 100
 .limit locals 3
 aload_0
-iload 1
-iload 2
+iload_1
+iload_2
 invokevirtual Life/lt(II)Z
 ifne LABEL31
 aload_0
-iload 2
-iload 1
+iload_2
+iload_1
 invokevirtual Life/lt(II)Z
 ifne LABEL31
 iconst_1
@@ -917,8 +917,8 @@ ireturn
 .limit stack 100
 .limit locals 3
 aload_0
-iload 1
-iload 2
+iload_1
+iload_2
 invokevirtual Life/eq(II)Z
 ifeq LABEL33
 iconst_0
@@ -932,8 +932,8 @@ ireturn
 .method public lt(II)Z
 .limit stack 100
 .limit locals 3
-iload 1
-iload 2
+iload_1
+iload_2
 if_icmpge LABEL35
 iconst_1
 goto LABEL36
@@ -947,13 +947,13 @@ ireturn
 .limit stack 100
 .limit locals 3
 aload_0
-iload 1
-iload 2
+iload_1
+iload_2
 invokevirtual Life/lt(II)Z
 ifne LABEL37
 aload_0
-iload 1
-iload 2
+iload_1
+iload_2
 invokevirtual Life/eq(II)Z
 ifne LABEL37
 iconst_1
@@ -974,8 +974,8 @@ ireturn
 .limit stack 100
 .limit locals 3
 aload_0
-iload 1
-iload 2
+iload_1
+iload_2
 invokevirtual Life/le(II)Z
 ifeq LABEL41
 iconst_0
@@ -990,13 +990,13 @@ ireturn
 .limit stack 100
 .limit locals 3
 aload_0
-iload 1
-iload 2
+iload_1
+iload_2
 invokevirtual Life/gt(II)Z
 ifne LABEL43
 aload_0
-iload 1
-iload 2
+iload_1
+iload_2
 invokevirtual Life/eq(II)Z
 ifne LABEL43
 iconst_1
