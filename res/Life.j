@@ -16,6 +16,7 @@ invokespecial Life/<init>()V
 astore 1
 aload 1
 invokevirtual Life/init()Z
+pop
 LABEL1:
 ifeq LABEL2
 aload 1
@@ -522,13 +523,13 @@ aload_0
 iload 3
 aload_0
 getfield Life/UNDERPOP_LIM I
-invokevirtual Life/ge(II)V
+invokevirtual Life/ge(II)Z
 ifeq LABEL7
 aload_0
 iload 3
 aload_0
 getfield Life/OVERPOP_LIM I
-invokevirtual Life/le(II)V
+invokevirtual Life/le(II)Z
 ifeq LABEL7
 iconst_1
 goto LABEL8
@@ -558,7 +559,7 @@ aload_0
 iload 3
 aload_0
 getfield Life/REPRODUCE_NUM I
-invokevirtual Life/eq(II)V
+invokevirtual Life/eq(II)Z
 ifeq LABEL11
 aload 5
 iload 1
@@ -615,6 +616,8 @@ LABEL15:
 LABEL16:
 aload_0
 getfield Life/field [I
+iload 1
+iaload
 invokestatic io/print(I)V
 iload 1
 ldc 1
@@ -837,7 +840,7 @@ iload 3
 iaload
 iaload
 ldc 0
-invokevirtual Life/ne(II)V
+invokevirtual Life/ne(II)Z
 ifeq LABEL27
 iload 4
 ldc 1
@@ -880,17 +883,74 @@ iconst_1
 ireturn
 .end method
 
-.method public lt(II)Z
+.method public eq(II)Z
 .limit stack 100
 .limit locals 3
+aload_0
 iload 1
 iload 2
-if_icmpge LABEL31
+invokevirtual Life/lt(II)Z
+ifne LABEL31
+aload_0
+iload 2
+iload 1
+invokevirtual Life/lt(II)Z
+ifne LABEL31
 iconst_1
 goto LABEL32
 LABEL31:
 iconst_0
 LABEL32:
+ireturn
+.end method
+
+.method public ne(II)Z
+.limit stack 100
+.limit locals 3
+aload_0
+iload 1
+iload 2
+invokevirtual Life/eq(II)Z
+ifeq LABEL33
+iconst_0
+goto LABEL34
+LABEL33:
+iconst_1
+LABEL34:
+ireturn
+.end method
+
+.method public lt(II)Z
+.limit stack 100
+.limit locals 3
+iload 1
+iload 2
+if_icmpge LABEL35
+iconst_1
+goto LABEL36
+LABEL35:
+iconst_0
+LABEL36:
+ireturn
+.end method
+
+.method public le(II)Z
+.limit stack 100
+.limit locals 3
+aload_0
+iload 1
+iload 2
+invokevirtual Life/lt(II)Z
+aload_0
+iload 1
+iload 2
+invokevirtual Life/eq(II)Z
+ifeq LABEL37
+iconst_0
+goto LABEL38
+LABEL37:
+iconst_1
+LABEL38:
 ireturn
 .end method
 
@@ -900,13 +960,33 @@ ireturn
 aload_0
 iload 1
 iload 2
-invokevirtual Life/le(II)V
-ifeq LABEL33
+invokevirtual Life/le(II)Z
+ifeq LABEL39
 iconst_0
-goto LABEL34
-LABEL33:
+goto LABEL40
+LABEL39:
 iconst_1
-LABEL34:
+LABEL40:
+ireturn
+.end method
+
+.method public ge(II)Z
+.limit stack 100
+.limit locals 3
+aload_0
+iload 1
+iload 2
+invokevirtual Life/gt(II)Z
+aload_0
+iload 1
+iload 2
+invokevirtual Life/eq(II)Z
+ifeq LABEL41
+iconst_0
+goto LABEL42
+LABEL41:
+iconst_1
+LABEL42:
 ireturn
 .end method
 

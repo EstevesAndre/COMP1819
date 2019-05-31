@@ -92,6 +92,7 @@ invokespecial FindMaximum/<init>()V
 astore 1
 aload 1
 invokevirtual FindMaximum/build_test_arr()I
+pop
 aload 1
 aload 1
 invokevirtual FindMaximum/get_array()[I

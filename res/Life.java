@@ -365,8 +365,8 @@ class Life {
 		return (!this.le(a, b));
     }
     
-    // public boolean ge(int a, int b) {
-	// 	return !(!this.gt(a, b) && !this.eq(a, b));
-	// }
+    public boolean ge(int a, int b) {
+		return !(!this.gt(a, b) && !this.eq(a, b));
+	}
 
 }
