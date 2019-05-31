@@ -50,6 +50,7 @@ aload_0
 ldc 225000
 putfield Life/LOOPS_PER_MS I
 aload_0
+aload_0
 aload 1
 invokevirtual Life/field([I)[I
 putfield Life/field [I
@@ -764,49 +765,49 @@ aload 9
 ldc 0
 iload 2
 iload 5
-invokestatic trIdx/trIdx(II)I
+invokestatic null/trIdx(II)I
 iastore
 aload 9
 ldc 1
 iload 4
 iload 5
-invokestatic trIdx/trIdx(II)I
+invokestatic null/trIdx(II)I
 iastore
 aload 9
 ldc 2
 iload 4
 iload 3
-invokestatic trIdx/trIdx(II)I
+invokestatic null/trIdx(II)I
 iastore
 aload 9
 ldc 3
 iload 4
 iload 7
-invokestatic trIdx/trIdx(II)I
+invokestatic null/trIdx(II)I
 iastore
 aload 9
 ldc 4
 iload 2
 iload 7
-invokestatic trIdx/trIdx(II)I
+invokestatic null/trIdx(II)I
 iastore
 aload 9
 ldc 5
 iload 6
 iload 7
-invokestatic trIdx/trIdx(II)I
+invokestatic null/trIdx(II)I
 iastore
 aload 9
 ldc 6
 iload 6
 iload 3
-invokestatic trIdx/trIdx(II)I
+invokestatic null/trIdx(II)I
 iastore
 aload 9
 ldc 7
 iload 6
 iload 5
-invokestatic trIdx/trIdx(II)I
+invokestatic null/trIdx(II)I
 iastore
 aload 9
 areturn
@@ -831,8 +832,12 @@ if_icmpge LABEL26
 aload_0
 aload_0
 getfield Life/field [I
+aload 2
+iload 3
+iaload
+iaload
 ldc 0
-invokevirtual Life/ne(II)Z
+invokevirtual Life/ne(II)V
 ifeq LABEL27
 iload 4
 ldc 1
@@ -875,33 +880,17 @@ iconst_1
 ireturn
 .end method
 
-.method public ne(II)Z
-.limit stack 100
-.limit locals 3
-aload_0
-iload 1
-iload 2
-invokevirtual Life/eq(II)V
-ifeq LABEL31
-iconst_0
-goto LABEL32
-LABEL31:
-iconst_1
-LABEL32:
-ireturn
-.end method
-
 .method public lt(II)Z
 .limit stack 100
 .limit locals 3
 iload 1
 iload 2
-if_icmpge LABEL33
+if_icmpge LABEL31
 iconst_1
-goto LABEL34
-LABEL33:
+goto LABEL32
+LABEL31:
 iconst_0
-LABEL34:
+LABEL32:
 ireturn
 .end method
 
@@ -912,12 +901,12 @@ aload_0
 iload 1
 iload 2
 invokevirtual Life/le(II)V
-ifeq LABEL35
+ifeq LABEL33
 iconst_0
-goto LABEL36
-LABEL35:
+goto LABEL34
+LABEL33:
 iconst_1
-LABEL36:
+LABEL34:
 ireturn
 .end method
 
