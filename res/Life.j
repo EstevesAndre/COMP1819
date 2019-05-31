@@ -765,53 +765,71 @@ LABEL22:
 ldc 8
 newarray int
 astore 9
+iload 2
+invokestatic io/println(I)V
+iload 5
+invokestatic io/println(I)V
+iload 7
+invokestatic io/println(I)V
+iload 6
+invokestatic io/println(I)V
+iload 4
+invokestatic io/println(I)V
 aload 9
 ldc 0
+aload_0
 iload 2
 iload 5
-invokestatic null/trIdx(II)I
+invokevirtual Life/trIdx(II)I
 iastore
 aload 9
 ldc 1
+aload_0
 iload 4
 iload 5
-invokestatic null/trIdx(II)I
+invokevirtual Life/trIdx(II)I
 iastore
 aload 9
 ldc 2
+aload_0
 iload 4
 iload 3
-invokestatic null/trIdx(II)I
+invokevirtual Life/trIdx(II)I
 iastore
 aload 9
 ldc 3
+aload_0
 iload 4
 iload 7
-invokestatic null/trIdx(II)I
+invokevirtual Life/trIdx(II)I
 iastore
 aload 9
 ldc 4
+aload_0
 iload 2
 iload 7
-invokestatic null/trIdx(II)I
+invokevirtual Life/trIdx(II)I
 iastore
 aload 9
 ldc 5
+aload_0
 iload 6
 iload 7
-invokestatic null/trIdx(II)I
+invokevirtual Life/trIdx(II)I
 iastore
 aload 9
 ldc 6
+aload_0
 iload 6
 iload 3
-invokestatic null/trIdx(II)I
+invokevirtual Life/trIdx(II)I
 iastore
 aload 9
 ldc 7
+aload_0
 iload 6
 iload 5
-invokestatic null/trIdx(II)I
+invokevirtual Life/trIdx(II)I
 iastore
 aload 9
 areturn

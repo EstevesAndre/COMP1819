@@ -540,13 +540,19 @@ public class JasminGenerator implements ASTNodeVisitor {
 
         String out = "";
 
+        SimpleNode n = (SimpleNode) node.parent;
+
+        if(n instanceof AST_this)
+            out += "aload_0\n";
+
         if(node.children != null)
             for (Node child : node.children) {
                 out += getJasminRecursive(child);
             }
 
-        SimpleNode n = (SimpleNode) node.parent;
         String id = null;
+
+        boolean classType = false;
 
         if (n instanceof ASTStatement) {
             id = ((ASTStatement) n).id;
@@ -554,13 +560,17 @@ public class JasminGenerator implements ASTNodeVisitor {
             id = ((ASTid) n).info;
         }
         else if(n instanceof AST_this){
-            // TODO
+            Node p = node.parent;
+            while(!(p instanceof ASTClassDeclaration))
+                p = ((SimpleNode) p).parent;
+            id = ((ASTClassDeclaration) p).id;
+            classType = true;
         }
 
         STEntry entry = null;
         entry = node.checkImediateSymbolTable(id);
 
-        if (node.checkSymbolTable(id) != null) {
+        if (node.checkSymbolTable(id) != null || classType) {
             out += "invokevirtual ";
 
         } else {

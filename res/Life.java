@@ -294,7 +294,8 @@ class Life {
         }
 
         ret = new int[8];
-        // Clockwise from N
+        // Clockwise from N 
+
         ret[0] = this.trIdx(x, upY);
         ret[1] = this.trIdx(upX, upY);
         ret[2] = this.trIdx(upX, y);
