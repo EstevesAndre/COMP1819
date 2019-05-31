@@ -765,16 +765,6 @@ LABEL22:
 ldc 8
 newarray int
 astore 9
-iload 2
-invokestatic io/println(I)V
-iload 5
-invokestatic io/println(I)V
-iload 7
-invokestatic io/println(I)V
-iload 6
-invokestatic io/println(I)V
-iload 4
-invokestatic io/println(I)V
 aload 9
 ldc 0
 aload_0
@@ -960,16 +950,23 @@ aload_0
 iload 1
 iload 2
 invokevirtual Life/lt(II)Z
+ifne LABEL37
 aload_0
 iload 1
 iload 2
 invokevirtual Life/eq(II)Z
-ifeq LABEL37
-iconst_0
+ifne LABEL37
+iconst_1
 goto LABEL38
 LABEL37:
-iconst_1
+iconst_0
 LABEL38:
+ifeq LABEL39
+iconst_0
+goto LABEL40
+LABEL39:
+iconst_1
+LABEL40:
 ireturn
 .end method
 
@@ -980,12 +977,12 @@ aload_0
 iload 1
 iload 2
 invokevirtual Life/le(II)Z
-ifeq LABEL39
+ifeq LABEL41
 iconst_0
-goto LABEL40
-LABEL39:
+goto LABEL42
+LABEL41:
 iconst_1
-LABEL40:
+LABEL42:
 ireturn
 .end method
 
@@ -996,16 +993,23 @@ aload_0
 iload 1
 iload 2
 invokevirtual Life/gt(II)Z
+ifne LABEL43
 aload_0
 iload 1
 iload 2
 invokevirtual Life/eq(II)Z
-ifeq LABEL41
-iconst_0
-goto LABEL42
-LABEL41:
+ifne LABEL43
 iconst_1
-LABEL42:
+goto LABEL44
+LABEL43:
+iconst_0
+LABEL44:
+ifeq LABEL45
+iconst_0
+goto LABEL46
+LABEL45:
+iconst_1
+LABEL46:
 ireturn
 .end method
 
