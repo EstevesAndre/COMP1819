@@ -222,7 +222,16 @@ public class JasminGenerator implements ASTNodeVisitor {
             out += "LABEL" + label2 + ":\n";
         } else if (first_child instanceof ASTand) {
 
-        } else if (first_child instanceof ASTfield || first_child instanceof ASTid || first_child instanceof ASTbool) {
+        } else if (first_child instanceof ASTfield || first_child instanceof ASTid) {
+            out += "ifeq LABEL" + label2 + "\n";
+            out += visit((ASTStatement) statements);
+            out += "goto LABEL" + label1 + "\n";
+            out += "LABEL" + label2 + ":\n";
+        } else if (first_child instanceof ASTbool) {
+            if(((ASTbool) first_child).info)
+                out += "iconst_1\n";
+            else
+                out += "iconst_0\n";
             out += "ifeq LABEL" + label2 + "\n";
             out += visit((ASTStatement) statements);
             out += "goto LABEL" + label1 + "\n";

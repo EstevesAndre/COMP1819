@@ -18,6 +18,7 @@ aload 1
 invokevirtual Life/init()Z
 pop
 LABEL1:
+iconst_1
 ifeq LABEL2
 aload 1
 invokevirtual Life/printField()Z
