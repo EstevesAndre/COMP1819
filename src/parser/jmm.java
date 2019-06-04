@@ -1,5 +1,6 @@
 package parser;
 
+import optimizations.CFGVisitor;
 import semanticAnalysis.SemanticAnalyzer;
 
 /* jmm.java */
@@ -17,15 +18,29 @@ public
 
     if(args.length != 1)
     {
-      System.out.println("Usage: java jmm <filename>");
+      System.out.println("Usage: java [ -r <numVars> ] [ -o ] jmm <filename>");
       return;
+    }
+    int numVars = 0;
+    for(int i = 0; i < args.length; i++){
+      if(args[i].equals("-r")){
+        numVars = Integer.parseInt(args[i + 1]);
+
+        if(numVars <= 0){
+          System.err.println("Invalid number of variables for option -r.");
+          return;
+        }
+      }
+      else if(args[i].equals("-o")){
+
+      }
     }
 
     jmm p;
 
     try
     {
-      p = new jmm(new java.io.FileInputStream(args[0]));
+      p = new jmm(new java.io.FileInputStream(args[args.length - 1]));
     }
     catch (java.io.FileNotFoundException e)
     {
@@ -45,7 +60,11 @@ public
 
     root.dump("");
 
+    CFGVisitor visitor = new CFGVisitor();
+
     root.acceptSemanticAnalysis(new SemanticAnalyzer());
+    visitor.visit(root);
+
     root.printSymbolTable();
     SimpleNode.writeJasminFile(args[0], root);
   }

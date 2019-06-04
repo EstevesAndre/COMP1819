@@ -26,11 +26,9 @@ iload 4
 istore_3
 goto LABEL4
 LABEL3:
-LABEL4:
 iload_2
-iconst_1
-iadd
-istore_2
+istore_3
+LABEL4:
 goto LABEL1
 LABEL2:
 iload_3

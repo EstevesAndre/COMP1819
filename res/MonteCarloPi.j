@@ -2,7 +2,9 @@
 .super java/lang/Object
 .method public performSingleEstimate()Z
 .limit stack 100
-.limit locals 5
+.limit locals 6
+iconst_1
+istore 4
 iconst_0
 bipush 100
 isub
@@ -24,8 +26,8 @@ imul
 iadd
 bipush 100
 idiv
-istore 4
-iload 4
+istore 5
+iload 5
 bipush 100
 if_icmpge LABEL1
 iconst_1

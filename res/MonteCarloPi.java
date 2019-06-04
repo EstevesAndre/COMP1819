@@ -3,8 +3,9 @@ class MonteCarloPi {
 		int rand1;
 		int rand2;
 		boolean in_circle;
+		boolean x;
 		int squareDist;
-
+		x = true;
 		rand1 = MathUtils.random(0-100, 100);
 		rand2 = MathUtils.random(0-100, 100);
 

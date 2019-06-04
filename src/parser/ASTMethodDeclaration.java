@@ -4,11 +4,13 @@ import utils.ASTNodeVisitor;
 import semanticAnalysis.*;
 import symbolTable.STEntry;
 import java.util.HashMap;
+import optimizations.Graph;
 
 /* Gen /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 public class ASTMethodDeclaration extends SimpleNode {
   public int global_order = 1;
   public HashMap<String, STEntry> symtbl = new HashMap<String, STEntry>();
+  public Graph cfg = new Graph();
 
   public String id;
 

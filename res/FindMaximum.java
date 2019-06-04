@@ -13,8 +13,9 @@ class FindMaximum {
 			if (maximum < value) {
 				maximum = value;
 			} else {
+				maximum = i;
 			}
-			i = i + 1;
+			// i = i + 1;
 		}
 
 		return maximum;

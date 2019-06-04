@@ -558,6 +558,7 @@ public class JasminGenerator implements ASTNodeVisitor {
             }
 
         }
+        
         return out + "\n.end method\n\n";
 
     }

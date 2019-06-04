@@ -25,5 +25,5 @@ For the second checkpoint, the following points were analysed:
 ## Run
 
 ```bash
-java -cp src/ parser.jmm <input_file.jmm>
+java -cp bin/ parser.jmm <input_file.jmm>
 ```
