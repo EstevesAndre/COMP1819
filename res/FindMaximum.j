@@ -3,13 +3,13 @@
 .field public 'test_arr' [I
 .method public find_maximum([I)I
 .limit stack 100
-.limit locals 5
-iconst_1
+.limit locals 6
+iload_3
 istore_2
 aload_1
 iconst_0
 iaload
-istore_3
+istore 4
 LABEL1:
 iload_2
 aload_1
@@ -18,20 +18,24 @@ if_icmpge LABEL2
 aload_1
 iload_2
 iaload
-istore 4
-iload_3
+istore 5
 iload 4
+iload 5
 if_icmpge LABEL3
-iload 4
-istore_3
+iload 5
+istore 4
 goto LABEL4
 LABEL3:
 iload_2
-istore_3
+istore 4
 LABEL4:
+iload_2
+iconst_1
+iadd
+istore_2
 goto LABEL1
 LABEL2:
-iload_3
+iload 4
 ireturn
 .end method
 

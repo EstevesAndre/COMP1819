@@ -16,35 +16,29 @@ private
 public
   static void main(String args[]) throws ParseException {
 
-    if(args.length != 1)
+    if(args.length > 2 || args.length == 0)
     {
-      System.out.println("Usage: java [ -r <numVars> ] [ -o ] jmm <filename>");
+      System.out.println("Usage: java -jar jmm.jar [ -r=<numVars> ] <filename>");
       return;
     }
     int numVars = 0;
-    for(int i = 0; i < args.length; i++){
-      if(args[i].equals("-r")){
-        numVars = Integer.parseInt(args[i + 1]);
-
-        if(numVars <= 0){
-          System.err.println("Invalid number of variables for option -r.");
-          return;
-        }
-      }
-      else if(args[i].equals("-o")){
-
-      }
+    String fileName = args[0];
+    
+    if(args[0].substring(0, 3).equals("-r=")){
+      int temp = Integer.parseInt(args[0].split("=")[1]);
+      numVars = temp >= 1 ? temp : 0;
+      fileName = args[1];
     }
 
     jmm p;
 
     try
     {
-      p = new jmm(new java.io.FileInputStream(args[args.length - 1]));
+      p = new jmm(new java.io.FileInputStream(fileName));
     }
     catch (java.io.FileNotFoundException e)
     {
-      System.out.println("error: file " + args[0] + " not found.");
+      System.out.println("error: file " + fileName + " not found.");
       return;
     }
 
@@ -63,7 +57,7 @@ public
     CFGVisitor visitor = new CFGVisitor();
 
     root.acceptSemanticAnalysis(new SemanticAnalyzer());
-    visitor.visit(root);
+    visitor.visit(root, numVars);
 
     root.printSymbolTable();
     SimpleNode.writeJasminFile(args[0], root);

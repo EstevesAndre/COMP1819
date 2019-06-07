@@ -1,6 +1,8 @@
 package optimizations;
 
 import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BasicBlock {
     BitSet out;
@@ -20,6 +22,35 @@ public class BasicBlock {
         in = new BitSet();
         this.use = use;
         this.def = def;
+    }
+
+    public void printLiveSets(HashMap<String, Integer> variables) {
+        System.out.println("LIVE-IN");
+        printSet(in, variables);
+        System.out.println("\nLIVE-OUT");
+        printSet(out, variables);
+    }
+
+
+    public void printDefUseSets(HashMap<String, Integer> variables) {
+        System.out.println("DEF");
+        printSet(def, variables);
+        System.out.println("\nUSE");
+        printSet(use, variables);
+    }
+
+    private void printSet(BitSet set, HashMap<String, Integer> variables) {
+        String out = "";
+
+        if(set == null)
+            return;
+
+        for (Map.Entry<String, Integer> entry : variables.entrySet()) {
+            if (set.get(entry.getValue()))
+                out += entry.getKey() + " ";
+        }
+
+        System.out.println(out);
     }
 
     public BitSet getOut() {

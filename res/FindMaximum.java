@@ -15,7 +15,7 @@ class FindMaximum {
 			} else {
 				maximum = i;
 			}
-			// i = i + 1;
+			i = i + 1;
 		}
 
 		return maximum;

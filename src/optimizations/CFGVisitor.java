@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
-
+ 
 import parser.*;
 
 public class CFGVisitor {
@@ -12,6 +12,8 @@ public class CFGVisitor {
     int id = 0;
 
     ArrayList<int[]> edges = new ArrayList<int[]>();
+    HashMap<String, Integer> vars = new HashMap<String, Integer>();
+    int numLocalVars = 0;
 
     public static HashMap<String, String> getMoveRelatedVariables(ASTMethodDeclaration node) {
         HashMap<String, String> map = new HashMap<String, String>();
@@ -33,18 +35,51 @@ public class CFGVisitor {
         return map;
     }
 
-    public void visit(SimpleNode node) {
+    public static HashMap<String, String> getMoveRelatedVariables(ASTMainDeclaration node) {
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        if (node.children != null) {
+            for (Node child : node.children) {
+                if (child instanceof ASTStatement) {
+                    ASTStatement c = (ASTStatement) child;
+
+                    if (c.assign && c.children[0] instanceof ASTid) {
+                        map.put(c.id, ((ASTid) c.children[0]).info);
+                    }
+                } else {
+                    getMoveRelatedVariablesRecursive((SimpleNode) child, map);
+                }
+            }
+        }
+
+        return map;
+    }
+
+    public void visit(SimpleNode node, int k) {
+
+        DataflowAnalyzer analyzer = new DataflowAnalyzer();
+
         if (node.children != null) {
             for (Node child : node.children) {
                 if (child instanceof ASTMethodDeclaration) {
                     System.out.println(((ASTMethodDeclaration) child).id);
                     Graph<BasicBlock> graph = visit((ASTMethodDeclaration) child);
-                    graph.printGraph();
+                  
+                    HashMap<String, String> moveRelatedVars = getMoveRelatedVariables((ASTMethodDeclaration) child);
+                    analyzer.livenessAnalysis(graph, vars.size());
+                    Graph<String> interferenceGraph = analyzer.getInterferenceGraph(moveRelatedVars, vars);
+                    RegisterAllocator.registerAllocation(interferenceGraph, k);
                 } else if (child instanceof ASTMainDeclaration) {
                     Graph<BasicBlock> graph = visit((ASTMainDeclaration) child);
-                    graph.printGraph();
+
+                    HashMap<String, String> moveRelatedVars = getMoveRelatedVariables((ASTMainDeclaration) child);
+
+                    analyzer.livenessAnalysis(graph, vars.size());
+                    Graph<String> interferenceGraph = analyzer.getInterferenceGraph(moveRelatedVars, vars);
+                    RegisterAllocator.registerAllocation(interferenceGraph, k);
+
                 } else {
-                    visit((SimpleNode) child);
+                    visit((SimpleNode) child, k);
                 }
             }
         }
@@ -69,9 +104,7 @@ public class CFGVisitor {
     public Graph<BasicBlock> visit(ASTMethodDeclaration node) {
 
         Graph<BasicBlock> graph = new Graph<BasicBlock>();
-        int numLocalVars = (node.symtbl.size() + 1);
-
-        HashMap<String, Integer> vars = new HashMap<String, Integer>();
+        numLocalVars = (node.symtbl.size() + 1);
 
         int i = 0;
         for (String id : node.symtbl.keySet()) {
@@ -93,7 +126,6 @@ public class CFGVisitor {
                     use.clear();
                 } else if (child.children[0] instanceof ASTWhile) {
                     graph.addVertex(new Vertex<BasicBlock>(id++, new BasicBlock(use, def)));
-                    System.out.println("CARALHO");
                     visit((ASTWhile) child.children[0], graph, vars);
 
                     def.clear();
@@ -157,7 +189,6 @@ public class CFGVisitor {
                     use.clear();
                 } else if (child.children[0] instanceof ASTWhile) {
                     graph.addVertex(new Vertex<BasicBlock>(id++, new BasicBlock(use, def)));
-                    System.out.println("CARALHO");
                     visit((ASTWhile) child.children[0], graph, vars);
 
                     def.clear();
@@ -203,7 +234,7 @@ public class CFGVisitor {
     }
 
     void getDefSetRecursive(SimpleNode node, BitSet def, HashMap<String, Integer> vars) {
-        if (node.children != null)
+        if (node.children != null) 
             for (Node child : node.children) {
                 if (child instanceof ASTStatement)
                     getDefSetRecursive((ASTStatement) child, def, vars);
@@ -213,6 +244,7 @@ public class CFGVisitor {
     }
 
     void getDefSetRecursive(ASTStatement node, BitSet def, HashMap<String, Integer> vars) {
+        
         if (node.assign && vars.get(node.id) != null) {
             def.set(vars.get(node.id));
         }
@@ -224,7 +256,7 @@ public class CFGVisitor {
 
         BitSet use = new BitSet(vars.size());
         getUseSetRecursive(condition, use, vars);
-        BasicBlock conditionBlock = new BasicBlock(use, null);
+        BasicBlock conditionBlock = new BasicBlock(use, new BitSet(numLocalVars));
         graph.addVertex(new Vertex<BasicBlock>(id++, conditionBlock));
         edges.add( new int[] {id - 2, id - 1} );
 
@@ -250,7 +282,7 @@ public class CFGVisitor {
 
         BitSet use = new BitSet(vars.size());
         getUseSetRecursive(condition, use, vars);
-        BasicBlock conditionBlock = new BasicBlock(use, null);
+        BasicBlock conditionBlock = new BasicBlock(use, new BitSet(numLocalVars));
         graph.addVertex(new Vertex<BasicBlock>(id++, conditionBlock));
         edges.add( new int[] {id - 2, id - 1} );
 
@@ -267,8 +299,8 @@ public class CFGVisitor {
     }
 
     public void visit(SimpleNode node, Graph<BasicBlock> graph, HashMap<String, Integer> vars) {
-        BitSet def = new BitSet(vars.size());
-        BitSet use = new BitSet(vars.size());
+        BitSet def = new BitSet(numLocalVars);
+        BitSet use = new BitSet(numLocalVars);
 
         if (node.children != null)
             for (int i = 0; i < node.children.length; i++) {

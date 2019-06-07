@@ -91,7 +91,7 @@ class DataflowAnalyzer {
         return range;
     }
 
-    public void livenessAnalysis(Graph<BasicBlock> cfg) {
+    public void livenessAnalysis(Graph<BasicBlock> cfg, int numVariables) {
 
         ArrayList<BitSet> prevIn = new ArrayList<BitSet>();
         currIn = new ArrayList<BitSet>();
@@ -110,13 +110,12 @@ class DataflowAnalyzer {
                 Vertex<BasicBlock> v = set.get(i);
                 BasicBlock vertex = (BasicBlock) set.get(i).getContent();
 
-                BitSet in = vertex.getIn();
-                BitSet out = vertex.getOut();
+                BitSet in = new BitSet(numVariables);
+                BitSet out = new BitSet(numVariables);
 
                 for (Edge<BasicBlock> edge : v.getSucc()) {
                     out.or(((BasicBlock) edge.dest.getContent()).in);
                 }
-
                 in.or(vertex.getUse());
                 in.or(difference(vertex.getOut(), vertex.getDef()));
 

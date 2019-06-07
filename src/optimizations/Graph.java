@@ -43,8 +43,8 @@ public class Graph<T> {
         if (source == null || destiny == null)
             return;
 
-        for(Edge<T> e : source.succ){
-            if(e.dest == destiny){
+        for (Edge<T> e : source.succ) {
+            if (e.dest == destiny) {
                 e.type = "";
                 return;
             }
@@ -68,14 +68,13 @@ public class Graph<T> {
         if (v1 == null || v2 == null)
             return;
 
-        for(Edge<T> e : v2.succ){
+        for (Edge<T> e : v2.succ) {
             addEdge(vertex1, e.dest.id);
         }
 
-
-        for(Edge<T> e : v2.pred){
-            for(Vertex<T> v : vertexSet){
-                if(v.succ.contains(e)){
+        for (Edge<T> e : v2.pred) {
+            for (Vertex<T> v : vertexSet) {
+                if (v.succ.contains(e)) {
                     addEdge(vertex1, v.id);
                     break;
                 }
@@ -93,14 +92,13 @@ public class Graph<T> {
         if (v1 == null || v2 == null)
             return false;
 
-        for(Edge<T> e : v2.succ){
+        for (Edge<T> e : v2.succ) {
             test.addEdge(vertex1, e.dest.id);
         }
 
-
-        for(Edge<T> e : v2.pred){
-            for(Vertex<T> v : test.vertexSet){
-                if(v.succ.contains(e)){
+        for (Edge<T> e : v2.pred) {
+            for (Vertex<T> v : test.vertexSet) {
+                if (v.succ.contains(e)) {
                     test.addEdge(vertex1, v.id);
                     break;
                 }
@@ -133,11 +131,11 @@ public class Graph<T> {
         this.vertexSet = vertexSet;
     }
 
-    public void printGraph(){
-        for(Vertex<T> vertex : vertexSet){
+    public void printGraph() {
+        for (Vertex<T> vertex : vertexSet) {
             System.out.println("VERTEX " + vertex.id);
             System.out.println("EDGES");
-            for(Edge<T> edge : vertex.succ){
+            for (Edge<T> edge : vertex.succ) {
                 System.out.println("  DEST: " + edge.dest.id);
             }
         }
@@ -159,6 +157,10 @@ class Vertex<T> {
         this.content = content;
     }
 
+    public Vertex() {
+
+    }
+
     public T getContent() {
         return content;
     }
@@ -175,7 +177,6 @@ class Vertex<T> {
         dest.pred.add(edge);
     }
 
-
     public void addEdge(Vertex<T> dest, String type) {
         Edge<T> edge = new Edge<T>(dest, type);
 
@@ -189,7 +190,20 @@ class Vertex<T> {
     }
 
     public int degree() {
-        return succ.size() + pred.size();
+
+        int degree = 0;
+
+        for (Edge<T> edge : succ) {
+            if (!edge.type.equals("moveRelated"))
+                degree++;
+        }
+
+        for (Edge<T> edge : pred) {
+            if (!edge.type.equals("moveRelated"))
+                degree++;
+        }
+
+        return degree;
     }
 
     public ArrayList<Edge<T>> getSucc() {
@@ -208,14 +222,14 @@ class Vertex<T> {
         this.pred = pred;
     }
 
-    public boolean isMoveRelated(){
-        for(Edge<T> e : succ){
-            if(e.type.equals("moveRelated"))
+    public boolean isMoveRelated() {
+        for (Edge<T> e : succ) {
+            if (e.type.equals("moveRelated"))
                 return true;
         }
 
-        for(Edge<T> e : pred){
-            if(e.type.equals("moveRelated"))
+        for (Edge<T> e : pred) {
+            if (e.type.equals("moveRelated"))
                 return true;
         }
 
